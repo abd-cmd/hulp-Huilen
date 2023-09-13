@@ -4,5 +4,5 @@ public enum Vooropleiding {
     HAVO,
     VWO,
     MBO,
-    HBO
+    ANDERE
 }

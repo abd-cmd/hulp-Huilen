@@ -17,9 +17,24 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Vooropleiding vooropleiding;
 
+    @OneToOne
+    private BSA studieAdvies;
+
     // TODO verander naar Object type Opleiding
     private String opleiding;
 
-    public Student(){}
+    protected Student(){}
+
+    public Student(PersoonsGegevens persoonsGegevens, Vooropleiding vooropleiding, BSA bsa, String opleiding){
+
+
+        this.persoonsGegevens = persoonsGegevens;
+        this.vooropleiding = vooropleiding;
+        this.studieAdvies = bsa;
+        this.opleiding = opleiding;
+    }
+
+
+
 
 }
