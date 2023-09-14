@@ -28,7 +28,7 @@ public class Student {
 
     public Student(PersoonsGegevens persoonsGegevens, Vooropleiding vooropleiding){
         if(persoonsGegevens == null || vooropleiding == null){
-            throw new RuntimeException();
+            throw new IllegalArgumentException("Persoonsgegevens en vooropleiding mogen niet leeg zijn");
         }
 
         this.persoonsGegevens = persoonsGegevens;
@@ -61,8 +61,11 @@ public class Student {
     }
 
 
+    public void setVooropleiding(Vooropleiding vooropleiding) {
+        this.vooropleiding = vooropleiding;
+    }
 
-
-
-
+    public void setPesoonsGegevens(PersoonsGegevens persoonsGegevens) {
+        this.persoonsGegevens = persoonsGegevens;
+    }
 }
