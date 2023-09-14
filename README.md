@@ -2,8 +2,24 @@
 
 Bij deze de start-repository voor de HULP opdracht.
 
-In deze repository start een lege Spring-boot applicatie. Deze staat net 1 directory dieper dan je gewend 
-bent. Dat kun je voor nu negeren, maar zorgt er voor dat de overstap in week 3 net iets prettiger loopt.
+In deze repository wordt er verteld qua programmeren hoe de Monoliet opgebouwed wordt. 
+Boverdien wordt er laten zien wat voor technieken gebruikt worden en wat voor programmer taal gebruikt wordt om code te implementeren.  
+Daarnaast wordt er getoond wat de use cases zijn die geïmplementeerd zijn en die behersed worden.
+
+# De technieken:
+* Database : h2database
+* Programmeer Taal: JAVA
+* Application Framework : Springboot
+* Versiebeer : Github
+
+Voor database is er gebruik gemaakt van h2database. Het slaat gegevens op in het geheugen en bewaart de gegevens niet op schijf. 
+De programmer taal java wordt gebruikt in de springboot application omdat Het biedt beheert REST-eindpunten. 
+In Spring Boot wordt alles automatisch geconfigureerd; er zijn geen handmatige configuraties nodig. 
+Voor framewwork is er gebruik gemaakt van Springboot. Met Spring Boot kunt u eenvoudig stand-alone, op Spring gebaseerde
+applicaties van productiekwaliteit maken die u "gewoon kunt uitvoeren". Spring Boot biedt automatische configuratie voor veel algemene Spring Framework-componenten,
+waardoor de hoeveelheid standaardcode die ontwikkelaars moeten schrijven wordt verminderd.
+
+
 
 
 Na opstarten kun je alvast kijken op
