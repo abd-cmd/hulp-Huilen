@@ -2,14 +2,15 @@ package nl.hu.inno.humc.monoliet.domain.persoonsgegevens;
 
 import jakarta.persistence.Embedded;
 
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class PersoonsGegevens {
 
     @Embedded
     private Naam naam;
-    private Date geboortedatum;
+    private LocalDate geboortedatum;
 
     @Embedded
     private Adres adres;
@@ -19,9 +20,9 @@ public class PersoonsGegevens {
     @Embedded
     private TelefoonNummer telefoonNummer;
 
-    public PersoonsGegevens(Naam naam, Date geboortedatum, Adres adres, Email email, TelefoonNummer telefoonNummer){
+    public PersoonsGegevens(Naam naam, LocalDate geboortedatum, Adres adres, Email email, TelefoonNummer telefoonNummer){
         if(naam == null || geboortedatum == null || adres == null || email == null || telefoonNummer == null){
-            throw new RuntimeException();
+            throw new IllegalArgumentException("Alle velden moeten ingevuld zijn");
         }
         this.naam = naam;
         this.geboortedatum = geboortedatum;
@@ -34,7 +35,7 @@ public class PersoonsGegevens {
         return naam;
     }
 
-    public Date getGeboortedatum() {
+    public LocalDate getGeboortedatum() {
         return geboortedatum;
     }
 

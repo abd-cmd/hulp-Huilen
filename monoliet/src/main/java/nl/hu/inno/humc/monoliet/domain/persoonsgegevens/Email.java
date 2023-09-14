@@ -1,5 +1,7 @@
 package nl.hu.inno.humc.monoliet.domain.persoonsgegevens;
 
+import nl.hu.inno.humc.monoliet.domain.exceptions.InvalidEmailException;
+
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,8 +10,8 @@ public class Email {
     private String email;
 
     public Email(String email){
-        if (email.isBlank()) throw new RuntimeException();
-        if(!isEmailValide(email)) throw new RuntimeException("Inavlid email");
+        if (email.isBlank()) throw new IllegalArgumentException("E-mailadres mag niet leeg zijn");
+        if(!isEmailValide(email)) throw new InvalidEmailException("Ongeldig e-mailadres: " + email);
 
         this.email = email;
     }

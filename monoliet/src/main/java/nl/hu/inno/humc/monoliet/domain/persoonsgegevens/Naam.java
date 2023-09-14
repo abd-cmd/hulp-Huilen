@@ -9,8 +9,8 @@ public class Naam {
 
     protected Naam(){}
     public Naam(String voornaam, String achternaam, String roepnaam){
-        if(voornaam.isBlank() || achternaam.isBlank() || roepnaam.isBlank()){
-            throw new RuntimeException();
+        if (voornaam.isBlank() || achternaam.isBlank()) {
+            throw new IllegalArgumentException("Voornaam en achternaam mogen niet leeg zijn");
         }
         this.voornaam = voornaam;
         this.achternaam = achternaam;

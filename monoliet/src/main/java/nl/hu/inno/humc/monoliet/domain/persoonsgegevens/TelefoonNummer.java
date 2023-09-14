@@ -1,5 +1,7 @@
 package nl.hu.inno.humc.monoliet.domain.persoonsgegevens;
 
+import nl.hu.inno.humc.monoliet.domain.exceptions.InvalidTelefoonNummerException;
+
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,8 +10,14 @@ public class TelefoonNummer {
     private String telefoonNummer;
 
     public TelefoonNummer(String telefoonNummer){
-        if(telefoonNummer.isBlank()) throw new RuntimeException();
-        if(!isTelefoonNummerValide(telefoonNummer)) throw new RuntimeException("Invalid number");
+        if(telefoonNummer.isBlank()) {
+            throw new IllegalArgumentException("Telefoonnummer mag niet leeg zijn");
+        }
+        if(!isTelefoonNummerValide(telefoonNummer)) {
+            throw new InvalidTelefoonNummerException("Ongeldig telefoonnummer: " + telefoonNummer);
+        }
+
+        this.telefoonNummer = telefoonNummer;
     }
 
     private boolean isTelefoonNummerValide(String telefoonNummer){

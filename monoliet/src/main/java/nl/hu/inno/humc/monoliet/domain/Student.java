@@ -54,7 +54,7 @@ public class Student {
                 return true;
             }
 
-            return this.studieAdvies.getHuidigAdvies();
+            return this.studieAdvies.isBSAAdviesBehaald();
 
         }
         throw new RuntimeException();

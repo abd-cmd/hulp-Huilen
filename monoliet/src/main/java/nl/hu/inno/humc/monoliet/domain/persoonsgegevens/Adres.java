@@ -1,5 +1,7 @@
 package nl.hu.inno.humc.monoliet.domain.persoonsgegevens;
 
+import nl.hu.inno.humc.monoliet.domain.exceptions.InvalidPostcodeException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,10 +18,10 @@ public class Adres {
 
         // Check of string null of leeg, of alleen uit spaties bestaat
         if(plaats.isBlank() || postcode.isBlank()|| straat.isBlank()|| huisnummer.isBlank()) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException("Adres waardes mogen niet leeg zijn");
         }
         if(!isPostcodeValide(postcode)){
-            throw new RuntimeException("Postcode is invalid");
+            throw new InvalidPostcodeException("Ongeldige postcode: " + postcode);
         }
 
         this.plaats = plaats;
