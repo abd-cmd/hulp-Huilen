@@ -1,9 +1,7 @@
 package nl.hu.inno.humc.monoliet.domain;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -20,6 +18,18 @@ public class Vak {
     private ToetsGegevens toetsGegevens;
     @Embedded
     private HerkansingGegevens herkansingGegevens;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "opleidingId")
+    private Opleiding opleiding;
+
+    public Opleiding getOpleiding() {
+        return opleiding;
+    }
+
+    public void setOpleiding(Opleiding opleiding) {
+        this.opleiding = opleiding;
+    }
 
     public Vak() {
 

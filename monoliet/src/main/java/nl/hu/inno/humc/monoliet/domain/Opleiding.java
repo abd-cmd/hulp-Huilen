@@ -12,9 +12,8 @@ public class Opleiding {
     @GeneratedValue
     private Long opleidingId;
 
-//    todo beheren van vakken
-//    @OneToMany(mappedBy = "opleiding", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Vak> vakken;
+    @OneToMany(mappedBy = "opleiding", cascade = CascadeType.ALL)
+    private List<Vak> vakken;
     private String naam;
     private String beschrijving;
     private Type type;
@@ -108,5 +107,23 @@ public class Opleiding {
 
     public void setEindDatum(LocalDate eindDatum) {
         this.eindDatum = eindDatum;
+    }
+
+    public List<Vak> getVakken() {
+        return vakken;
+    }
+
+    public void setVakken(List<Vak> vakken) {
+        this.vakken = vakken;
+    }
+
+    public void addVak(Vak vak) {
+        vakken.add(vak);
+        vak.setOpleiding(this);
+    }
+
+    public void removeVak(Vak vak) {
+        vakken.remove(vak);
+        vak.setOpleiding(null);
     }
 }
