@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.monoliet.domain;
+package nl.hu.inno.humc.monoliet.domain.student;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

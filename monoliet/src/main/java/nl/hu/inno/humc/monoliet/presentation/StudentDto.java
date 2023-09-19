@@ -1,7 +1,7 @@
 package nl.hu.inno.humc.monoliet.presentation;
 
 
-import nl.hu.inno.humc.monoliet.domain.Vooropleiding;
+import nl.hu.inno.humc.monoliet.domain.student.Vooropleiding;
 
 import java.time.LocalDate;
 

@@ -1,6 +1,6 @@
-package nl.hu.inno.humc.monoliet.domain.persoonsgegevens;
+package nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens;
 
-import nl.hu.inno.humc.monoliet.domain.exceptions.InvalidTelefoonNummerException;
+import nl.hu.inno.humc.monoliet.domain.student.exceptions.InvalidTelefoonNummerException;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
