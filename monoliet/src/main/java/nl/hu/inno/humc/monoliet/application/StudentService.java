@@ -8,6 +8,9 @@ import nl.hu.inno.humc.monoliet.domain.persoonsgegevens.*;
 import nl.hu.inno.humc.monoliet.presentation.StudentDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class StudentService {
@@ -17,14 +20,22 @@ public class StudentService {
         this.studentRepo = studentRepository;
     }
 
-    public Student registreerStudent(StudentDto dto) {
+    public Optional<Student> getStudentById(Long id){
+        return studentRepo.findById(id);
+    }
+
+    public Optional<List<Student>> getAllStudents(){
+        return Optional.of(studentRepo.findAll());
+    }
+
+    public Optional<Student> registreerStudent(StudentDto dto) {
         Naam naam = new Naam(dto.getVoornaam(), dto.getAchternaam(), dto.getRoepnaam());
         Email email = new Email(dto.getEmail());
         TelefoonNummer telefoonNummer = new TelefoonNummer(dto.getTelefoonNummer());
         Adres adres = new Adres(dto.getPlaats(), dto.getPostcode(), dto.getStraat(), dto.getHuisnummer());
         PersoonsGegevens persoonsGegevens = new PersoonsGegevens(naam, dto.getGeboortedatum(), adres, email, telefoonNummer );
         Student student = new Student(persoonsGegevens, dto.getVooropleiding());
-        return studentRepo.save(student);
+        return Optional.of(studentRepo.save(student));
     }
 
     public void schrijfStudentInVoorOpleiding(Long studentId, Long opleidingId) {

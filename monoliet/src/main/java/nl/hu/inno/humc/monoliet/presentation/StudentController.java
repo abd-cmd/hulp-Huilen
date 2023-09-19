@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/students")
 public class StudentController {
@@ -15,24 +18,31 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-//    @GetMapping("/{studentId}")
-//    public ResponseEntity<StudentDto> getStudent(@PathVariable Long studentId) {
-//        StudentDto studentDto = studentService.getStudentById(studentId);
-//        if (studentDto != null) {
-//            return new ResponseEntity<>(studentDto, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+    @GetMapping("/{studentId}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long studentId) {
+        Optional<Student> student = studentService.getStudentById(studentId);
+        if (student.isPresent()) {
+            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Student>> getAllStudents() {
+        Optional<List<Student>> students = studentService.getAllStudents();
+        if (students.isPresent()) {
+            return new ResponseEntity<>(students.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @PostMapping
     public @ResponseBody ResponseEntity<Student> createStudent(@RequestBody StudentDto studentDto) {
-        Student createdStudent = studentService.registreerStudent(studentDto);
-        if (createdStudent != null) {
-            return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Optional<Student> createdStudent = studentService.registreerStudent(studentDto);
+        if (createdStudent.isPresent()) {
+            return new ResponseEntity<>(createdStudent.get(), HttpStatus.CREATED);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 //    @PutMapping("/{studentId}")
