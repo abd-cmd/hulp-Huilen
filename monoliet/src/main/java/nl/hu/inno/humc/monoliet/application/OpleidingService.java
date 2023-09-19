@@ -1,24 +1,27 @@
 package nl.hu.inno.humc.monoliet.application;
 
 import nl.hu.inno.humc.monoliet.data.OpleidingRepository;
+import nl.hu.inno.humc.monoliet.data.VakRepository;
 import nl.hu.inno.humc.monoliet.domain.Opleiding;
 
-import nl.hu.inno.humc.monoliet.domain.exceptions.OpleidingNietGevondenException;
+import nl.hu.inno.humc.monoliet.domain.Vak;
+import nl.hu.inno.humc.monoliet.domain.exceptions.OpleidingNotFoundException;
+import nl.hu.inno.humc.monoliet.domain.exceptions.VakNotFoundException;
 import nl.hu.inno.humc.monoliet.presentation.dto.OpleidingDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OpleidingService {
 
     private final OpleidingRepository opleidingRepository;
+    private VakRepository vakRepository;
 
-    public OpleidingService(OpleidingRepository opleidingRepository) {
+    public OpleidingService(OpleidingRepository opleidingRepository, VakRepository vakRepository) {
         this.opleidingRepository = opleidingRepository;
+        this.vakRepository = vakRepository;
     }
 
     public List<OpleidingDto> getAllOpleidingen() {
@@ -35,7 +38,7 @@ public class OpleidingService {
 
     public OpleidingDto getOpleidingById(Long id) {
         Opleiding opleiding = opleidingRepository.findById(id)
-                .orElseThrow(() -> new OpleidingNietGevondenException(id));
+                .orElseThrow(() -> new OpleidingNotFoundException(id));
         return convertToDto(opleiding);
     }
 
@@ -48,7 +51,7 @@ public class OpleidingService {
 
     public OpleidingDto updateOpleiding(Long id, OpleidingDto opleidingDto) {
         if (!opleidingRepository.existsById(id)) {
-            throw new OpleidingNietGevondenException(id);
+            throw new OpleidingNotFoundException(id);
         }
         Opleiding updatedOpleiding = convertToEntity(opleidingDto);
         updatedOpleiding.setOpleidingId(id);
@@ -58,11 +61,32 @@ public class OpleidingService {
 
     public void deleteOpleiding(Long id) {
         if (!opleidingRepository.existsById(id)) {
-            throw new OpleidingNietGevondenException(id);
+            throw new OpleidingNotFoundException(id);
         }
         opleidingRepository.deleteById(id);
     }
 
+    public OpleidingDto addVakToOpleiding(Long opleidingId, Vak vak) {
+        Opleiding opleiding = opleidingRepository.findById(opleidingId)
+                .orElseThrow(() -> new OpleidingNotFoundException(opleidingId));
+
+        opleiding.getVakken().add(vak);
+        opleidingRepository.save(opleiding);
+
+        return convertToDto(opleiding);
+    }
+
+    public OpleidingDto removeVakFromOpleiding(Long opleidingId, Long vakId) {
+        Opleiding opleiding = opleidingRepository.findById(opleidingId)
+                .orElseThrow(() -> new OpleidingNotFoundException(opleidingId));
+
+        Vak vak = vakRepository.findById(vakId)
+                .orElseThrow(() -> new VakNotFoundException());
+  
+        opleiding.getVakken().remove(vak);
+
+        return convertToDto(opleiding);
+    }
 
     private OpleidingDto convertToDto(Opleiding opleiding) {
         return new OpleidingDto(
