@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.monoliet.domain.persoonsgegevens;
+package nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens;
 
 import java.util.Objects;
 

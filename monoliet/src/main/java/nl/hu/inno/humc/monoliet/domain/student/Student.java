@@ -1,7 +1,7 @@
-package nl.hu.inno.humc.monoliet.domain;
+package nl.hu.inno.humc.monoliet.domain.student;
 
 import jakarta.persistence.*;
-import nl.hu.inno.humc.monoliet.domain.persoonsgegevens.PersoonsGegevens;
+import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.PersoonsGegevens;
 
 import java.time.LocalDate;
 

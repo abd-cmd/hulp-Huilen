@@ -2,9 +2,8 @@ package nl.hu.inno.humc.monoliet.application;
 
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.StudentRepository;
-import nl.hu.inno.humc.monoliet.domain.Student;
-import nl.hu.inno.humc.monoliet.domain.Vooropleiding;
-import nl.hu.inno.humc.monoliet.domain.persoonsgegevens.*;
+import nl.hu.inno.humc.monoliet.domain.student.Student;
+import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.*;
 import nl.hu.inno.humc.monoliet.presentation.StudentDto;
 import org.springframework.stereotype.Service;
 
