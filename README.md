@@ -44,4 +44,21 @@ Na opstarten kun je alvast kijken op
 
   (als het goed is kloppen de defaults, anders moet je de url/username even uit de application.properties vissen)
 
+---
+# Splitsing monoliet (Osiris)
+Wij hebben er voor gekozen om de splitsing aan te houden die ook als suggestie op canvas staat
+
+> * Studenten in/uitschrijven (met allerhande regeltjes). 
+Denk hierbij aan vooropleiding, BSAs, herkomst. Bij uitschrijving kan er misschieen een deelgraad (propedeuse, bachelor, minor, etc.) 
+behaald worden. Een decaan kan voor sommige vereisten juist weer vrijstellingen verlenen.
+
+>* Vakken beheren, en hoe de cijfers opgebouwd zijn (toetsen, herkansingen, vervangende opdrachten etc.)
+  Per jaar kunnen er uiteraard andere regels gelden, maar standaard is het ‘hetzelfde als vorig jaar’
+
+>* Opleidingen beheren, en welke vakken er nodig zijn om het te halen (vervangingen, bezemvakken, vrijstellingen etc.).
+
+### Jan
+Ik heb de splitsing over de studenten op me genomen, en heb geprobeerd om me hier aan de DDD principes te houden,
+dit is vooral in de persoonsgegevens terug te vinden. 
+
 
