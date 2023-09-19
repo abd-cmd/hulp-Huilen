@@ -20,6 +20,8 @@ public class PersoonsGegevens {
     @Embedded
     private TelefoonNummer telefoonNummer;
 
+    protected PersoonsGegevens(){}
+
     public PersoonsGegevens(Naam naam, LocalDate geboortedatum, Adres adres, Email email, TelefoonNummer telefoonNummer){
         if(naam == null || geboortedatum == null || adres == null || email == null || telefoonNummer == null){
             throw new IllegalArgumentException("Alle velden moeten ingevuld zijn");

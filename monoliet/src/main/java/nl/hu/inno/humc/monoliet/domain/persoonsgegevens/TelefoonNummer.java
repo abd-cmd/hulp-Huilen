@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 public class TelefoonNummer {
     private String telefoonNummer;
 
+    protected TelefoonNummer(){}
+
     public TelefoonNummer(String telefoonNummer){
         if(telefoonNummer.isBlank()) {
             throw new IllegalArgumentException("Telefoonnummer mag niet leeg zijn");

@@ -68,4 +68,24 @@ public class Student {
     public void setPesoonsGegevens(PersoonsGegevens persoonsGegevens) {
         this.persoonsGegevens = persoonsGegevens;
     }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public PersoonsGegevens getPersoonsGegevens() {
+        return persoonsGegevens;
+    }
+
+    public Vooropleiding getVooropleiding() {
+        return vooropleiding;
+    }
+
+    public BSA getStudieAdvies() {
+        return studieAdvies;
+    }
+
+    public String getOpleiding() {
+        return opleiding;
+    }
 }

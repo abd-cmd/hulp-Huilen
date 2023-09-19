@@ -31,7 +31,7 @@ public class Adres {
     }
 
     private boolean isPostcodeValide(String postcode){
-        Pattern regex = Pattern.compile("^[1-9][0-9]{3} ?(?!sa|sd|ss)[a-z]{2}$");
+        Pattern regex = Pattern.compile("^[1-9][0-9]{3}?[a-zA-Z]{2}$");
         Matcher matcher = regex.matcher(postcode);
         return matcher.matches();
     }
