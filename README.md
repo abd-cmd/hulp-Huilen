@@ -61,4 +61,8 @@ behaald worden. Een decaan kan voor sommige vereisten juist weer vrijstellingen 
 Ik heb de splitsing over de studenten op me genomen, en heb geprobeerd om me hier aan de DDD principes te houden,
 dit is vooral in de persoonsgegevens terug te vinden. 
 
+## Abuzar
+Ik heb het domein opleiding gemaakt. Binnen dit domein kan een opleiding bestaan uit meerdere vakken.
 
+### Het gebruik van collega module
+Ik maak gebruik van het domein "vak" dit is ontwikkeld door Abdul, binnen een opleiding kunnen verschillende vakken vallen. Daarom heb ik een lijst met vakken voor de opleiding opgesteld. In deze lijst zijn twee methodes geïmplementeerd: één om een vak toe te voegen ('add') en een andere om een vak te verwijderen ('remove').
