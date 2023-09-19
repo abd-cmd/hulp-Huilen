@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "4f9557ca-feb7-482c-8b99-59a4394738cd",
+		"name": "Students",
+		"description": "HAR To Postman Generated Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27725744"
+	},
+	"item": [
+		{
+			"name": "Create Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Insomnia/2023.5.7"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL1}}/students",
+					"host": [
+						"{{baseURL1}}"
+					],
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "created / 201",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Insomnia/2023.5.7"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/students",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 18 Sep 2023 12:27:56 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n \"studentId\": 1,\n \"persoonsGegevens\": {\n  \"naam\": {\n   \"voornaam\": \"John\",\n   \"achternaam\": \"Doe\",\n   \"roepnaam\": \"Johny\"\n  },\n  \"geboortedatum\": \"2000-04-22\",\n  \"adres\": {\n   \"plaats\": \"City\",\n   \"postcode\": \"1234BB\",\n   \"straat\": \"123 Main Street\",\n   \"huisnummer\": \"A1\"\n  },\n  \"email\": {\n   \"email\": \"johndoe@gmail.com\"\n  },\n  \"telefoonNummer\": {\n   \"telefoonNummer\": \"+1234567890\"\n  }\n },\n \"vooropleiding\": \"HAVO\",\n \"studieAdvies\": null,\n \"opleiding\": null\n}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL1",
+			"value": "http://localhost:8080",
+			"type": "any"
+		}
+	]
+}
