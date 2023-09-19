@@ -29,6 +29,7 @@ public class StudentService {
     }
 
     public Optional<Student> registreerStudent(StudentDto dto) {
+        // TODO Dit verbeteren
         Naam naam = new Naam(dto.getVoornaam(), dto.getAchternaam(), dto.getRoepnaam());
         Email email = new Email(dto.getEmail());
         TelefoonNummer telefoonNummer = new TelefoonNummer(dto.getTelefoonNummer());
@@ -38,24 +39,13 @@ public class StudentService {
         return Optional.of(studentRepo.save(student));
     }
 
-    public void schrijfStudentInVoorOpleiding(Long studentId, Long opleidingId) {
-        Student student = studentRepo.findById(studentId).orElse(null);
-        if (student != null) {
+    public Optional<Student> schrijfStudentInVoorOpleiding(Long studentId, Long opleidingId) {
+        Optional<Student> maybeStudent = studentRepo.findById(studentId);
+        if (maybeStudent.isPresent()) {
+            Student student = maybeStudent.get();
             student.schrijfInVoorOpleiding("ICT"); // TODO opleidingId gebruiken
-            studentRepo.save(student);
+            return Optional.of(studentRepo.save(student));
         }
+        return Optional.empty();
     }
-
-    public Student updateStudent(Long studentId, PersoonsGegevens persoonsGegevens, Vooropleiding vooropleiding) {
-        Student student = studentRepo.findById(studentId).orElse(null);
-        if (student != null) {
-            student.setPesoonsGegevens(persoonsGegevens);
-            student.setVooropleiding(vooropleiding);
-            return studentRepo.save(student);
-        }
-        return null; // Student niet gevonden
-    }
-
-
-
 }
