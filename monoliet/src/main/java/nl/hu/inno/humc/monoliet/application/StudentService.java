@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.StudentRepository;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.*;
-import nl.hu.inno.humc.monoliet.presentation.StudentDto;
+import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

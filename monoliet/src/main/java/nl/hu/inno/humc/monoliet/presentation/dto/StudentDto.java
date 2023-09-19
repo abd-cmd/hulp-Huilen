@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.monoliet.presentation;
+package nl.hu.inno.humc.monoliet.presentation.dto;
 
 
 import nl.hu.inno.humc.monoliet.domain.student.Vooropleiding;

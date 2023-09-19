@@ -2,6 +2,7 @@ package nl.hu.inno.humc.monoliet.presentation;
 
 import nl.hu.inno.humc.monoliet.application.StudentService;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
+import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
