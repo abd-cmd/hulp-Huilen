@@ -42,7 +42,7 @@ public class StudentService {
         Optional<Student> maybeStudent = studentRepo.findById(studentId);
         if (maybeStudent.isPresent()) {
             Student student = maybeStudent.get();
-            student.schrijfInVoorOpleiding("ICT"); // TODO opleidingId gebruiken
+            student.schrijfInVoorOpleiding(null); // TODO opleidingId gebruiken om opleiding te vragen aan OpleidingService
             return Optional.of(studentRepo.save(student));
         }
         return Optional.empty();

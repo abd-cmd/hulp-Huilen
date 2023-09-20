@@ -1,6 +1,7 @@
 package nl.hu.inno.humc.monoliet.domain.student;
 
 import jakarta.persistence.*;
+import nl.hu.inno.humc.monoliet.domain.Opleiding;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.PersoonsGegevens;
 
 import java.time.LocalDate;
@@ -21,8 +22,8 @@ public class Student {
     @OneToOne
     private BSA studieAdvies;
 
-    // TODO verander naar Object type Opleiding
-    private String opleiding;
+    @OneToOne
+    private Opleiding opleiding;
 
     protected Student(){}
 
@@ -35,11 +36,11 @@ public class Student {
         this.vooropleiding = vooropleiding;
     }
 
-    public void schrijfInVoorOpleiding(String opleiding){
+    public void schrijfInVoorOpleiding(Opleiding opleiding){
 
         if(isStudentToegestaan()){
             if(this.studieAdvies == null){
-                this.studieAdvies = new BSA(30, LocalDate.now()); // TODO attributen afleiden van Opleiding object, wanneer deze bestaat.
+                this.studieAdvies = new BSA(30, opleiding.getStartDatum()); // TODO attributen afleiden van Opleiding object, wanneer deze bestaat.
             }
             this.opleiding = opleiding;
         }
@@ -85,7 +86,7 @@ public class Student {
         return studieAdvies;
     }
 
-    public String getOpleiding() {
+    public Opleiding getOpleiding() {
         return opleiding;
     }
 }
