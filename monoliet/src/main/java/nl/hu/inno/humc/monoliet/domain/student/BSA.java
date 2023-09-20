@@ -39,4 +39,8 @@ public class BSA {
         }
         else return this.behaaldeStudiepunten == this.minVerplichteStudiePunten;
     }
+
+    public int getBehaaldeStudiepunten() {
+        return this.behaaldeStudiepunten;
+    }
 }
