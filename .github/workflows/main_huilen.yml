@@ -21,6 +21,9 @@ jobs:
         with:
           java-version: '17'
 
+      - name: Create target directory if it does not exist
+        run: mkdir -p "${{ github.workspace }}/target"
+
       - name: Build with Maven
         run: mvn clean install
 
