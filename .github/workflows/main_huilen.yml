@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
 
       - name: Create target directory if it does not exist
-        run: mkdir -p "${{ github.workspace }}/target"
+        run: mkdir -p "${{ github.workspace }}/monoliet/target"
 
       - name: Build with Maven
         run: mvn clean install
@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/monoliet/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
