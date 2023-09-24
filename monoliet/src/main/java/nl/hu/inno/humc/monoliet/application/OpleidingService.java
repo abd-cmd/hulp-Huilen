@@ -42,6 +42,11 @@ public class OpleidingService {
         return convertToDto(opleiding);
     }
 
+    public Opleiding getOpleidingEntityById(Long id) {
+        return opleidingRepository.findById(id)
+                .orElseThrow(() -> new OpleidingNotFoundException(id));
+    }
+
 
     public OpleidingDto createOpleiding(OpleidingDto opleidingDto) {
         Opleiding opleiding = convertToEntity(opleidingDto);

@@ -2,6 +2,7 @@ package nl.hu.inno.humc.monoliet.application;
 
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.StudentRepository;
+import nl.hu.inno.humc.monoliet.domain.Opleiding;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.*;
 import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Transactional
 public class StudentService {
     private final StudentRepository studentRepo;
+    private final OpleidingService opleidingService;
 
-    StudentService(StudentRepository studentRepository) {
+    StudentService(StudentRepository studentRepository, OpleidingService opleidingService) {
         this.studentRepo = studentRepository;
+        this.opleidingService = opleidingService;
     }
 
     public Optional<Student> getStudentById(Long id){
@@ -40,9 +43,10 @@ public class StudentService {
 
     public Optional<Student> schrijfStudentInVoorOpleiding(Long studentId, Long opleidingId) {
         Optional<Student> maybeStudent = studentRepo.findById(studentId);
+        Opleiding opleiding = this.opleidingService.getOpleidingEntityById(opleidingId);
         if (maybeStudent.isPresent()) {
             Student student = maybeStudent.get();
-            student.schrijfInVoorOpleiding(null); // TODO opleidingId gebruiken om opleiding te vragen aan OpleidingService
+            student.schrijfInVoorOpleiding(opleiding);
             return Optional.of(studentRepo.save(student));
         }
         return Optional.empty();

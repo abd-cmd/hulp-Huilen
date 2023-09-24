@@ -40,7 +40,7 @@ public class Student {
 
         if(isStudentToegestaan()){
             if(this.studieAdvies == null){
-                this.studieAdvies = new BSA(30, opleiding.getStartDatum()); // TODO attributen afleiden van Opleiding object, wanneer deze bestaat.
+                this.studieAdvies = new BSA(30, opleiding.getStartDatum());
             }
             this.opleiding = opleiding;
         }
