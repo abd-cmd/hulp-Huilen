@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.StudentRepository;
 import nl.hu.inno.humc.monoliet.domain.Opleiding;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
+import nl.hu.inno.humc.monoliet.domain.student.StudentBuilder;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.*;
 import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
 import org.springframework.stereotype.Service;
@@ -31,13 +32,14 @@ public class StudentService {
     }
 
     public Optional<Student> registreerStudent(StudentDto dto) {
-        // TODO Dit verbeteren
-        Naam naam = new Naam(dto.getVoornaam(), dto.getAchternaam(), dto.getRoepnaam());
-        Email email = new Email(dto.getEmail());
-        TelefoonNummer telefoonNummer = new TelefoonNummer(dto.getTelefoonNummer());
-        Adres adres = new Adres(dto.getPlaats(), dto.getPostcode(), dto.getStraat(), dto.getHuisnummer());
-        PersoonsGegevens persoonsGegevens = new PersoonsGegevens(naam, dto.getGeboortedatum(), adres, email, telefoonNummer );
-        Student student = new Student(persoonsGegevens, dto.getVooropleiding());
+        Student student = new StudentBuilder()
+                .withNaam(dto.getVoornaam(), dto.getAchternaam(), dto.getRoepnaam())
+                .withEmail(dto.getEmail())
+                .withTelefoonNummer(dto.getTelefoonNummer())
+                .withAdres(dto.getPlaats(), dto.getPostcode(), dto.getStraat(), dto.getHuisnummer())
+                .withGeboortedatum(dto.getGeboortedatum())
+                .withVooropleiding(dto.getVooropleiding())
+                .build();
         return Optional.of(studentRepo.save(student));
     }
 
