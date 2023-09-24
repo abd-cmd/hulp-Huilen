@@ -3,6 +3,8 @@ package nl.hu.inno.humc.monoliet.domain.student;
 import jakarta.persistence.*;
 import nl.hu.inno.humc.monoliet.domain.Opleiding;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.PersoonsGegevens;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDate;
 
@@ -20,6 +22,7 @@ public class Student {
     private Vooropleiding vooropleiding;
 
     @OneToOne
+    @Cascade(CascadeType.ALL)
     private BSA studieAdvies;
 
     @OneToOne
