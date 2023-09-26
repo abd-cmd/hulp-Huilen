@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "9d2a201e-cf4a-4f01-9038-a9c0234dce79",
+		"_postman_id": "52d6c938-90e6-43e5-a9a7-df0c9a3a03b4",
 		"name": "Osiris",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15787237"
 	},
 	"item": [
 		{
@@ -148,6 +149,22 @@
 						"AlleVakken"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get VakByToetsGegevens",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get VakByToetsGegevensVorm",
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}
