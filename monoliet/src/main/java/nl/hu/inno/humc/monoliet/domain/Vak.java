@@ -2,6 +2,7 @@ package nl.hu.inno.humc.monoliet.domain;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
