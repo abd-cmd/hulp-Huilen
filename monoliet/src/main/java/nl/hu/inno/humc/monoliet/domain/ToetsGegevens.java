@@ -2,6 +2,7 @@ package nl.hu.inno.humc.monoliet.domain;
 
 import jakarta.persistence.Embeddable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,13 +10,14 @@ import java.util.Objects;
 public class ToetsGegevens {
 
     private String vorm;
-    private LocalDateTime toetsDatum;
+    private LocalDate toetsDatum;
     private int toetsPunten;
 
-    public ToetsGegevens(String vorm, LocalDateTime toetsDatum, int toetsPunten) {
+    public ToetsGegevens(String vorm, LocalDate toetsDatum, int toetsPunten) {
         this.vorm = vorm;
         this.toetsDatum = toetsDatum;
         this.toetsPunten = toetsPunten;
+
     }
 
     public ToetsGegevens() {
@@ -26,27 +28,25 @@ public class ToetsGegevens {
         return vorm;
     }
 
-    public void setVorm(String toets) {
+    public void setVorm(String vorm) {
         this.vorm = vorm;
     }
 
-    public LocalDateTime getDatum() {
+    public LocalDate gettoetsDatum() {
         return toetsDatum;
     }
 
-    public void setDatum(LocalDateTime toetsDatum) {
+    public void settoetsDatum(LocalDate toetsDatum) {
         this.toetsDatum = toetsDatum;
     }
 
-    public int getPunten() {
+    public int gettoetsPunten() {
         return toetsPunten;
     }
 
-    public void setPunten(int toetsCijfer) {
+    public void settoetsPunten(int toetsCijfer) {
         this.toetsPunten = toetsCijfer;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

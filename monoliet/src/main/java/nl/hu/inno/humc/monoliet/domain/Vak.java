@@ -1,20 +1,20 @@
 package nl.hu.inno.humc.monoliet.domain;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import nl.hu.inno.humc.monoliet.presentation.dto.VakDto;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class Vak {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String naam;
-    private LocalDateTime beginDatum;
-    private LocalDateTime eindDatum;
+    private LocalDate beginDatum;
+    private LocalDate eindDatum;
     private int periode;
     @Embedded
     private ToetsGegevens toetsGegevens;
@@ -24,7 +24,7 @@ public class Vak {
     public Vak() {
 
     }
-    public Vak(String naam, LocalDateTime beginDatum, LocalDateTime eindDatum, int periode,
+    public Vak(String naam, LocalDate beginDatum, LocalDate eindDatum, int periode,
                ToetsGegevens toetsGegevens,
                HerkansingGegevens herkansingGegevens) {
 
@@ -44,19 +44,19 @@ public class Vak {
         this.naam = naam;
     }
 
-    public LocalDateTime getBeginDatum() {
+    public LocalDate getBeginDatum() {
         return beginDatum;
     }
 
-    public void setBeginDatum(LocalDateTime beginDatum) {
+    public void setBeginDatum(LocalDate beginDatum) {
         this.beginDatum = beginDatum;
     }
 
-    public LocalDateTime getEindDatum() {
+    public LocalDate getEindDatum() {
         return eindDatum;
     }
 
-    public void setEindDatum(LocalDateTime eindDatum) {
+    public void setEindDatum(LocalDate eindDatum) {
         this.eindDatum = eindDatum;
     }
 
@@ -76,7 +76,7 @@ public class Vak {
         return id;
     }
 
-    public ToetsGegevens getToets() {
+    public ToetsGegevens getToetsGegevens() {
         return toetsGegevens;
     }
     public void setToetsGegevens(ToetsGegevens toetsGegevens) {
@@ -90,13 +90,6 @@ public class Vak {
         this.herkansingGegevens = herkansingGegevens;
     }
 
-    public ToetsGegevens createToets(String vorm,LocalDateTime toetsDatum,int toetspunten){
-        return new ToetsGegevens(vorm,toetsDatum,toetspunten);
-    }
-
-    public HerkansingGegevens createHerkansing(int herkansingsperiode,LocalDateTime herkansingDatum,int herkansingCijfer){
-        return new HerkansingGegevens(herkansingsperiode,herkansingDatum,herkansingCijfer);
-    }
 
     @Override
     public boolean equals(Object o) {
