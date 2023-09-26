@@ -41,7 +41,7 @@ Na opstarten kun je alvast kijken op
 
 * http://localhost:5050 voor de DBMS, login is admin@admin.com en wachtwoord is admin.
 * login voor postgress is is username postgres en wachtwoord postgres
-* [Azure deploy]([https://link-url-here.org](https://huilen.huilen.p.azurewebsites.net))
+* [Azure deploy](https://huilen.huilen.p.azurewebsites.net)
 ---
 # Splitsing monoliet (Osiris)
 Wij hebben er voor gekozen om de splitsing aan te houden die ook als suggestie op canvas staat
