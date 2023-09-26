@@ -1,5 +1,11 @@
 version: '3.8'
 services:
+#  app:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#        - "8080:8080"
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
