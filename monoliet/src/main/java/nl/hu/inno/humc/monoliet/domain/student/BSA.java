@@ -14,7 +14,7 @@ public class BSA {
     private int minVerplichteStudiePunten;
     private int behaaldeStudiepunten;
     private LocalDate ingangsDatum;
-    @ManyToOne
+    @ManyToOne  // Ben nog niet heel tevreden over deze oplossing
     private Opleiding opleiding;
 
 
