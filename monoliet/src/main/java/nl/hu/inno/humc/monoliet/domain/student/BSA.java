@@ -1,8 +1,7 @@
 package nl.hu.inno.humc.monoliet.domain.student;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import nl.hu.inno.humc.monoliet.domain.Opleiding;
 
 import java.time.LocalDate;
 
@@ -15,12 +14,14 @@ public class BSA {
     private int minVerplichteStudiePunten;
     private int behaaldeStudiepunten;
     private LocalDate ingangsDatum;
+    @ManyToOne
+    private Opleiding opleiding;
 
 
     protected BSA(){}
-    public BSA(int minVerplichteStudiePunten, LocalDate ingangsDatum) {
+    public BSA(int minVerplichteStudiePunten, Opleiding opleiding) {
         this.minVerplichteStudiePunten = minVerplichteStudiePunten;
-        this.ingangsDatum = ingangsDatum;
+        this.ingangsDatum = opleiding.getStartDatum();
         this.behaaldeStudiepunten = 0;
     }
 
@@ -42,5 +43,9 @@ public class BSA {
 
     public int getBehaaldeStudiepunten() {
         return this.behaaldeStudiepunten;
+    }
+
+    public Opleiding getOpleiding() {
+        return opleiding;
     }
 }
