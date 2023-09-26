@@ -21,6 +21,9 @@ public class Opleiding {
     @OneToOne
     private OpleidingDetails opleidingDetails;
 
+    public Opleiding() {
+    }
+
     public Opleiding(Long opleidingId, List<Vak> vakken, String naam, LocalDate startDatum, LocalDate eindDatum, OpleidingDetails opleidingDetails) {
         this.opleidingId = opleidingId;
         this.vakken = vakken;
