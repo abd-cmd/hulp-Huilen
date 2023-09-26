@@ -22,6 +22,7 @@ public class BSA {
     public BSA(int minVerplichteStudiePunten, Opleiding opleiding) {
         this.minVerplichteStudiePunten = minVerplichteStudiePunten;
         this.ingangsDatum = opleiding.getStartDatum();
+        this.opleiding = opleiding;
         this.behaaldeStudiepunten = 0;
     }
 

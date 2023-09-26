@@ -3,6 +3,7 @@ package nl.hu.inno.humc.monoliet.application;
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.StudentRepository;
 import nl.hu.inno.humc.monoliet.domain.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.Vak;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
 import nl.hu.inno.humc.monoliet.domain.student.StudentBuilder;
 import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
@@ -16,10 +17,12 @@ import java.util.Optional;
 public class StudentService {
     private final StudentRepository studentRepo;
     private final OpleidingService opleidingService;
+    private final VakService vakService;
 
-    StudentService(StudentRepository studentRepository, OpleidingService opleidingService) {
+    StudentService(StudentRepository studentRepository, OpleidingService opleidingService, VakService vakService) {
         this.studentRepo = studentRepository;
         this.opleidingService = opleidingService;
+        this.vakService = vakService;
     }
 
     public Optional<Student> getStudentById(Long id){
@@ -48,6 +51,18 @@ public class StudentService {
         if (maybeStudent.isPresent()) {
             Student student = maybeStudent.get();
             student.schrijfInVoorOpleiding(opleiding);
+            return Optional.of(studentRepo.save(student));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Student> vraagVrijstellingAan(Long studentId, Long vakId) {
+        Optional<Student> maybeStudent = studentRepo.findById(studentId);
+        Vak maybeVak = vakService.findById(vakId);
+
+        if (maybeStudent.isPresent() && maybeVak != null) {
+            Student student = maybeStudent.get();
+            student.geefStudentVrijstellingVoorVak(maybeVak);
             return Optional.of(studentRepo.save(student));
         }
         return Optional.empty();
