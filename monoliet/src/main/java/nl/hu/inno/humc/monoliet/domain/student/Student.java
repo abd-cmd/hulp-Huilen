@@ -2,11 +2,13 @@ package nl.hu.inno.humc.monoliet.domain.student;
 
 import jakarta.persistence.*;
 import nl.hu.inno.humc.monoliet.domain.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.Vak;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.PersoonsGegevens;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -26,7 +28,12 @@ public class Student {
     private BSA studieAdvies;
 
     @OneToOne
+    @Cascade(CascadeType.ALL)
     private Opleiding opleiding;
+
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<Vak> vrijstellingen;
 
     protected Student(){}
 
@@ -34,9 +41,9 @@ public class Student {
         if(persoonsGegevens == null || vooropleiding == null){
             throw new IllegalArgumentException("Persoonsgegevens en vooropleiding mogen niet leeg zijn");
         }
-
         this.persoonsGegevens = persoonsGegevens;
         this.vooropleiding = vooropleiding;
+        this.vrijstellingen = new ArrayList<>();
     }
 
     public void schrijfInVoorOpleiding(Opleiding opleiding){
@@ -64,6 +71,14 @@ public class Student {
         throw new RuntimeException();
     }
 
+    public void geefStudentVrijstellingVoorVak(Vak vak){
+        if(this.opleiding == null) throw new IllegalStateException("Student is nog niet ingeschreven voor een opleiding");
+        if(vak == null) throw new IllegalArgumentException("Vak mag niet leeg zijn");
+        if(this.vrijstellingen.contains(vak)) throw new IllegalArgumentException("Student heeft al vrijstelling voor dit vak");
+
+        this.vrijstellingen.add(vak);
+        this.studieAdvies.voegStudiePuntenToe(vak.getToets().getPunten());
+    }
 
     public void setVooropleiding(Vooropleiding vooropleiding) {
         this.vooropleiding = vooropleiding;
@@ -91,5 +106,9 @@ public class Student {
 
     public Opleiding getOpleiding() {
         return opleiding;
+    }
+
+    public List<Vak> getVrijstellingen() {
+        return vrijstellingen;
     }
 }

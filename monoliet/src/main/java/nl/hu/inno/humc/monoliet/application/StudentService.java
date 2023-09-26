@@ -5,7 +5,6 @@ import nl.hu.inno.humc.monoliet.data.StudentRepository;
 import nl.hu.inno.humc.monoliet.domain.Opleiding;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
 import nl.hu.inno.humc.monoliet.domain.student.StudentBuilder;
-import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.*;
 import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
 import org.springframework.stereotype.Service;
 
