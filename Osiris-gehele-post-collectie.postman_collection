@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "38de23d1-4690-4364-8a13-88b4f061fe55",
+		"_postman_id": "303b732e-1177-4a67-8e9a-6bf0e35f7f32",
 		"name": "Osiris",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23226568"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -33,52 +32,123 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "created / 201",
-							"originalRequest": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "User-Agent",
-										"value": "Insomnia/2023.5.7"
-									}
-								],
-								"url": {
-									"raw": "{{baseURL1}}/students",
-									"host": [
-										"{{baseURL1}}"
-									],
-									"path": [
-										"students"
-									]
+					"response": []
+				},
+				{
+					"name": "Get students",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Create opleiding",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"naam\": \"Informatica\",\r\n  \"beschrijving\": \"Een opleiding in informatica\",\r\n  \"type\": \"BACHELOR\",\r\n  \"punten\": 180,\r\n  \"locatie\": \"Amsterdam\",\r\n  \"taal\": \"Nederlands\",\r\n  \"startDatum\": \"2023-09-01\",\r\n  \"eindDatum\": \"2026-06-30\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Date",
-									"value": "Mon, 18 Sep 2023 12:27:56 GMT"
-								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/opleiding",
+							"host": [
+								"{{baseURL1}}"
 							],
-							"cookie": [],
-							"body": "{\n \"studentId\": 1,\n \"persoonsGegevens\": {\n  \"naam\": {\n   \"voornaam\": \"John\",\n   \"achternaam\": \"Doe\",\n   \"roepnaam\": \"Johny\"\n  },\n  \"geboortedatum\": \"2000-04-22\",\n  \"adres\": {\n   \"plaats\": \"City\",\n   \"postcode\": \"1234BB\",\n   \"straat\": \"123 Main Street\",\n   \"huisnummer\": \"A1\"\n  },\n  \"email\": {\n   \"email\": \"johndoe@gmail.com\"\n  },\n  \"telefoonNummer\": {\n   \"telefoonNummer\": \"+1234567890\"\n  }\n },\n \"vooropleiding\": \"HAVO\",\n \"studieAdvies\": null,\n \"opleiding\": null\n}"
+							"path": [
+								"opleiding"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Schrijf student in voor opleiding",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\": 1,\r\n    \"opleidingId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/students/opleiding",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"students",
+								"opleiding"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Vak",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"naam\": \"Vaknaam\",\r\n  \"beginDatum\": \"2023-09-15\",\r\n  \"eindDatum\": \"2023-12-15\",\r\n  \"periode\": 2,\r\n  \"toetsGegevens\": {\r\n      \"vorm\": \"vorm\",\r\n      \"punten\": 5\r\n  },\r\n  \"herkansingGegevens\": {\r\n      \"herkansingsperiode\": 2\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/Vak/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vak",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vrijstelling voor vak",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\": 1,\r\n    \"vakId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/students/vrijstelling",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"students",
+								"vrijstelling"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
