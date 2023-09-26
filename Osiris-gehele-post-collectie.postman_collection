@@ -1,0 +1,407 @@
+{
+	"info": {
+		"_postman_id": "38de23d1-4690-4364-8a13-88b4f061fe55",
+		"name": "Osiris",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23226568"
+	},
+	"item": [
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "Create Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Insomnia/2023.5.7"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/students",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "created / 201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "User-Agent",
+										"value": "Insomnia/2023.5.7"
+									}
+								],
+								"url": {
+									"raw": "{{baseURL1}}/students",
+									"host": [
+										"{{baseURL1}}"
+									],
+									"path": [
+										"students"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 18 Sep 2023 12:27:56 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"studentId\": 1,\n \"persoonsGegevens\": {\n  \"naam\": {\n   \"voornaam\": \"John\",\n   \"achternaam\": \"Doe\",\n   \"roepnaam\": \"Johny\"\n  },\n  \"geboortedatum\": \"2000-04-22\",\n  \"adres\": {\n   \"plaats\": \"City\",\n   \"postcode\": \"1234BB\",\n   \"straat\": \"123 Main Street\",\n   \"huisnummer\": \"A1\"\n  },\n  \"email\": {\n   \"email\": \"johndoe@gmail.com\"\n  },\n  \"telefoonNummer\": {\n   \"telefoonNummer\": \"+1234567890\"\n  }\n },\n \"vooropleiding\": \"HAVO\",\n \"studieAdvies\": null,\n \"opleiding\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "vak",
+			"item": [
+				{
+					"name": "Create Vak",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    naam\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/Vakken/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vakken",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vak",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/Vakken/update/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vakken",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Vak",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/Vakken/delete/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vakken",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get VakById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/Vakken/getById/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vakken",
+								"getById",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get VakByNaam",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/Vakken/getByNaam/Cisq1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vakken",
+								"getByNaam",
+								"Cisq1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get VakByPeriode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/Vakken/getByPeriode/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vakken",
+								"getByPeriode",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Alle Vakken",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/Vakken/AlleVakken",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Vakken",
+								"AlleVakken"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "opleiding",
+			"item": [
+				{
+					"name": "Get All Opleidingen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Opleiding By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Opleiding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"opleidingId\": 1,\n\t\"vakken\": [],\n\t\"naam\": \"Example Opleiding\",\n\t\"startDatum\": \"2023-01-01\",\n\t\"eindDatum\": \"2025-01-01\",\n\t\"opleidingDetails\": null\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Opleiding",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"opleidingId\": 1,\n\t\"vakken\": [],\n\t\"naam\": \"Updated Opleiding\",\n\t\"startDatum\": \"2023-01-01\",\n\t\"eindDatum\": \"2025-01-01\",\n\t\"opleidingDetails\": null\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Opleiding",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Vak to Opleiding",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 1,\n\t\"naam\": \"Example Vak\",\n\t\"startDatum\": \"2023-01-01\",\n\t\"eindDatum\": \"2025-01-01\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen/1/vak",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen",
+								"1",
+								"vak"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Vak from Opleiding",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen/1/vak/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen",
+								"1",
+								"vak",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL1",
+			"value": "localhost:8080"
+		}
+	]
+}
