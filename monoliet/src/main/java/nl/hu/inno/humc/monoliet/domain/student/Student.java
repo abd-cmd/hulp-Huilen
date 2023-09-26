@@ -2,9 +2,14 @@ package nl.hu.inno.humc.monoliet.domain.student;
 
 import jakarta.persistence.*;
 import nl.hu.inno.humc.monoliet.domain.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.Vak;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.PersoonsGegevens;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Entity
@@ -19,11 +24,15 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private Vooropleiding vooropleiding;
 
-    @OneToOne
-    private BSA studieAdvies;
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<BSA> bsaList;
 
-    @OneToOne
-    private Opleiding opleiding;
+    @OneToMany
+    private List<Opleiding> opleidingen;
+
+    @OneToMany
+    private List<Vak> vrijstellingen;
 
     protected Student(){}
 
@@ -31,36 +40,56 @@ public class Student {
         if(persoonsGegevens == null || vooropleiding == null){
             throw new IllegalArgumentException("Persoonsgegevens en vooropleiding mogen niet leeg zijn");
         }
-
         this.persoonsGegevens = persoonsGegevens;
         this.vooropleiding = vooropleiding;
+        this.vrijstellingen = new ArrayList<>();
+        this.bsaList = new ArrayList<>();
+        this.opleidingen = new ArrayList<>();
     }
 
     public void schrijfInVoorOpleiding(Opleiding opleiding){
+        if(opleiding == null) throw new IllegalArgumentException("Opleiding mag niet leeg zijn");
+        if(this.opleidingen.contains(opleiding)) throw new IllegalArgumentException("Student is al ingeschreven voor deze opleiding");
 
-        if(isStudentToegestaan()){
-            if(this.studieAdvies == null){
-                this.studieAdvies = new BSA(30, opleiding.getStartDatum()); // TODO attributen afleiden van Opleiding object, wanneer deze bestaat.
+        if(isStudentToegestaanOpOpleiding(opleiding)){
+
+            // als er nog geen bsa is aangemaakt voor deze opleiding maak er dan een aan
+            if(this.bsaList.stream().noneMatch(bsa -> bsa.getOpleiding().equals(opleiding))) {
+                this.bsaList.add(new BSA(30, opleiding));
             }
-            this.opleiding = opleiding;
+            this.opleidingen.add(opleiding);
         }
     }
 
-    private boolean isStudentToegestaan() {
+    private boolean isStudentToegestaanOpOpleiding(Opleiding opleiding) {
         if(this.vooropleiding == Vooropleiding.ANDERE) return false;
         if(this.vooropleiding == Vooropleiding.HAVO || vooropleiding == Vooropleiding.VWO || vooropleiding == Vooropleiding.MBO){
 
-            // Als bsa null is is deze nog nooit aangemaakt
-            if(this.studieAdvies == null){
+            // Zoek de bsa van de opleiding waar de student zich voor wil inschrijven
+            BSA bsaVanOpleiding = this.bsaList.stream().filter(bsa -> bsa.getOpleiding().equals(opleiding)).findFirst().orElse(null);
+
+            // Als de student nog geen bsa heeft voor deze opleiding, dan is de student toegestaan
+            if(bsaVanOpleiding == null) {
                 return true;
             }
 
-            return this.studieAdvies.isBSAAdviesBehaald();
+            return bsaVanOpleiding.isBSAAdviesBehaald();
 
         }
         throw new RuntimeException();
     }
 
+    public void geefStudentVrijstellingVoorVak(Vak vak){
+        if(vak == null) throw new IllegalArgumentException("Vak mag niet leeg zijn");
+        if(!this.opleidingen.contains(vak.getOpleiding())) throw new IllegalStateException("Student is nog niet ingeschreven voor deze opleiding");
+        if(this.vrijstellingen.contains(vak)) throw new IllegalArgumentException("Student heeft al vrijstelling voor dit vak");
+
+        this.vrijstellingen.add(vak);
+
+        // Voeg de studiepunten van het vak toe aan het bsa van de opleiding
+        Optional<BSA> bsaVanOpleiding = this.bsaList.stream().filter(bsa -> bsa.getOpleiding().equals(vak.getOpleiding())).findFirst();
+        bsaVanOpleiding.ifPresent(bsa -> bsa.voegStudiePuntenToe(vak.getToetsGegevens().gettoetsPunten()));
+    }
 
     public void setVooropleiding(Vooropleiding vooropleiding) {
         this.vooropleiding = vooropleiding;
@@ -82,11 +111,15 @@ public class Student {
         return vooropleiding;
     }
 
-    public BSA getStudieAdvies() {
-        return studieAdvies;
+    public List<BSA> getStudieAdviezen() {
+        return bsaList;
     }
 
-    public Opleiding getOpleiding() {
-        return opleiding;
+    public List<Opleiding> getOpleidingen() {
+        return opleidingen;
+    }
+
+    public List<Vak> getVrijstellingen() {
+        return vrijstellingen;
     }
 }

@@ -2,8 +2,10 @@ package nl.hu.inno.humc.monoliet.application;
 
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.StudentRepository;
+import nl.hu.inno.humc.monoliet.domain.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.Vak;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
-import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.*;
+import nl.hu.inno.humc.monoliet.domain.student.StudentBuilder;
 import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,13 @@ import java.util.Optional;
 @Transactional
 public class StudentService {
     private final StudentRepository studentRepo;
+    private final OpleidingService opleidingService;
+    private final VakService vakService;
 
-    StudentService(StudentRepository studentRepository) {
+    StudentService(StudentRepository studentRepository, OpleidingService opleidingService, VakService vakService) {
         this.studentRepo = studentRepository;
+        this.opleidingService = opleidingService;
+        this.vakService = vakService;
     }
 
     public Optional<Student> getStudentById(Long id){
@@ -28,21 +34,35 @@ public class StudentService {
     }
 
     public Optional<Student> registreerStudent(StudentDto dto) {
-        // TODO Dit verbeteren
-        Naam naam = new Naam(dto.getVoornaam(), dto.getAchternaam(), dto.getRoepnaam());
-        Email email = new Email(dto.getEmail());
-        TelefoonNummer telefoonNummer = new TelefoonNummer(dto.getTelefoonNummer());
-        Adres adres = new Adres(dto.getPlaats(), dto.getPostcode(), dto.getStraat(), dto.getHuisnummer());
-        PersoonsGegevens persoonsGegevens = new PersoonsGegevens(naam, dto.getGeboortedatum(), adres, email, telefoonNummer );
-        Student student = new Student(persoonsGegevens, dto.getVooropleiding());
+        Student student = new StudentBuilder()
+                .withNaam(dto.getVoornaam(), dto.getAchternaam(), dto.getRoepnaam())
+                .withEmail(dto.getEmail())
+                .withTelefoonNummer(dto.getTelefoonNummer())
+                .withAdres(dto.getPlaats(), dto.getPostcode(), dto.getStraat(), dto.getHuisnummer())
+                .withGeboortedatum(dto.getGeboortedatum())
+                .withVooropleiding(dto.getVooropleiding())
+                .build();
         return Optional.of(studentRepo.save(student));
     }
 
     public Optional<Student> schrijfStudentInVoorOpleiding(Long studentId, Long opleidingId) {
         Optional<Student> maybeStudent = studentRepo.findById(studentId);
+        Opleiding opleiding = this.opleidingService.getOpleidingEntityById(opleidingId);
         if (maybeStudent.isPresent()) {
             Student student = maybeStudent.get();
-            student.schrijfInVoorOpleiding(null); // TODO opleidingId gebruiken om opleiding te vragen aan OpleidingService
+            student.schrijfInVoorOpleiding(opleiding);
+            return Optional.of(studentRepo.save(student));
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Student> vraagVrijstellingAan(Long studentId, Long vakId) {
+        Optional<Student> maybeStudent = studentRepo.findById(studentId);
+        Vak maybeVak = vakService.findById(vakId);
+
+        if (maybeStudent.isPresent() && maybeVak != null) {
+            Student student = maybeStudent.get();
+            student.geefStudentVrijstellingVoorVak(maybeVak);
             return Optional.of(studentRepo.save(student));
         }
         return Optional.empty();

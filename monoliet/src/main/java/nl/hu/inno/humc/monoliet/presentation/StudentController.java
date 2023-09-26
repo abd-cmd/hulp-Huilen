@@ -2,9 +2,12 @@ package nl.hu.inno.humc.monoliet.presentation;
 
 import nl.hu.inno.humc.monoliet.application.StudentService;
 import nl.hu.inno.humc.monoliet.domain.student.Student;
+import nl.hu.inno.humc.monoliet.presentation.dto.InschrijvingDto;
 import nl.hu.inno.humc.monoliet.presentation.dto.StudentDto;
+import nl.hu.inno.humc.monoliet.presentation.dto.VrijstellingDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,15 +49,23 @@ public class StudentController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-//    @PutMapping("/{studentId}")
-//    public ResponseEntity<Void> updateStudent(@PathVariable Long studentId, @RequestBody StudentDto studentDto) {
-//        boolean updated = studentService.updateStudent(studentId, studentDto);
-//        if (updated) {
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+    @PatchMapping("/opleiding")
+    public ResponseEntity<Student> schrijfInVoorOpleiding(@RequestBody @Validated InschrijvingDto dto){
+        Optional<Student> student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
+        if (student.isPresent()) {
+            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PatchMapping("/vrijstelling")
+    public ResponseEntity<Student> vraagVrijstellingAan(@RequestBody @Validated VrijstellingDto dto){
+        Optional<Student> student = studentService.vraagVrijstellingAan(dto.getStudentId(), dto.getVakId());
+        if (student.isPresent()) {
+            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }
 
 
