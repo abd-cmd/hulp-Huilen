@@ -82,7 +82,7 @@ public class OpleidingService {
 
         Vak vak = vakRepository.findById(vakId)
                 .orElseThrow(() -> new VakNotFoundException());
-  
+
         opleiding.getVakken().remove(vak);
 
         return convertToDto(opleiding);
@@ -91,28 +91,22 @@ public class OpleidingService {
     private OpleidingDto convertToDto(Opleiding opleiding) {
         return new OpleidingDto(
                 opleiding.getOpleidingId(),
+                opleiding.getVakken(),
                 opleiding.getNaam(),
-                opleiding.getBeschrijving(),
-                opleiding.getType(),
-                opleiding.getPunten(),
-                opleiding.getLocatie(),
-                opleiding.getTaal(),
                 opleiding.getStartDatum(),
-                opleiding.getEindDatum()
+                opleiding.getEindDatum(),
+                opleiding.getOpleidingDetails()
         );
     }
 
     private Opleiding convertToEntity(OpleidingDto opleidingDto) {
         return new Opleiding(
                 opleidingDto.opleidingId(),
+                opleidingDto.vakken(),
                 opleidingDto.naam(),
-                opleidingDto.beschrijving(),
-                opleidingDto.type(),
-                opleidingDto.punten(),
-                opleidingDto.locatie(),
-                opleidingDto.taal(),
                 opleidingDto.startDatum(),
-                opleidingDto.eindDatum()
+                opleidingDto.eindDatum(),
+                opleidingDto.opleidingDetails()
         );
     }
 }
