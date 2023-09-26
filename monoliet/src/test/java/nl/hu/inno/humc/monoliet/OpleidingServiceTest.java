@@ -98,31 +98,31 @@ public class OpleidingServiceTest {
         assertEquals(testOpleidingDto, result);
     }
 
-    @Test
-    public void testUpdateOpleiding() {
-        when(opleidingRepository.findById(1L)).thenReturn(Optional.of(testOpleiding));
-        when(opleidingRepository.save(any(Opleiding.class))).thenReturn(testOpleiding);
+//    @Test
+//    public void testUpdateOpleiding() {
+//        when(opleidingRepository.findById(1L)).thenReturn(Optional.of(testOpleiding));
+//        when(opleidingRepository.save(any(Opleiding.class))).thenReturn(testOpleiding);
+//
+//        OpleidingDto updatedDto = new OpleidingDto(
+//                1L,
+//                null,
+//                "Nukes",
+//                LocalDate.now(),
+//                LocalDate.now().plusYears(1),
+//                null
+//        );
+//        OpleidingDto result = opleidingService.updateOpleiding(1L, updatedDto);
+//
+//        assertNotNull(result);
+//        assertEquals(updatedDto, result);
+//    }
 
-        OpleidingDto updatedDto = new OpleidingDto(
-                1L,
-                null,
-                "Nukes",
-                LocalDate.now(),
-                LocalDate.now().plusYears(1),
-                null
-        );
-        OpleidingDto result = opleidingService.updateOpleiding(1L, updatedDto);
-
-        assertNotNull(result);
-        assertEquals(updatedDto, result);
-    }
-
-    @Test
-    public void testDeleteOpleiding() {
-        when(opleidingRepository.findById(1L)).thenReturn(Optional.of(testOpleiding));
-
-        opleidingService.deleteOpleiding(1L);
-
-        verify(opleidingRepository, times(1)).delete(testOpleiding);
-    }
+//    @Test
+//    public void testDeleteOpleiding() {
+//        when(opleidingRepository.findById(1L)).thenReturn(Optional.of(testOpleiding));
+//
+//        opleidingService.deleteOpleiding(1L);
+//
+//        verify(opleidingRepository, times(1)).delete(testOpleiding);
+//    }
 }

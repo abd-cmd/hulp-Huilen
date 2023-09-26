@@ -4,13 +4,13 @@ package nl.hu.inno.humc.monoliet.presentation.controller;
 import nl.hu.inno.humc.monoliet.application.VakService;
 import nl.hu.inno.humc.monoliet.domain.Vak;
 import nl.hu.inno.humc.monoliet.domain.exceptions.VakNotFoundException;
+import nl.hu.inno.humc.monoliet.presentation.dto.ToetsGegevensDto;
 import nl.hu.inno.humc.monoliet.presentation.dto.VakDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -26,27 +26,15 @@ public class VakController {
     @PostMapping("/save")
     public Vak save(@Validated @RequestBody VakDto vakDto) {
 
-        LocalDateTime begindatum = LocalDateTime.parse(vakDto.beginDatum+"T10:15:30");
-        LocalDateTime einddatum = LocalDateTime.parse(vakDto.eindDatum+"T10:15:30");
-//        LocalDateTime toetsdatum = LocalDateTime.parse(vakDto.toetsDatum+"T10:15:30");
-//        LocalDateTime herkansingsdatum = LocalDateTime.parse(vakDto.herkansingDatum+"T10:15:30");
-
-        return this.vakService.saveVak(vakDto.naam,begindatum,einddatum, vakDto.periode,
-                                        vakDto.toetsGegevens,vakDto.herkansingGegevens);
+        return this.vakService.saveVak(vakDto.naam,vakDto.beginDatum,vakDto.eindDatum, vakDto.periode,
+                                       vakDto.toetsGegevens,vakDto.herkansingGegevens);
     }
 
     @PutMapping("/update/{id}")
     public Vak update(@PathVariable("id") Long VakId, @Validated @RequestBody VakDto vakDto) {
         try {
-            LocalDateTime begindatum = LocalDateTime.parse(vakDto.beginDatum+"T10:15:30");
-            LocalDateTime einddatum = LocalDateTime.parse(vakDto.eindDatum+"T10:15:30");
-//            LocalDateTime toetsdatum = LocalDateTime.parse(vakDto.toetsDatum+"T10:15:30");
-//            LocalDateTime herkansingsdatum = LocalDateTime.parse(vakDto.herkansingDatum+"T10:15:30");
-
-            return this.vakService.updateVak(VakId,vakDto.naam,begindatum,einddatum, vakDto.periode,
+            return this.vakService.updateVak(VakId,vakDto.naam,vakDto.beginDatum,vakDto.eindDatum, vakDto.periode,
                                              vakDto.toetsGegevens,vakDto.herkansingGegevens);
-
-
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
@@ -79,6 +67,22 @@ public class VakController {
         }
     }
 
+    @GetMapping("/getByToetsGegevens")
+    public List<Vak> getByToetsGegevens(@Validated @RequestBody ToetsGegevensDto toetsGegevensDto) {
+        try {
+            return this.vakService.findVakByToetsGegevens(toetsGegevensDto.toetsGegevens);
+        } catch (VakNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+    @GetMapping("/getByToetsGegevensVorm/{vorm}")
+    public List<Vak> getByToetsGegevensVorm(@PathVariable("vorm") String vorm) {
+        try {
+            return this.vakService.findVakByToetsGegevensVorm(vorm);
+        } catch (VakNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
     @GetMapping("/getByPeriode/{periode}")
     public List<Vak> getByPeriode(@PathVariable("periode") int VakPeriode) {
         try {

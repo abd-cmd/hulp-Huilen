@@ -5,14 +5,15 @@ import nl.hu.inno.humc.monoliet.data.VakRepository;
 import nl.hu.inno.humc.monoliet.domain.HerkansingGegevens;
 import nl.hu.inno.humc.monoliet.domain.ToetsGegevens;
 import nl.hu.inno.humc.monoliet.domain.Vak;
+import nl.hu.inno.humc.monoliet.domain.VakGegevensValideren;
 import nl.hu.inno.humc.monoliet.domain.exceptions.VakNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-@Transactional
 @Service
+@Transactional
 public class VakService {
     private VakRepository vakRepository;
 
@@ -20,17 +21,43 @@ public class VakService {
         this.vakRepository = vakRepository;
     }
 
-    public Vak saveVak(String naam, LocalDateTime beginDatum, LocalDateTime eindDatum, int periode,
+    public Vak saveVak(String naam, LocalDate beginDatum, LocalDate eindDatum, int periode,
                        ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens) {
 
         Vak vak = new Vak(naam,beginDatum,eindDatum,periode, toetsGegevens, herkansingGegevens);
 
+        if(!VakGegevensValideren.checkVakDatums(vak.getBeginDatum(),vak.getEindDatum())){
+            return null;
+        }
+
+        if(!VakGegevensValideren.checkVakDatums(vak.getToetsGegevens().gettoetsDatum(),
+                vak.getHerkansingGegevens().getherkansingDatum())){
+            return null;
+        }
+
+        if (!VakGegevensValideren.checkVakHasNaamAndPeriode(vak.getNaam(), vak.getPeriode())){
+            return null;
+        }
+
         return vakRepository.save(vak);
     }
 
-    public Vak updateVak(Long id, String naam, LocalDateTime begindatum, LocalDateTime eindDatum, int periode,
+    public Vak updateVak(Long id, String naam, LocalDate begindatum, LocalDate eindDatum, int periode,
                          ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens) {
         Vak vak = findById(id);
+
+        if(!VakGegevensValideren.checkVakDatums(vak.getBeginDatum(),vak.getEindDatum())){
+            return null;
+        }
+
+        if(!VakGegevensValideren.checkVakDatums(vak.getToetsGegevens().gettoetsDatum(),vak.getHerkansingGegevens().getherkansingDatum())){
+            return null;
+        }
+
+        if (!VakGegevensValideren.checkVakHasNaamAndPeriode(vak.getNaam(), vak.getPeriode())){
+            return null;
+        }
+
         if (vak != null) {
             vak.setNaam(naam);
             vak.setBeginDatum(begindatum);
@@ -40,6 +67,7 @@ public class VakService {
             vak.setHerkansingGegevens(herkansingGegevens);
             return this.vakRepository.save(vak);
         }
+
         return null;
     }
 
@@ -63,6 +91,21 @@ public class VakService {
     public List<Vak> findByPeriode(int periode) {
         List<Vak> vakken = this.vakRepository.findByPeriode(periode);
 
+        if(vakken.isEmpty()){
+            return null;
+        }
+        return vakken;
+    }
+
+    public List<Vak> findVakByToetsGegevens(ToetsGegevens toetsGegevens){
+        List<Vak> vakken = vakRepository.findVakByToetsGegevens(toetsGegevens);
+        if(vakken.isEmpty()){
+            return null;
+        }
+        return vakken;
+    }
+    public List<Vak> findVakByToetsGegevensVorm(String vorm){
+        List<Vak> vakken = vakRepository.findVakByToetsGegevens_Vorm(vorm);
         if(vakken.isEmpty()){
             return null;
         }

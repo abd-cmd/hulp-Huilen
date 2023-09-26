@@ -13,6 +13,7 @@ die de benoemde cases de mogelijkheid geeft om geactiveerd te worden dus in dit 
 Daarnaast is er een data package die de application package aanspreekt en dit geeft toegang tot de database.
 
 De applicatie is ook ondersteuned met unit tests. Het doel van unit-testen is om te valideren dat elke eenheid van de software werkt zoals bedoeld en aan de vereisten voldoet.
+Bovendien is de applicatie ondersteund met integratie tests om te checken of use cases werkend zijn.
 
 # De technieken:
 * Database : Postgressql

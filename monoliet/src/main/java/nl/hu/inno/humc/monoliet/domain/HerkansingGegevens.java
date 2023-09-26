@@ -2,6 +2,7 @@ package nl.hu.inno.humc.monoliet.domain;
 
 import jakarta.persistence.Embeddable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,38 +10,38 @@ import java.util.Objects;
 public class HerkansingGegevens {
 
     private int herkansingsperiode;
-    private LocalDateTime herkansingDatum;
-    private int herkansingCijfer;
+    private LocalDate herkansingDatum;
+    private int herkansingPunten;
 
-    public HerkansingGegevens(int herkansingsperiode, LocalDateTime herkansingDatum, int herkansingCijfer) {
+    public HerkansingGegevens(int herkansingsperiode, LocalDate herkansingDatum, int herkansingPunten) {
         this.herkansingsperiode = herkansingsperiode;
         this.herkansingDatum = herkansingDatum;
-        this.herkansingCijfer = herkansingCijfer;
+        this.herkansingPunten = herkansingPunten;
     }
 
     public HerkansingGegevens() {
 
     }
-    public LocalDateTime getDatum() {
+    public LocalDate getherkansingDatum() {
         return herkansingDatum;
     }
 
-    public void setDatum(LocalDateTime herkansingDatum) {
+    public void setherkansingDatum(LocalDate herkansingDatum) {
         this.herkansingDatum = herkansingDatum;
     }
 
-    public int getCijfer() {
-        return herkansingCijfer;
+    public int getherkansingPunten() {
+        return herkansingPunten;
     }
 
-    public void setCijfer(int herkansingCijfer) {
-        this.herkansingCijfer = herkansingCijfer;
+    public void setherkansingPunten(int herkansingPunten) {
+        this.herkansingPunten = herkansingPunten;
     }
 
-    public int getperiode() {
+    public int getherkansingsperiode() {
         return herkansingsperiode;
     }
-    public void setperiode(int herkansingsperiode) {
+    public void setherkansingsperiode(int herkansingsperiode) {
         this.herkansingsperiode = herkansingsperiode;
     }
 
@@ -49,12 +50,12 @@ public class HerkansingGegevens {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HerkansingGegevens that = (HerkansingGegevens) o;
-        return herkansingsperiode == that.herkansingsperiode && herkansingCijfer == that.herkansingCijfer &&
+        return herkansingsperiode == that.herkansingsperiode && herkansingPunten == that.herkansingPunten &&
                 Objects.equals(herkansingDatum, that.herkansingDatum);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(herkansingsperiode, herkansingDatum, herkansingCijfer);
+        return Objects.hash(herkansingsperiode, herkansingDatum, herkansingPunten);
     }
 }
