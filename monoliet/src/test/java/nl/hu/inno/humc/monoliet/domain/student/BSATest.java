@@ -11,7 +11,8 @@ class BSATest {
     @Test
     public void testVoegStudiePuntenToeMetGeldigeWaarde() {
         LocalDate ingangsDatum = LocalDate.now().minusYears(1); // Ingangsdatum is 1 jaar geleden
-        Opleiding opleiding = new Opleiding(null, null, null, null, null, null, null, ingangsDatum, null);
+        Opleiding opleiding = new Opleiding();
+        opleiding.setStartDatum(ingangsDatum);
 
         BSA bsa = new BSA(30, opleiding);
 
@@ -22,7 +23,8 @@ class BSATest {
     @Test
     public void testVoegStudiePuntenToeMetOngeldigeWaarde() {
         LocalDate ingangsDatum = LocalDate.now().minusYears(1); // Ingangsdatum is 1 jaar geleden
-        Opleiding opleiding = new Opleiding(null, null, null, null, null, null, null, ingangsDatum, null);
+        Opleiding opleiding = new Opleiding();
+        opleiding.setStartDatum(ingangsDatum);
         BSA bsa = new BSA(30, opleiding);
 
         assertThrows(IllegalArgumentException.class, () -> bsa.voegStudiePuntenToe(-5));
@@ -31,7 +33,8 @@ class BSATest {
     @Test
     public void testVoegStudiePuntenToeBijTeOudeIngangsdatum() {
         LocalDate ingangsDatum = LocalDate.now().minusYears(3); // Ingangsdatum is 3 jaar geleden
-        Opleiding opleiding = new Opleiding(null, null, null, null, null, null, null, ingangsDatum, null);
+        Opleiding opleiding = new Opleiding();
+        opleiding.setStartDatum(ingangsDatum);
         BSA bsa = new BSA(30, opleiding);
 
         // Moet Exception gooien omdat je na 2 jaar geen punten meer mag toevoegen
@@ -41,7 +44,8 @@ class BSATest {
     @Test
     public void testIsBSAAdviesBehaald_IngangsDatumBinnenJaar_TekortStudiepunten() {
         LocalDate ingangsDatum = LocalDate.now().minusYears(1); // Ingangsdatum is 1 jaar geleden
-        Opleiding opleiding = new Opleiding(null, null, null, null, null, null, null, ingangsDatum, null);
+        Opleiding opleiding = new Opleiding();
+        opleiding.setStartDatum(ingangsDatum);
         BSA bsa = new BSA(30, opleiding);
 
         assertFalse(bsa.isBSAAdviesBehaald());
@@ -50,7 +54,8 @@ class BSATest {
     @Test
     public void testIsBSAAdviesBehaald_IngangsDatumBinnenJaar_VoldoendeStudiepunten() {
         LocalDate ingangsDatum = LocalDate.now().minusYears(1); // Ingangsdatum is 1 jaar geleden
-        Opleiding opleiding = new Opleiding(null, null, null, null, null, null, null, ingangsDatum, null);
+        Opleiding opleiding = new Opleiding();
+        opleiding.setStartDatum(ingangsDatum);
         BSA bsa = new BSA(30, opleiding);
 
         bsa.voegStudiePuntenToe(30); // Genoeg studiepunten om aan het vereiste te voldoen

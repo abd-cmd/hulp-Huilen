@@ -88,7 +88,7 @@ public class Student {
 
         // Voeg de studiepunten van het vak toe aan het bsa van de opleiding
         Optional<BSA> bsaVanOpleiding = this.bsaList.stream().filter(bsa -> bsa.getOpleiding().equals(vak.getOpleiding())).findFirst();
-        bsaVanOpleiding.ifPresent(bsa -> bsa.voegStudiePuntenToe(vak.getToets().getPunten()));
+        bsaVanOpleiding.ifPresent(bsa -> bsa.voegStudiePuntenToe(vak.getToetsGegevens().gettoetsPunten()));
     }
 
     public void setVooropleiding(Vooropleiding vooropleiding) {
