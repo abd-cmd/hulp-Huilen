@@ -15,26 +15,30 @@ public class Opleiding {
     @OneToMany(mappedBy = "opleiding", cascade = CascadeType.ALL)
     private List<Vak> vakken;
     private String naam;
-    private String beschrijving;
-    private Type type;
-    private Long punten;
-    private String locatie;
-    private String taal;
     private LocalDate startDatum;
     private LocalDate eindDatum;
 
-    protected Opleiding() {}
+    @OneToOne
+    private OpleidingDetails opleidingDetails;
 
-    public Opleiding(Long opleidingId, String naam, String beschrijving, Type type, Long punten, String locatie, String taal, LocalDate startDatum, LocalDate eindDatum) {
+    public Opleiding() {
+    }
+
+    public Opleiding(Long opleidingId, List<Vak> vakken, String naam, LocalDate startDatum, LocalDate eindDatum, OpleidingDetails opleidingDetails) {
         this.opleidingId = opleidingId;
+        this.vakken = vakken;
         this.naam = naam;
-        this.beschrijving = beschrijving;
-        this.type = type;
-        this.punten = punten;
-        this.locatie = locatie;
-        this.taal = taal;
         this.startDatum = startDatum;
         this.eindDatum = eindDatum;
+        this.opleidingDetails = opleidingDetails;
+    }
+
+    public OpleidingDetails getOpleidingDetails() {
+        return opleidingDetails;
+    }
+
+    public void setOpleidingDetails(OpleidingDetails opleidingDetails) {
+        this.opleidingDetails = opleidingDetails;
     }
 
     public Long getOpleidingId() {
@@ -51,46 +55,6 @@ public class Opleiding {
 
     public void setNaam(String naam) {
         this.naam = naam;
-    }
-
-    public String getBeschrijving() {
-        return beschrijving;
-    }
-
-    public void setBeschrijving(String beschrijving) {
-        this.beschrijving = beschrijving;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public Long getPunten() {
-        return punten;
-    }
-
-    public void setPunten(Long punten) {
-        this.punten = punten;
-    }
-
-    public String getLocatie() {
-        return locatie;
-    }
-
-    public void setLocatie(String locatie) {
-        this.locatie = locatie;
-    }
-
-    public String getTaal() {
-        return taal;
-    }
-
-    public void setTaal(String taal) {
-        this.taal = taal;
     }
 
     public LocalDate getStartDatum() {
