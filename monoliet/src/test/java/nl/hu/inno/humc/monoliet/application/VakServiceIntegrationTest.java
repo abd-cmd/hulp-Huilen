@@ -1,22 +1,7 @@
 package nl.hu.inno.humc.monoliet.application;
 
-import nl.hu.inno.humc.monoliet.data.VakRepository;
-import nl.hu.inno.humc.monoliet.domain.HerkansingGegevens;
-import nl.hu.inno.humc.monoliet.domain.ToetsGegevens;
-import nl.hu.inno.humc.monoliet.domain.Vak;
-import nl.hu.inno.humc.monoliet.domain.exceptions.VakNotFoundException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc

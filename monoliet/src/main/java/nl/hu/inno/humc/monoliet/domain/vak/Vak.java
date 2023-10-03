@@ -1,11 +1,11 @@
-package nl.hu.inno.humc.monoliet.domain;
+package nl.hu.inno.humc.monoliet.domain.vak;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import nl.hu.inno.humc.monoliet.presentation.dto.VakDto;
+import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -24,7 +24,25 @@ public class Vak {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "opleidingId")
+    @JsonIgnore
     private Opleiding opleiding;
+
+    public Vak() {
+
+    }
+    public Vak(String naam, LocalDate beginDatum, LocalDate eindDatum, int periode,
+               ToetsGegevens toetsGegevens,
+               HerkansingGegevens herkansingGegevens,
+               Opleiding opleiding) {
+
+        this.naam = naam;
+        this.beginDatum = beginDatum;
+        this.eindDatum = eindDatum;
+        this.periode = periode;
+        this.toetsGegevens = toetsGegevens;
+        this.herkansingGegevens = herkansingGegevens;
+        this.opleiding = opleiding;
+    }
 
     public Opleiding getOpleiding() {
         return opleiding;
@@ -33,22 +51,6 @@ public class Vak {
     public void setOpleiding(Opleiding opleiding) {
         this.opleiding = opleiding;
     }
-
-    public Vak() {
-
-    }
-    public Vak(String naam, LocalDate beginDatum, LocalDate eindDatum, int periode,
-               ToetsGegevens toetsGegevens,
-               HerkansingGegevens herkansingGegevens) {
-
-        this.naam = naam;
-        this.beginDatum = beginDatum;
-        this.eindDatum = eindDatum;
-        this.periode = periode;
-        this.toetsGegevens = toetsGegevens;
-        this.herkansingGegevens = herkansingGegevens;
-    }
-
     public String getNaam() {
         return naam;
     }

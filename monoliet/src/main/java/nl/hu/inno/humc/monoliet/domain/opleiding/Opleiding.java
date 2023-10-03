@@ -1,6 +1,7 @@
-package nl.hu.inno.humc.monoliet.domain;
+package nl.hu.inno.humc.monoliet.domain.opleiding;
 
 import jakarta.persistence.*;
+import nl.hu.inno.humc.monoliet.domain.vak.Vak;
 
 import java.time.LocalDate;
 import java.util.List;

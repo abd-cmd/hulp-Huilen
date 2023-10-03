@@ -1,8 +1,8 @@
 package nl.hu.inno.humc.monoliet.presentation.dto;
 
 
-import nl.hu.inno.humc.monoliet.domain.HerkansingGegevens;
-import nl.hu.inno.humc.monoliet.domain.ToetsGegevens;
+import nl.hu.inno.humc.monoliet.domain.vak.HerkansingGegevens;
+import nl.hu.inno.humc.monoliet.domain.vak.ToetsGegevens;
 
 import java.time.LocalDate;
 
@@ -13,4 +13,6 @@ public class VakDto {
     public int periode;
     public ToetsGegevens toetsGegevens;
     public HerkansingGegevens herkansingGegevens;
+
+    public Long opleidingId;
 }

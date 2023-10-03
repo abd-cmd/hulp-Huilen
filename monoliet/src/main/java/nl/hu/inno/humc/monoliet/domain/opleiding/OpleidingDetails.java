@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.monoliet.domain;
+package nl.hu.inno.humc.monoliet.domain.opleiding;
 
 import jakarta.persistence.*;
 

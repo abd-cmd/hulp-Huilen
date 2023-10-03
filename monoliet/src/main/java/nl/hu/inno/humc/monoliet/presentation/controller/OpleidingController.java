@@ -1,7 +1,7 @@
-package nl.hu.inno.humc.monoliet.presentation;
+package nl.hu.inno.humc.monoliet.presentation.controller;
 
 import nl.hu.inno.humc.monoliet.application.OpleidingService;
-import nl.hu.inno.humc.monoliet.domain.Vak;
+import nl.hu.inno.humc.monoliet.domain.vak.Vak;
 import nl.hu.inno.humc.monoliet.presentation.dto.OpleidingDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
