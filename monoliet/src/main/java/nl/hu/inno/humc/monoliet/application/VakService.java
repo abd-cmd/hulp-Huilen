@@ -3,10 +3,7 @@ package nl.hu.inno.humc.monoliet.application;
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.VakRepository;
 import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
-import nl.hu.inno.humc.monoliet.domain.vak.HerkansingGegevens;
-import nl.hu.inno.humc.monoliet.domain.vak.ToetsGegevens;
-import nl.hu.inno.humc.monoliet.domain.vak.Vak;
-import nl.hu.inno.humc.monoliet.domain.vak.VakGegevensValideren;
+import nl.hu.inno.humc.monoliet.domain.vak.*;
 import nl.hu.inno.humc.monoliet.domain.exceptions.VakNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -25,52 +22,28 @@ public class VakService {
         this.opleidingService = opleidingService;
     }
 
-    public Vak saveVak(String naam, LocalDate beginDatum, LocalDate eindDatum, int periode,
-                       ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,Long opleinfID) {
+    public Vak saveVak(String naam, int periode,IngangEisen ingangEisen,LoopTijd loopTijd,
+                       ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens, Long opleinfID) {
 
         Opleiding opleiding = this.opleidingService.findOpleidingById(opleinfID);
 
-        Vak vak = new Vak(naam,beginDatum,eindDatum,periode,
+        Vak vak = new Vak(naam,periode,ingangEisen,loopTijd,
                 toetsGegevens, herkansingGegevens,opleiding);
 
-        if(!VakGegevensValideren.checkVakDatums(vak.getBeginDatum(),vak.getEindDatum())){
-            return null;
-        }
-
-        if(!VakGegevensValideren.checkVakDatums(vak.getToetsGegevens().gettoetsDatum(),
-                vak.getHerkansingGegevens().getherkansingDatum())){
-            return null;
-        }
-
-        if (!VakGegevensValideren.checkVakHasNaamAndPeriode(vak.getNaam(), vak.getPeriode())){
-            return null;
-        }
 
         return vakRepository.save(vak);
     }
 
-    public Vak updateVak(Long id, String naam, LocalDate begindatum, LocalDate eindDatum, int periode,
+    public Vak updateVak(Long id, String naam,int periode,IngangEisen ingangEisen,LoopTijd loopTijd,
                          ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,Long opleinfID) {
         Vak vak = findById(id);
         Opleiding opleiding = this.opleidingService.findOpleidingById(opleinfID);
 
-        if(!VakGegevensValideren.checkVakDatums(vak.getBeginDatum(),vak.getEindDatum())){
-            return null;
-        }
-
-        if(!VakGegevensValideren.checkVakDatums(vak.getToetsGegevens().gettoetsDatum(),vak.getHerkansingGegevens().getherkansingDatum())){
-            return null;
-        }
-
-        if (!VakGegevensValideren.checkVakHasNaamAndPeriode(vak.getNaam(), vak.getPeriode())){
-            return null;
-        }
-
         if (vak != null) {
             vak.setNaam(naam);
-            vak.setBeginDatum(begindatum);
-            vak.setEindDatum(eindDatum);
             vak.setPeriode(periode);
+            vak.setIngangEisen(ingangEisen);
+            vak.setLoopTijd(loopTijd);
             vak.setToetsGegevens(toetsGegevens);
             vak.setHerkansingGegevens(herkansingGegevens);
             vak.setOpleiding(opleiding);

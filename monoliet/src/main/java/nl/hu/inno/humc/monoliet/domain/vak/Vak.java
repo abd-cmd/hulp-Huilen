@@ -14,9 +14,11 @@ public class Vak {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String naam;
-    private LocalDate beginDatum;
-    private LocalDate eindDatum;
     private int periode;
+    @Embedded
+    private IngangEisen ingangEisen;
+    @Embedded
+    private LoopTijd loopTijd;
     @Embedded
     private ToetsGegevens toetsGegevens;
     @Embedded
@@ -30,15 +32,18 @@ public class Vak {
     public Vak() {
 
     }
-    public Vak(String naam, LocalDate beginDatum, LocalDate eindDatum, int periode,
+
+    public Vak(String naam, int periode,
+               IngangEisen ingangEisen,
+               LoopTijd loopTijd,
                ToetsGegevens toetsGegevens,
                HerkansingGegevens herkansingGegevens,
                Opleiding opleiding) {
 
         this.naam = naam;
-        this.beginDatum = beginDatum;
-        this.eindDatum = eindDatum;
         this.periode = periode;
+        this.ingangEisen = ingangEisen;
+        this.loopTijd = loopTijd;
         this.toetsGegevens = toetsGegevens;
         this.herkansingGegevens = herkansingGegevens;
         this.opleiding = opleiding;
@@ -59,22 +64,6 @@ public class Vak {
         this.naam = naam;
     }
 
-    public LocalDate getBeginDatum() {
-        return beginDatum;
-    }
-
-    public void setBeginDatum(LocalDate beginDatum) {
-        this.beginDatum = beginDatum;
-    }
-
-    public LocalDate getEindDatum() {
-        return eindDatum;
-    }
-
-    public void setEindDatum(LocalDate eindDatum) {
-        this.eindDatum = eindDatum;
-    }
-
     public int getPeriode() {
         return periode;
     }
@@ -91,6 +80,22 @@ public class Vak {
         return id;
     }
 
+    public IngangEisen getIngangEisen() {
+        return ingangEisen;
+    }
+
+    public void setIngangEisen(IngangEisen ingangEisen) {
+        this.ingangEisen = ingangEisen;
+    }
+
+    public LoopTijd getLoopTijd() {
+        return loopTijd;
+    }
+
+    public void setLoopTijd(LoopTijd loopTijd) {
+        this.loopTijd = loopTijd;
+    }
+
     public ToetsGegevens getToetsGegevens() {
         return toetsGegevens;
     }
@@ -105,21 +110,27 @@ public class Vak {
         this.herkansingGegevens = herkansingGegevens;
     }
 
+    public boolean ValidateVakGekoppledAanOpleiding(Opleiding opleiding){
+        return opleiding.getOpleidingId() != null;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vak vak = (Vak) o;
-        return periode == vak.periode && Objects.equals(naam, vak.naam) &&
-                Objects.equals(beginDatum, vak.beginDatum) &&
-                Objects.equals(eindDatum, vak.eindDatum) &&
-                Objects.equals(toetsGegevens, vak.toetsGegevens) &&
-                Objects.equals(herkansingGegevens, vak.herkansingGegevens);
+        return periode == vak.periode &&
+                Objects.equals(id, vak.id)
+                && Objects.equals(naam, vak.naam)
+                && Objects.equals(ingangEisen, vak.ingangEisen)
+                && Objects.equals(loopTijd, vak.loopTijd)
+                && Objects.equals(toetsGegevens, vak.toetsGegevens)
+                && Objects.equals(herkansingGegevens, vak.herkansingGegevens)
+                && Objects.equals(opleiding, vak.opleiding);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(naam, beginDatum, eindDatum, periode, toetsGegevens, herkansingGegevens);
+        return Objects.hash(id, naam, periode, ingangEisen, loopTijd, toetsGegevens, herkansingGegevens, opleiding);
     }
 }

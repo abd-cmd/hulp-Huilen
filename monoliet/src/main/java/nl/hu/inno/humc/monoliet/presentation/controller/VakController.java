@@ -27,18 +27,26 @@ public class VakController {
     @PostMapping("/create")
     public Vak save(@Validated @RequestBody VakDto vakDto) {
         try {
-        return this.vakService.saveVak(vakDto.naam,vakDto.beginDatum,vakDto.eindDatum, vakDto.periode,
-                                       vakDto.toetsGegevens,vakDto.herkansingGegevens,vakDto.opleidingId);
+        return this.vakService.saveVak(vakDto.naam,vakDto.periode,
+                vakDto.ingangEisen,
+                vakDto.loopTijd,
+                vakDto.toetsGegevens,
+                vakDto.herkansingGegevens,
+                vakDto.opleidingId);
         } catch (VakNotFoundException | OpleidingNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     public Vak update(@PathVariable("id") Long VakId, @Validated @RequestBody VakDto vakDto) {
         try {
-            return this.vakService.updateVak(VakId,vakDto.naam,vakDto.beginDatum,vakDto.eindDatum, vakDto.periode,
-                                             vakDto.toetsGegevens,vakDto.herkansingGegevens,vakDto.opleidingId);
+            return this.vakService.updateVak(VakId,vakDto.naam,vakDto.periode,
+                    vakDto.ingangEisen,
+                    vakDto.loopTijd,
+                    vakDto.toetsGegevens,
+                    vakDto.herkansingGegevens,
+                    vakDto.opleidingId);
         }catch (VakNotFoundException | OpleidingNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
