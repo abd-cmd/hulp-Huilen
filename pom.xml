@@ -21,6 +21,7 @@
 	<modules>
 		<module>monoliet</module>
 		<module>student</module>
+		<module>cursus</module>
 	</modules>
 	
 	<dependencies>
