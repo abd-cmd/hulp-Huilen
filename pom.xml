@@ -22,6 +22,7 @@
 		<module>monoliet</module>
 		<module>student</module>
 		<module>cursus</module>
+		<module>opleiding</module>
 	</modules>
 	
 	<dependencies>
