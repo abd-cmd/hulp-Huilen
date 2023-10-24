@@ -1,0 +1,71 @@
+package nl.hu.inno.humc.student.presentation;
+
+import nl.hu.inno.humc.student.application.StudentService;
+import nl.hu.inno.humc.student.domain.student.Student;
+import nl.hu.inno.humc.student.presentation.dto.InschrijvingDto;
+import nl.hu.inno.humc.student.presentation.dto.StudentDto;
+import nl.hu.inno.humc.student.presentation.dto.VrijstellingDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/students")
+public class StudentController {
+    private final StudentService studentService;
+
+    StudentController(StudentService studentService){
+        this.studentService = studentService;
+    }
+
+    @GetMapping("/{studentId}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long studentId) {
+        Optional<Student> student = studentService.getStudentById(studentId);
+        if (student.isPresent()) {
+            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Student>> getAllStudents() {
+        Optional<List<Student>> students = studentService.getAllStudents();
+        if (students.isPresent()) {
+            return new ResponseEntity<>(students.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping
+    public @ResponseBody ResponseEntity<Student> createStudent(@RequestBody StudentDto studentDto) {
+        Optional<Student> createdStudent = studentService.registreerStudent(studentDto);
+        if (createdStudent.isPresent()) {
+            return new ResponseEntity<>(createdStudent.get(), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PatchMapping("/opleiding")
+    public ResponseEntity<Student> schrijfInVoorOpleiding(@RequestBody @Validated InschrijvingDto dto){
+        Optional<Student> student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
+        if (student.isPresent()) {
+            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PatchMapping("/vrijstelling")
+    public ResponseEntity<Student> vraagVrijstellingAan(@RequestBody @Validated VrijstellingDto dto){
+        Optional<Student> student = studentService.vraagVrijstellingAan(dto.getStudentId(), dto.getVakId());
+        if (student.isPresent()) {
+            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+}
+
+
