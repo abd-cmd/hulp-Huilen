@@ -1,7 +1,7 @@
 package nl.hu.inno.humc.student.presentation;
 
 import nl.hu.inno.humc.student.application.StudentService;
-import nl.hu.inno.humc.student.domain.student.Student;
+import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.presentation.dto.InschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VrijstellingDto;

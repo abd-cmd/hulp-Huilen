@@ -2,10 +2,8 @@ package nl.hu.inno.humc.student.application;
 
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.student.data.StudentRepository;
-import nl.hu.inno.humc.student.domain.Opleiding;
-import nl.hu.inno.humc.student.domain.Vak;
-import nl.hu.inno.humc.student.domain.student.Student;
-import nl.hu.inno.humc.student.domain.student.StudentBuilder;
+import nl.hu.inno.humc.student.domain.Student;
+import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.student.domain.student.exceptions;
+package nl.hu.inno.humc.student.domain.exceptions;
 
 public class InvalidTelefoonNummerException extends IllegalArgumentException {
     public InvalidTelefoonNummerException(String message) {

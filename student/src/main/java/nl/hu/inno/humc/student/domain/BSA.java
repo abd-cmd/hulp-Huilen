@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.student.domain.student;
+package nl.hu.inno.humc.student.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

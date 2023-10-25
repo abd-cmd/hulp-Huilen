@@ -1,6 +1,6 @@
-package nl.hu.inno.humc.student.domain.student;
+package nl.hu.inno.humc.student.domain;
 
-import nl.hu.inno.humc.student.domain.student.persoonsgegevens.*;
+import nl.hu.inno.humc.student.domain.persoonsgegevens.*;
 
 import java.time.LocalDate;
 

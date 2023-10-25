@@ -1,9 +1,7 @@
-package nl.hu.inno.humc.student.domain.student;
+package nl.hu.inno.humc.student.domain;
 
 import jakarta.persistence.*;
-import nl.hu.inno.humc.student.domain.Opleiding;
-import nl.hu.inno.humc.student.domain.Vak;
-import nl.hu.inno.humc.student.domain.student.persoonsgegevens.PersoonsGegevens;
+import nl.hu.inno.humc.student.domain.persoonsgegevens.PersoonsGegevens;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 

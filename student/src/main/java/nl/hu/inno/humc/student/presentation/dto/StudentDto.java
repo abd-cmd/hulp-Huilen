@@ -1,7 +1,7 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
 
-import nl.hu.inno.humc.student.domain.student.Vooropleiding;
+import nl.hu.inno.humc.student.domain.Vooropleiding;
 
 import java.time.LocalDate;
 

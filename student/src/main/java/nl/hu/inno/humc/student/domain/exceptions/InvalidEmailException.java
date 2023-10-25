@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.student.domain.student.exceptions;
+package nl.hu.inno.humc.student.domain.exceptions;
 
 public class InvalidEmailException extends RuntimeException{
     public InvalidEmailException(String message) {

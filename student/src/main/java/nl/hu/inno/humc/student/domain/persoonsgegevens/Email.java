@@ -1,6 +1,6 @@
-package nl.hu.inno.humc.student.domain.student.persoonsgegevens;
+package nl.hu.inno.humc.student.domain.persoonsgegevens;
 
-import nl.hu.inno.humc.student.domain.student.exceptions.InvalidEmailException;
+import nl.hu.inno.humc.student.domain.exceptions.InvalidEmailException;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

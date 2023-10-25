@@ -1,6 +1,6 @@
-package nl.hu.inno.humc.student.domain.student.persoonsgegevens;
+package nl.hu.inno.humc.student.domain.persoonsgegevens;
 
-import nl.hu.inno.humc.student.domain.student.exceptions.InvalidPostcodeException;
+import nl.hu.inno.humc.student.domain.exceptions.InvalidPostcodeException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

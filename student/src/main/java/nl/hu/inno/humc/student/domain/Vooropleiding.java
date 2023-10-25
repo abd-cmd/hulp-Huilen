@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.student.domain.student;
+package nl.hu.inno.humc.student.domain;
 
 public enum Vooropleiding {
     HAVO,
