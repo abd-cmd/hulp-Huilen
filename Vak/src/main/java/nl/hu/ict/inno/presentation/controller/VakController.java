@@ -134,6 +134,24 @@ public class VakController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
+    @GetMapping("/getAlleOpleidingVak")
+    public List<Opleiding> getAlleOpleidingVak() {
+        try {
+            return this.vakService.getOpleidingVakken();
+        } catch (VakNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllestudentenVak")
+    public List<Student> getAllestudentenVak() {
+        try {
+            return this.vakService.getStudentenVak();
+        } catch (VakNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
     @GetMapping("/getAlleVakken")
     public List<Vak> getAlleVakken() {
         try {

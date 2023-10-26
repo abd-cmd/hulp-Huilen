@@ -126,7 +126,17 @@ public class VakService {
 //        return vakken;
         return null;
     }
+    public List<Student> getStudentenVak() {
+        List<Student> StudentenVak = new ArrayList<>();
+        this.studentRestTemplate.findAll();
+        return StudentenVak;
+    }
 
+    public List<Opleiding> getOpleidingVakken() {
+        List<Opleiding> OpleidingVakken = new ArrayList<>();
+        this.opleidingRestTemplate.findAll();
+        return OpleidingVakken;
+    }
     public List<Vak> getVakken() {
         List<Vak> vakken = new ArrayList<>();
         this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
