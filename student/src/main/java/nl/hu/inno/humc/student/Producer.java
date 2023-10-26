@@ -13,6 +13,6 @@ public class Producer {
 
     public void sendHelloWorld() {
 
-        rabbitTemplate.convertAndSend("helloworld-queue", "Hello World!");
+        rabbitTemplate.convertAndSend("vak-hallo-queue", "Hello World!");
     }
 }

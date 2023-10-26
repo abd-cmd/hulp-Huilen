@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class Consumer {
 
     @RabbitListener(queues={"vak-hallo-queue"})
-    public void acceptBla(SharedMessage msg){
+    public void acceptBla(String msg){
         System.out.println(msg);
     }
 }
