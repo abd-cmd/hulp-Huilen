@@ -1,7 +1,8 @@
 package nl.hu.inno.humc.monoliet.domain.student;
 
 import jakarta.persistence.*;
-import nl.hu.inno.humc.monoliet.domain.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
+
 
 import java.time.LocalDate;
 
