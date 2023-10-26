@@ -5,8 +5,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Consumer {
-    @RabbitListener(queues = "helloworld-queue")
+    @RabbitListener(queues = "student-hallo-queue")
     public void receiveMessage(String message) {
+        System.out.println("Received <" + message + ">");
+    }
+
+    @RabbitListener(queues = "vak-hallo-queue")
+    public void receiveMessageFromVak(String message) {
         System.out.println("Received <" + message + ">");
     }
 }

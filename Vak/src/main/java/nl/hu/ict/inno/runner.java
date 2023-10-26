@@ -16,6 +16,7 @@ public class runner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         SharedMessage testMessage = new SharedMessage("Hoi", 9999);
 
-        this.producer.sendMessage(testMessage);
+        //this.producer.sendMessage(testMessage);
+        this.producer.sendMessageToStudent("hallo");
     }
 }

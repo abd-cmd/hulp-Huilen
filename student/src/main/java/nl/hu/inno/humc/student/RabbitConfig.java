@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
     @Bean
     public Queue helloWorldQueue(){
-        return QueueBuilder.durable("helloworld-queue").build();
+        return QueueBuilder.durable("student-hallo-queue").build();
     }
 
     @Bean

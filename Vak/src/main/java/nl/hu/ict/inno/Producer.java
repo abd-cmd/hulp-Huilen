@@ -23,6 +23,12 @@ public class Producer {
         //In dit geval willen we juist de exchange gebruiken, dus zorg dat je niet de queue-naam gebruikt.
     }
 
+    public void sendMessageToStudent(String message) {
+        //TODO maak en stuur een bericht naar de queue
+        rabbitTemplate.convertAndSend("student-hallo-queue",message);
+        //In dit geval willen we juist de exchange gebruiken, dus zorg dat je niet de queue-naam gebruikt.
+    }
+
 }
 
 
