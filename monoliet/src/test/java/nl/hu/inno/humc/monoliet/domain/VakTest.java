@@ -256,15 +256,13 @@ class VakTest {
 
         ToetsGegevens toetsGegevens = new ToetsGegevens("open vragen",toetsdatum,100);
 
-        HerkansingGegevens herkansingGegevens = new HerkansingGegevens(1,herkansingsdatum,100);
-
         IngangEisen ingangEisen = new IngangEisen(5,false);
 
         LoopTijd loopTijd = new LoopTijd(begindatum,einddatum);
 
         Vak vak = new Vak("Cisq1",3,ingangEisen,loopTijd,
                 toetsGegevens,
-                herkansingGegevens,opleiding);
+                null ,opleiding);
 
         System.out.println(vak.getNaam());
 
