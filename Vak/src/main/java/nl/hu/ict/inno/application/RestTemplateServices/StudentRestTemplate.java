@@ -18,7 +18,7 @@ public class StudentRestTemplate implements StudentFakeRepository {
     private RestTemplate restTemplate = new RestTemplate();
     @Override
     public Student findById(Long id) {
-        ResponseEntity<Student> response = restTemplate.getForEntity("http://localhost/8080/students/" + id,Student.class);
+        ResponseEntity<Student> response = restTemplate.getForEntity("http://localhost:8080/students/" + id,Student.class);
 
 
         return response.getBody();
@@ -27,7 +27,7 @@ public class StudentRestTemplate implements StudentFakeRepository {
     @Override
     public List<Student> findAll() {
 
-        ResponseEntity<Student[]> response = restTemplate.getForEntity("http://localhost/8080/students",Student[].class);
+        ResponseEntity<Student[]> response = restTemplate.getForEntity("http://localhost:8080/students",Student[].class);
 
         return List.of(response.getBody());
     }

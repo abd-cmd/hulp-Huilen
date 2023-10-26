@@ -160,5 +160,4 @@ public class VakController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
-
 }
