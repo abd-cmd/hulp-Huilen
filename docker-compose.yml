@@ -25,3 +25,12 @@ services:
       POSTGRES_DB: osiris
     ports:
       - "5432:5432"
+
+  rabbitmq:
+      restart: always
+      image: rabbitmq:3-management
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+      environment:
+        RABBITMQ_NODENAME: humc-parent

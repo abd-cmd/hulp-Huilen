@@ -1,5 +1,6 @@
 package nl.hu.inno.humc.monoliet.application;
 
+import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.OpleidingRepository;
 import nl.hu.inno.humc.monoliet.data.VakRepository;
 import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class OpleidingService {
 
     private final OpleidingRepository opleidingRepository;
