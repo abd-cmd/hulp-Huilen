@@ -19,7 +19,7 @@ public class OpleidingRestTemplate implements OpleidingFakeRepository {
     @Override
     public Opleiding findById(Long id) {
         ResponseEntity<Opleiding> response = restTemplate.
-                getForEntity("http://localhost/8080/opleidingen/" + id,Opleiding.class);
+                getForEntity("http://localhost:8080/opleidingen/"+id,Opleiding.class);
 
         return response.getBody();
     }
@@ -27,7 +27,7 @@ public class OpleidingRestTemplate implements OpleidingFakeRepository {
     @Override
     public List<Opleiding> findAll() {
         ResponseEntity<Opleiding[]> response = restTemplate.
-                getForEntity("http://localhost/8080/opleidingen",Opleiding[].class);
+                getForEntity("http://localhost:8080/opleidingen",Opleiding[].class);
 
         return List.of(response.getBody());
     }
