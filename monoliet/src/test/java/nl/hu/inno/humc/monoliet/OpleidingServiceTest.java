@@ -5,16 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import nl.hu.inno.humc.monoliet.application.OpleidingService;
 import nl.hu.inno.humc.monoliet.data.OpleidingRepository;
-import nl.hu.inno.humc.monoliet.domain.Opleiding;
-import nl.hu.inno.humc.monoliet.domain.OpleidingDetails;
-import nl.hu.inno.humc.monoliet.domain.Type;
-import nl.hu.inno.humc.monoliet.domain.Vak;
+import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.opleiding.OpleidingDetails;
+import nl.hu.inno.humc.monoliet.domain.opleiding.Type;
+import nl.hu.inno.humc.monoliet.domain.vak.Vak;
 import nl.hu.inno.humc.monoliet.presentation.dto.OpleidingDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;

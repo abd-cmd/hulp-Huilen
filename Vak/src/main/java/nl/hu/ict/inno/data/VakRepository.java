@@ -1,7 +1,8 @@
-package nl.hu.inno.humc.monoliet.data;
+package nl.hu.ict.inno.data;
 
-import nl.hu.inno.humc.monoliet.domain.vak.ToetsGegevens;
-import nl.hu.inno.humc.monoliet.domain.vak.Vak;
+
+import nl.hu.ict.inno.domain.ToetsGegevens;
+import nl.hu.ict.inno.domain.Vak;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,8 +13,6 @@ public interface VakRepository extends JpaRepository<Vak,Long> {
 
     List<Vak> findVakByToetsGegevens( ToetsGegevens toetsGegevens);
     List<Vak> findVakByToetsGegevens_Vorm( String vorm);
-
-    List<Vak> findVakByOpleiding_OpleidingId(Long id);
 
     Vak findByNaam(String naam);
     List<Vak> findByPeriode(int periode);

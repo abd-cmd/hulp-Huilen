@@ -1,10 +1,11 @@
 package nl.hu.inno.humc.monoliet.application;
 
+import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.monoliet.data.OpleidingRepository;
 import nl.hu.inno.humc.monoliet.data.VakRepository;
-import nl.hu.inno.humc.monoliet.domain.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
 
-import nl.hu.inno.humc.monoliet.domain.Vak;
+import nl.hu.inno.humc.monoliet.domain.vak.Vak;
 import nl.hu.inno.humc.monoliet.domain.exceptions.OpleidingNotFoundException;
 import nl.hu.inno.humc.monoliet.domain.exceptions.VakNotFoundException;
 import nl.hu.inno.humc.monoliet.presentation.dto.OpleidingDto;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class OpleidingService {
 
     private final OpleidingRepository opleidingRepository;
@@ -79,6 +81,12 @@ public class OpleidingService {
         opleidingRepository.save(opleiding);
 
         return convertToDto(opleiding);
+    }
+
+    public Opleiding findOpleidingById(Long id) {
+        Opleiding opleiding = opleidingRepository.findById(id)
+                .orElseThrow(() -> new OpleidingNotFoundException(id));
+        return opleiding;
     }
 
     public OpleidingDto removeVakFromOpleiding(Long opleidingId, Long vakId) {

@@ -1,43 +1,57 @@
-package nl.hu.inno.humc.monoliet.application;
+package nl.hu.ict.inno.application;
 
 import jakarta.transaction.Transactional;
-import nl.hu.inno.humc.monoliet.data.VakRepository;
-import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
-import nl.hu.inno.humc.monoliet.domain.vak.*;
-import nl.hu.inno.humc.monoliet.domain.exceptions.VakNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
+import nl.hu.ict.inno.Producer;
+import nl.hu.ict.inno.application.RestTemplateServices.OpleidingRestTemplate;
+import nl.hu.ict.inno.application.RestTemplateServices.StudentRestTemplate;
+import nl.hu.ict.inno.data.VakRepository;
+import nl.hu.ict.inno.domain.*;
+import nl.hu.ict.inno.domain.exceptions.VakNotFoundException;
+
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @Transactional
 public class VakService {
     private VakRepository vakRepository;
-    private OpleidingService opleidingService;
-    public VakService(VakRepository vakRepository, OpleidingService opleidingService ) {
+
+    private StudentRestTemplate studentRestTemplate;
+    private OpleidingRestTemplate opleidingRestTemplate;
+
+
+    public VakService(VakRepository vakRepository,
+                      StudentRestTemplate studentRestTemplate,
+                      OpleidingRestTemplate opleidingRestTemplate) {
         this.vakRepository = vakRepository;
-        this.opleidingService = opleidingService;
+        this.studentRestTemplate = studentRestTemplate;
+        this.opleidingRestTemplate = opleidingRestTemplate;
+
     }
 
-    public Vak saveVak(String naam, int periode,IngangEisen ingangEisen,LoopTijd loopTijd,
-                       ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens, Long opleinfID) {
+    public Vak saveVak(String naam, int periode, IngangEisen ingangEisen, LoopTijd loopTijd,
+                       ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,
+                       Long opleindingID ,Long studentID) {
 
-        Opleiding opleiding = this.opleidingService.findOpleidingById(opleinfID);
-
+        Opleiding opleiding = this.opleidingRestTemplate.findById(opleindingID);
+        Student student = this.studentRestTemplate.findById(studentID);
         Vak vak = new Vak(naam,periode,ingangEisen,loopTijd,
-                toetsGegevens, herkansingGegevens,opleiding);
+                toetsGegevens, herkansingGegevens,opleiding,student);
+
 
 
         return vakRepository.save(vak);
     }
 
     public Vak updateVak(Long id, String naam,int periode,IngangEisen ingangEisen,LoopTijd loopTijd,
-                         ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,Long opleinfID) {
+                         ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,
+                         Long opleinfID,Long studentID) {
         Vak vak = findById(id);
-        Opleiding opleiding = this.opleidingService.findOpleidingById(opleinfID);
-
+        Opleiding opleiding = this.opleidingRestTemplate.findById(opleinfID);
+        Student student = this.studentRestTemplate.findById(studentID);
         if (vak != null) {
             vak.setNaam(naam);
             vak.setPeriode(periode);
@@ -98,12 +112,19 @@ public class VakService {
         return vak;
     }
 
+    public Opleiding findOpleidingById(Long id) {
+        return this.opleidingRestTemplate.findById(id);
+    }
+    public Student findStudentById(Long id) {
+        return this.studentRestTemplate.findById(id);
+    }
     public List<Vak> findVakByOpleidingId(Long id) {
-        List<Vak> vakken = vakRepository.findVakByOpleiding_OpleidingId(id);
-        if (vakken.isEmpty()){
-            return null;
-        }
-        return vakken;
+//        List<Vak> vakken = vakRepository.findVakByOpleiding_OpleidingId(id);
+//        if (vakken.isEmpty()){
+//            return null;
+//        }
+//        return vakken;
+        return null;
     }
 
     public List<Vak> getVakken() {
@@ -111,7 +132,4 @@ public class VakService {
         this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
         return vakken;
     }
-
-
-
 }

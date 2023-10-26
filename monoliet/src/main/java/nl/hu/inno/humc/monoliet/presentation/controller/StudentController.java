@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.monoliet.presentation;
+package nl.hu.inno.humc.monoliet.presentation.controller;
 
 import nl.hu.inno.humc.monoliet.application.StudentService;
 import nl.hu.inno.humc.monoliet.domain.student.Student;

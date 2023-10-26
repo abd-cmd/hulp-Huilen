@@ -1,9 +1,8 @@
-package nl.hu.inno.humc.monoliet.domain;
+package nl.hu.ict.inno.domain;
 
 import jakarta.persistence.Embeddable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Embeddable

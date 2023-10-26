@@ -21,6 +21,8 @@
 	<modules>
 		<module>monoliet</module>
 		<module>student</module>
+        <module>Vak</module>
+		<module>Opleiding</module>
 	</modules>
 	
 	<dependencies>
@@ -54,7 +56,32 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+		<!-- Deze dependency is nodig omdat springframework.amqp niet standaard jackson meezeult
+             in je 'echte project' is het waarschijnlijk dat één van de andere spring-starters dit al voor je doet -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
