@@ -1,6 +1,7 @@
 package nl.hu.inno.humc.monoliet.domain.student;
 
-import nl.hu.inno.humc.monoliet.domain.Opleiding;
+
+import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
