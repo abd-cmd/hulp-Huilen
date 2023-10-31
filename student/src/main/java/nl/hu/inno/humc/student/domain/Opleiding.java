@@ -1,15 +1,15 @@
 package nl.hu.inno.humc.student.domain;
 
 import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
 
-@Entity
+@Document
 public class Opleiding {
 
     @Id
-    @GeneratedValue
     private Long opleidingId;
     private String naam;
     private LocalDate startDatum;

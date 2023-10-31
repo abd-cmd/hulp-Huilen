@@ -1,22 +1,25 @@
 package nl.hu.inno.humc.student.domain.persoonsgegevens;
 
 import jakarta.persistence.Embedded;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class PersoonsGegevens {
 
-    @Embedded
+    @Field("student.naam")
     private Naam naam;
+
+    @Field("student.geboortedatum")
     private LocalDate geboortedatum;
 
-    @Embedded
+    @Field("student.adres")
     private Adres adres;
 
-    @Embedded
+    @Field("student.email")
     private Email email;
-    @Embedded
+    @Field("student.telefoonNummer")
     private TelefoonNummer telefoonNummer;
 
     protected PersoonsGegevens(){}
