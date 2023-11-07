@@ -1,24 +1,19 @@
 package nl.hu.inno.humc.student.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import nl.hu.inno.humc.student.domain.Opleiding;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDate;
 
 @Document
 public class BSA {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    @MongoId
+    private String id;
     private int minVerplichteStudiePunten;
     private int behaaldeStudiepunten;
     private LocalDate ingangsDatum;
-    @ManyToOne  // Ben nog niet heel tevreden over deze oplossing
     private Opleiding opleiding;
 
 
