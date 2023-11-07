@@ -11,7 +11,6 @@ import java.util.List;
 
 public class StudentDto {
 
-    @JsonProperty("_id")
     private String studentId;
     private String voornaam;
     private String achternaam;

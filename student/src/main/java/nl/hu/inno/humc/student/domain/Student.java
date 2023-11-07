@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Document(collection="student")
 public class Student {
-    @Id
+    @MongoId
     private String studentId;
     private PersoonsGegevens persoonsGegevens;
     private Vooropleiding vooropleiding;
