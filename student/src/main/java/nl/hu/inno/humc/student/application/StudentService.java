@@ -5,6 +5,7 @@ import nl.hu.inno.humc.student.data.StudentRepository;
 import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
+import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,21 +14,26 @@ import java.util.Optional;
 @Service
 @Transactional
 public class StudentService {
+
     private final StudentRepository studentRepo;
 
     StudentService(StudentRepository studentRepository) {
         this.studentRepo = studentRepository;
     }
 
-    public Optional<Student> getStudentById(Long id){
-        return studentRepo.findById(id);
+    public StudentDto getStudentById(String id){
+        Optional<Student> student = studentRepo.findById(id);
+        if (student.isEmpty()) throw new StudentBestaatNietException();
+        return StudentDto.Of(student.get());
     }
 
-    public Optional<List<Student>> getAllStudents(){
-        return Optional.of(studentRepo.findAll());
+    public List<StudentDto> getAllStudents(){
+        List<Student> students = studentRepo.findAll();
+        students.forEach((student) -> System.out.println(student.getStudentId()));
+        return StudentDto.Of(students);
     }
 
-    public Optional<Student> registreerStudent(StudentDto dto) {
+    public StudentDto registreerStudent(StudentDto dto) {
         Student student = new StudentBuilder()
                 .withNaam(dto.getVoornaam(), dto.getAchternaam(), dto.getRoepnaam())
                 .withEmail(dto.getEmail())
@@ -36,22 +42,24 @@ public class StudentService {
                 .withGeboortedatum(dto.getGeboortedatum())
                 .withVooropleiding(dto.getVooropleiding())
                 .build();
-        return Optional.of(studentRepo.save(student));
+        student = studentRepo.save(student);
+        return StudentDto.Of(student);
     }
 
-    public Optional<Student> schrijfStudentInVoorOpleiding(Long studentId, Long opleidingId) {
+    public StudentDto schrijfStudentInVoorOpleiding(String studentId, Long opleidingId) {
         Optional<Student> maybeStudent = studentRepo.findById(studentId);
         // TODO Opleiding opvragen uit de opleiding module/service
         // Opleiding opleiding = this.opleidingService.getOpleidingEntityById(opleidingId);
         if (maybeStudent.isPresent()) {
             Student student = maybeStudent.get();
             //student.schrijfInVoorOpleiding(opleiding);
-            return Optional.of(studentRepo.save(student));
+            studentRepo.save(student);
+            return StudentDto.Of(student);
         }
-        return Optional.empty();
+          throw new StudentBestaatNietException();
     }
 
-    public Optional<Student> vraagVrijstellingAan(Long studentId, Long vakId) {
+    public StudentDto vraagVrijstellingAan(String studentId, Long vakId) {
         Optional<Student> maybeStudent = studentRepo.findById(studentId);
 
         // TODO Vak opvragen uit de vak module/service
@@ -62,6 +70,6 @@ public class StudentService {
 //            student.geefStudentVrijstellingVoorVak(maybeVak);
 //            return Optional.of(studentRepo.save(student));
 //        }
-        return Optional.empty();
+        throw new StudentBestaatNietException();
     }
 }

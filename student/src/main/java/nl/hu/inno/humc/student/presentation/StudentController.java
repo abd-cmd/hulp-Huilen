@@ -5,6 +5,7 @@ import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.presentation.dto.InschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VrijstellingDto;
+import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,48 +24,60 @@ public class StudentController {
     }
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long studentId) {
-        Optional<Student> student = studentService.getStudentById(studentId);
-        if (student.isPresent()) {
-            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+    public ResponseEntity<StudentDto> getStudent(@PathVariable String studentId) {
+        try {
+            StudentDto student = studentService.getStudentById(studentId);
+            return new ResponseEntity<>(student, HttpStatus.OK);
+
+        } catch (StudentBestaatNietException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping
-    public ResponseEntity<List<Student>> getAllStudents() {
-        Optional<List<Student>> students = studentService.getAllStudents();
-        if (students.isPresent()) {
-            return new ResponseEntity<>(students.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<StudentDto>> getAllStudents() {
+        List<StudentDto> students = studentService.getAllStudents();
+
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity<Student> createStudent(@RequestBody StudentDto studentDto) {
-        Optional<Student> createdStudent = studentService.registreerStudent(studentDto);
-        if (createdStudent.isPresent()) {
-            return new ResponseEntity<>(createdStudent.get(), HttpStatus.CREATED);
+    public @ResponseBody ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
+        try {
+            StudentDto createdStudent = studentService.registreerStudent(studentDto);
+            return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PatchMapping("/opleiding")
-    public ResponseEntity<Student> schrijfInVoorOpleiding(@RequestBody @Validated InschrijvingDto dto){
-        Optional<Student> student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
-        if (student.isPresent()) {
-            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+    public ResponseEntity<StudentDto> schrijfInVoorOpleiding(@RequestBody @Validated InschrijvingDto dto){
+        try {
+
+
+            StudentDto student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
+
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } catch (StudentBestaatNietException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PatchMapping("/vrijstelling")
-    public ResponseEntity<Student> vraagVrijstellingAan(@RequestBody @Validated VrijstellingDto dto){
-        Optional<Student> student = studentService.vraagVrijstellingAan(dto.getStudentId(), dto.getVakId());
-        if (student.isPresent()) {
-            return new ResponseEntity<>(student.get(), HttpStatus.OK);
+    public ResponseEntity<StudentDto> vraagVrijstellingAan(@RequestBody @Validated VrijstellingDto dto){
+        try {
+            StudentDto student = studentService.vraagVrijstellingAan(dto.getStudentId(), dto.getVakId());
+            return new ResponseEntity<>(student, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 }
 

@@ -5,10 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import nl.hu.inno.humc.student.domain.Opleiding;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-@Entity
+@Document
 public class BSA {
 
     @Id

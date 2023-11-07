@@ -1,12 +1,17 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.Vooropleiding;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class StudentDto {
-    private Long studentId;
+
+    private String studentId;
     private String voornaam;
     private String achternaam;
     private String roepnaam;
@@ -21,9 +26,28 @@ public class StudentDto {
     private Vooropleiding vooropleiding;
 
 
+    public static StudentDto Of(Student student) {
+        StudentDto dto = new StudentDto();
+        dto.studentId = student.getStudentId();
+        dto.voornaam = student.getPersoonsGegevens().getNaam().getVoornaam();
+        dto.achternaam = student.getPersoonsGegevens().getNaam().getAchternaam();
+        dto.roepnaam = student.getPersoonsGegevens().getNaam().getRoepnaam();
+        dto.geboortedatum = student.getPersoonsGegevens().getGeboortedatum();
+        dto.email = student.getPersoonsGegevens().getEmail().getEmail();
+        dto.telefoonNummer = student.getPersoonsGegevens().getTelefoonNummer().getTelefoonNummer();
+        dto.straat = student.getPersoonsGegevens().getAdres().getStraat();
+        dto.huisnummer = student.getPersoonsGegevens().getAdres().getHuisnummer();
+        dto.postcode = student.getPersoonsGegevens().getAdres().getPostcode();
+        dto.plaats = student.getPersoonsGegevens().getAdres().getPlaats();
+        dto.vooropleiding = student.getVooropleiding();
+        return dto;
+    }
 
+    public static List<StudentDto> Of(List<Student> students) {
+        return students.stream().map(StudentDto::Of).toList();
+    }
 
-    public Long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 

@@ -2,15 +2,15 @@ package nl.hu.inno.humc.student.presentation.dto;
 
 public class InschrijvingDto {
 
-    private Long studentId;
+    private String studentId;
     private Long opleidingId;
 
 
-    public Long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Long studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 

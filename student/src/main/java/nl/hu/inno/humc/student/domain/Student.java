@@ -2,34 +2,25 @@ package nl.hu.inno.humc.student.domain;
 
 import jakarta.persistence.*;
 import nl.hu.inno.humc.student.domain.persoonsgegevens.PersoonsGegevens;
+import org.bson.types.ObjectId;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
-@Entity
+@Document(collection="student")
 public class Student {
-    @Id
-    @GeneratedValue
-    private Long studentId;
-
-    @Embedded
+    @MongoId
+    private String studentId;
     private PersoonsGegevens persoonsGegevens;
-
-    @Enumerated(EnumType.STRING)
     private Vooropleiding vooropleiding;
-
-    @OneToMany
-    @Cascade(CascadeType.ALL)
     private List<BSA> bsaList;
-
-    @OneToMany
     private List<Opleiding> opleidingen;
-
-    @OneToMany
     private List<Vak> vrijstellingen;
 
     protected Student(){}
@@ -97,7 +88,7 @@ public class Student {
         this.persoonsGegevens = persoonsGegevens;
     }
 
-    public Long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
