@@ -2,12 +2,15 @@ package nl.hu.inno.humc.student.application;
 
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.student.data.StudentRepository;
+import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
+import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +55,7 @@ public class StudentService {
         // Opleiding opleiding = this.opleidingService.getOpleidingEntityById(opleidingId);
         if (maybeStudent.isPresent()) {
             Student student = maybeStudent.get();
-            //student.schrijfInVoorOpleiding(opleiding);
+            student.schrijfInVoorOpleiding(Opleiding.getAlleOpleidingen().get(0));
             studentRepo.save(student);
             return StudentDto.Of(student);
         }
@@ -62,14 +65,16 @@ public class StudentService {
     public StudentDto vraagVrijstellingAan(String studentId, Long vakId) {
         Optional<Student> maybeStudent = studentRepo.findById(studentId);
 
-        // TODO Vak opvragen uit de vak module/service
+
+
         // Vak maybeVak = vakService.findById(vakId);
 
-//        if (maybeStudent.isPresent() && maybeVak != null) {
-//            Student student = maybeStudent.get();
-//            student.geefStudentVrijstellingVoorVak(maybeVak);
-//            return Optional.of(studentRepo.save(student));
-//        }
+        if (maybeStudent.isPresent()) {
+            Student student = maybeStudent.get();
+            student.geefStudentVrijstellingVoorVak(Vak.getAlleVakken().get(0)); // TODO Vak opvragen uit de vak module/service
+            studentRepo.save(student);
+            return StudentDto.Of(student);
+        }
         throw new StudentBestaatNietException();
     }
 }
