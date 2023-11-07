@@ -2,6 +2,7 @@ package nl.hu.inno.humc.student.domain;
 
 import jakarta.persistence.*;
 import nl.hu.inno.humc.student.domain.persoonsgegevens.PersoonsGegevens;
+import org.bson.types.ObjectId;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,8 +15,7 @@ import java.util.Optional;
 @Document(collection="student")
 public class Student {
     @Id
-    private Long studentId;
-
+    private String studentId;
     private PersoonsGegevens persoonsGegevens;
     private Vooropleiding vooropleiding;
     private List<BSA> bsaList;
@@ -87,7 +87,7 @@ public class Student {
         this.persoonsGegevens = persoonsGegevens;
     }
 
-    public Long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 

@@ -1,10 +1,10 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
 public class VrijstellingDto {
-    private Long studentId;
+    private String studentId;
     private Long vakId;
 
-    public Long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
