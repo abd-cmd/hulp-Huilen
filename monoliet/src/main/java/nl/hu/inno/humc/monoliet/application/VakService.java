@@ -111,7 +111,4 @@ public class VakService {
         this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
         return vakken;
     }
-
-
-
 }

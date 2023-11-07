@@ -1,4 +1,4 @@
-package nl.hu.ict.inno.domain;
+package nl.hu.ict.inno.domain.vakGegevens;
 
 import jakarta.persistence.Embeddable;
 
@@ -9,7 +9,6 @@ public class IngangEisen {
 
     private int EC;
     private boolean vrijstelling;
-
 
     public IngangEisen() {
 

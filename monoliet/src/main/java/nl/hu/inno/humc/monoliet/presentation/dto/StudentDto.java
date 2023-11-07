@@ -20,9 +20,6 @@ public class StudentDto {
 
     private Vooropleiding vooropleiding;
 
-
-
-
     public Long getStudentId() {
         return studentId;
     }

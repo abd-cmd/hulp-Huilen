@@ -74,10 +74,12 @@ public class OpleidingService {
     }
 
     public OpleidingDto addVakToOpleiding(Long opleidingId, Vak vak) {
+
         Opleiding opleiding = opleidingRepository.findById(opleidingId)
                 .orElseThrow(() -> new OpleidingNotFoundException(opleidingId));
 
         opleiding.getVakken().add(vak);
+        vakRepository.save(vak);
         opleidingRepository.save(opleiding);
 
         return convertToDto(opleiding);

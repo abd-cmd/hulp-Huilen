@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface StudentFakeRepository {
 
+    List<Vak> AddStudentToVak(Student student);
     Student findById(Long id);
     List<Student> findAll();
 }

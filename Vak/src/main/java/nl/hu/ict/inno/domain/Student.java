@@ -1,5 +1,8 @@
 package nl.hu.ict.inno.domain;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.OneToMany;
+
 import java.util.Objects;
 
 public class Student {
