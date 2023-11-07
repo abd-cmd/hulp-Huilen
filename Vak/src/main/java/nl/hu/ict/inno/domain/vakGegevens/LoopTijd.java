@@ -1,4 +1,4 @@
-package nl.hu.ict.inno.domain;
+package nl.hu.ict.inno.domain.vakGegevens;
 
 import jakarta.persistence.Embeddable;
 

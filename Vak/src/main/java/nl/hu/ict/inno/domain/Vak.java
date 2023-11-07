@@ -1,15 +1,28 @@
 package nl.hu.ict.inno.domain;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import nl.hu.ict.inno.domain.vakGegevens.HerkansingGegevens;
+import nl.hu.ict.inno.domain.vakGegevens.IngangEisen;
+import nl.hu.ict.inno.domain.vakGegevens.LoopTijd;
+import nl.hu.ict.inno.domain.vakGegevens.ToetsGegevens;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Data
+@Document
 public class Vak {
+//    @Id
+////    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private String id;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+
     private String naam;
     private int periode;
     @Embedded
@@ -32,11 +45,12 @@ public class Vak {
     private Opleiding opleiding;
 
     @Embedded
+    @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "vak_id"))
     @AttributeOverrides({
             @AttributeOverride(name="id",column = @Column(name="studentId")),
             @AttributeOverride(name="naam",column = @Column(name="studentNaam")),
     })
-    private Student student;
+    private List<Student> students = new ArrayList<>();
 
 
     public Vak() {
@@ -45,7 +59,7 @@ public class Vak {
     public Vak(String naam, int periode,
                IngangEisen ingangEisen, LoopTijd loopTijd,
                ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,
-               Opleiding opleiding, Student student) {
+               Opleiding opleiding, List<Student> students) {
         this.naam = naam;
         this.periode = periode;
         this.ingangEisen = ingangEisen;
@@ -53,7 +67,23 @@ public class Vak {
         this.toetsGegevens = toetsGegevens;
         this.herkansingGegevens = herkansingGegevens;
         this.opleiding = opleiding;
-        this.student = student;
+        this.students = students;
+
+    }
+
+    public Vak(String id, String naam, int periode, IngangEisen ingangEisen,
+               LoopTijd loopTijd, ToetsGegevens toetsGegevens,
+               HerkansingGegevens herkansingGegevens,
+               Opleiding opleiding, List<Student> students) {
+        this.id = id;
+        this.naam = naam;
+        this.periode = periode;
+        this.ingangEisen = ingangEisen;
+        this.loopTijd = loopTijd;
+        this.toetsGegevens = toetsGegevens;
+        this.herkansingGegevens = herkansingGegevens;
+        this.opleiding = opleiding;
+        this.students = students;
     }
 
     public Opleiding getOpleiding() {
@@ -79,11 +109,11 @@ public class Vak {
         this.periode = periode;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
@@ -117,16 +147,16 @@ public class Vak {
         this.herkansingGegevens = herkansingGegevens;
     }
 
-    public Student getStudent() {
-        return student;
+    public List<Student> getStudent() {
+        return students;
     }
 
-    public void setStudent(Student studentList) {
-        this.student = studentList;
+    public void AddStudent(Student student) {
+        this.students.add(student);
     }
 
     public boolean ValidateVakGekoppledAanOpleiding(Opleiding opleiding){
-        return opleiding.getId() != null;
+        return opleiding.getOpleidingId() != null;
     }
 
     @Override

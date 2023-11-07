@@ -1,12 +1,13 @@
 package nl.hu.ict.inno.presentation.dto;
 
 
-import nl.hu.ict.inno.domain.HerkansingGegevens;
-import nl.hu.ict.inno.domain.IngangEisen;
-import nl.hu.ict.inno.domain.LoopTijd;
-import nl.hu.ict.inno.domain.ToetsGegevens;
+import nl.hu.ict.inno.domain.vakGegevens.HerkansingGegevens;
+import nl.hu.ict.inno.domain.vakGegevens.IngangEisen;
+import nl.hu.ict.inno.domain.vakGegevens.LoopTijd;
+import nl.hu.ict.inno.domain.vakGegevens.ToetsGegevens;
 
 public class VakDto {
+    public String id;
     public String naam;
     public int periode;
     public IngangEisen ingangEisen;
@@ -14,6 +15,4 @@ public class VakDto {
     public ToetsGegevens toetsGegevens;
     public HerkansingGegevens herkansingGegevens;
     public Long opleidingId;
-    public Long studentId;
-
 }

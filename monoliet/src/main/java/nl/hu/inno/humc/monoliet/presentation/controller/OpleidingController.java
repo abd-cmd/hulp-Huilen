@@ -4,6 +4,7 @@ import nl.hu.inno.humc.monoliet.application.OpleidingService;
 import nl.hu.inno.humc.monoliet.domain.vak.Vak;
 import nl.hu.inno.humc.monoliet.presentation.dto.OpleidingDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,9 +49,12 @@ public class OpleidingController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/vak")
-    public ResponseEntity<OpleidingDto> addVakToOpleiding(@PathVariable Long id, @RequestBody Vak vak) {
+    @PostMapping("/{id}/vak")
+    public ResponseEntity<OpleidingDto> addVakToOpleiding(@PathVariable Long id, @Validated @RequestBody Vak vak) {
         OpleidingDto opleiding = opleidingService.addVakToOpleiding(id, vak);
+        System.out.println("het vak is:"+vak.getNaam());
+        System.out.println("het vakid is:"+vak.getId());
+
         return ResponseEntity.ok(opleiding);
     }
 

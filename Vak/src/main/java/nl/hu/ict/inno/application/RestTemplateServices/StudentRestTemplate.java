@@ -3,6 +3,7 @@ package nl.hu.ict.inno.application.RestTemplateServices;
 import nl.hu.ict.inno.data.FakeRepositories.StudentFakeRepository;
 import nl.hu.ict.inno.domain.Opleiding;
 import nl.hu.ict.inno.domain.Student;
+import nl.hu.ict.inno.domain.Vak;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,12 @@ import java.util.Optional;
 @Component
 public class StudentRestTemplate implements StudentFakeRepository {
     private RestTemplate restTemplate = new RestTemplate();
+
+    @Override
+    public List<Vak> AddStudentToVak(Student student) {
+        return null;
+    }
+
     @Override
     public Student findById(Long id) {
         ResponseEntity<Student> response = restTemplate.getForEntity("http://localhost:8080/students/" + id,Student.class);
