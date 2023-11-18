@@ -18,5 +18,4 @@ public class StudentApplication {
         new Vak("4389759843","BEP2", LocalDate.now().minusDays(30), LocalDate.now().plusMonths(2), 10, opleiding);
 
     }
-
 }

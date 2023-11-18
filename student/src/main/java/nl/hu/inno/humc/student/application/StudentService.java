@@ -7,6 +7,7 @@ import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.domain.Vak;
+import nl.hu.inno.humc.student.presentation.StudentRabbitController;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
@@ -23,8 +24,11 @@ public class StudentService {
     private final StudentRepository studentRepo;
     private final VakService vakService;
 
-    StudentService(StudentRepository studentRepository, VakService vakService) {
+    private final StudentRabbitController studentRabbitController;
+
+    StudentService(StudentRepository studentRepository, StudentRabbitController studentRabbitController, VakService vakService) {
         this.studentRepo = studentRepository;
+        this.studentRabbitController = studentRabbitController;
         this.vakService = vakService;
 
     }
@@ -51,20 +55,25 @@ public class StudentService {
                 .withVooropleiding(dto.getVooropleiding())
                 .build();
         student = studentRepo.save(student);
-        return StudentDto.Of(student);
+        StudentDto studentDto = StudentDto.Of(student);
+        // Send student to queue so the other microservices can process it
+        studentRabbitController.sendStudentToQueue(studentDto);
+        return studentDto;
     }
 
     public StudentDto schrijfStudentInVoorOpleiding(String studentId, Long opleidingId) {
-        Optional<Student> maybeStudent = studentRepo.findById(studentId);
+
         // TODO Opleiding opvragen uit de opleiding module/service
         // Opleiding opleiding = this.opleidingService.getOpleidingEntityById(opleidingId);
-        if (maybeStudent.isPresent()) {
-            Student student = maybeStudent.get();
-            student.schrijfInVoorOpleiding(Opleiding.getAlleOpleidingen().get(0));
-            studentRepo.save(student);
-            return StudentDto.Of(student);
-        }
-          throw new StudentBestaatNietException();
+        Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
+        student.schrijfInVoorOpleiding(Opleiding.getAlleOpleidingen().get(0));
+        studentRepo.save(student);
+
+        StudentDto studentDto = StudentDto.Of(student);
+        // Send student to queue so the other microservices can process it
+        studentRabbitController.sendStudentToQueue(studentDto);
+        return studentDto;
+
     }
 
     public StudentDto vraagVrijstellingAan(String studentId, String vakId) throws VakBestaatNietException {
@@ -73,6 +82,10 @@ public class StudentService {
         Vak vak = vakService.getVakById(vakId).orElseThrow(VakBestaatNietException::new);
         student.geefStudentVrijstellingVoorVak(vak);
         studentRepo.save(student);
-        return StudentDto.Of(student);
+
+        StudentDto studentDto = StudentDto.Of(student);
+        // Send student to queue so the other microservices can process it
+        studentRabbitController.sendStudentToQueue(studentDto);
+        return studentDto;
     }
 }
