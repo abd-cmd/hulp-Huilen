@@ -25,6 +25,11 @@ public class RabbitConfig {
     }
 
     @Bean
+    public Queue opleidingQueue(){
+        return QueueBuilder.durable("opleiding-queue").build();
+    }
+
+    @Bean
     MessageConverter getConverter(){
 
         // Add support for LocalDate objects

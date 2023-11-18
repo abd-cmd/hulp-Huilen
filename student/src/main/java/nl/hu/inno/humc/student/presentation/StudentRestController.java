@@ -41,13 +41,13 @@ public class StudentRestController {
 
     @PostMapping
     public @ResponseBody ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
-        //try {
+        try {
             StudentDto createdStudent = studentService.registreerStudent(studentDto);
             return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
 
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PatchMapping("/opleiding")

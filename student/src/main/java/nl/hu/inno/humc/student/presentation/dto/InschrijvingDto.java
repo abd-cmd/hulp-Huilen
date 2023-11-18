@@ -3,7 +3,7 @@ package nl.hu.inno.humc.student.presentation.dto;
 public class InschrijvingDto {
 
     private String studentId;
-    private Long opleidingId;
+    private String opleidingId;
 
 
     public String getStudentId() {
@@ -14,11 +14,11 @@ public class InschrijvingDto {
         this.studentId = studentId;
     }
 
-    public Long getOpleidingId() {
+    public String getOpleidingId() {
         return opleidingId;
     }
 
-    public void setOpleidingId(Long opleidingId) {
+    public void setOpleidingId(String opleidingId) {
         this.opleidingId = opleidingId;
     }
 }

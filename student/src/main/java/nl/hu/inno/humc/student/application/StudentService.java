@@ -23,14 +23,14 @@ public class StudentService {
 
     private final StudentRepository studentRepo;
     private final VakService vakService;
-
+    private final OpleidingService opleidingService;
     private final StudentRabbitController studentRabbitController;
 
-    StudentService(StudentRepository studentRepository, StudentRabbitController studentRabbitController, VakService vakService) {
+    StudentService(StudentRepository studentRepository, StudentRabbitController studentRabbitController, VakService vakService, OpleidingService opleidingService) {
         this.studentRepo = studentRepository;
         this.studentRabbitController = studentRabbitController;
         this.vakService = vakService;
-
+        this.opleidingService = opleidingService;
     }
 
     public StudentDto getStudentById(String id){
@@ -61,12 +61,12 @@ public class StudentService {
         return studentDto;
     }
 
-    public StudentDto schrijfStudentInVoorOpleiding(String studentId, Long opleidingId) {
+    public StudentDto schrijfStudentInVoorOpleiding(String studentId, String opleidingId) {
 
         // TODO Opleiding opvragen uit de opleiding module/service
-        // Opleiding opleiding = this.opleidingService.getOpleidingEntityById(opleidingId);
+        Opleiding opleiding = this.opleidingService.getOpleidingById(opleidingId);
         Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
-        student.schrijfInVoorOpleiding(Opleiding.getAlleOpleidingen().get(0));
+        student.schrijfInVoorOpleiding(opleiding);
         studentRepo.save(student);
 
         StudentDto studentDto = StudentDto.Of(student);

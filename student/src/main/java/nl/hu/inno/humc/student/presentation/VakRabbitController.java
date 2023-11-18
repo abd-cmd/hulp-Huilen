@@ -8,12 +8,12 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VakController {
+public class VakRabbitController {
 
     private final MessageConverter messageConverter;
     private final VakService vakService;
 
-    public VakController(MessageConverter messageConverter, VakService vakService) {
+    public VakRabbitController(MessageConverter messageConverter, VakService vakService) {
         this.messageConverter = messageConverter;
         this.vakService = vakService;
     }
