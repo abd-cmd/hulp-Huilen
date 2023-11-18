@@ -15,7 +15,7 @@ public class StudentApplication {
 
         // dummy data
         Opleiding opleiding = new Opleiding("HBO-ICT", LocalDate.now().minusYears(2), LocalDate.now().plusYears(2));
-        new Vak("BEP2", LocalDate.now().minusDays(30), LocalDate.now().plusMonths(2), 10, opleiding);
+        new Vak("4389759843","BEP2", LocalDate.now().minusDays(30), LocalDate.now().plusMonths(2), 10, opleiding);
 
     }
 

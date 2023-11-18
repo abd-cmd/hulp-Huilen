@@ -21,22 +21,20 @@ public class Vak {
 
     private Opleiding opleiding;
 
-    private static List<Vak> alleVakken = new ArrayList<>();
-
     public Vak(
+            String id, // Hier word ID meegegeven omdat deze word verkregen vanuit een andere service
             String naam,
             LocalDate beginDatum,
             LocalDate eindDatum,
             int studiePunten,
             Opleiding opleiding
     ) {
+        this.id = id;
         this.naam = naam;
         this.beginDatum = beginDatum;
         this.eindDatum = eindDatum;
         this.studiePunten = studiePunten;
         this.opleiding = opleiding;
-
-        alleVakken.add(this);
     }
 
 
@@ -48,7 +46,27 @@ public class Vak {
         return studiePunten;
     }
 
-    public static List<Vak> getAlleVakken() {
-        return alleVakken;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
+    public void setBeginDatum(LocalDate beginDatum) {
+        this.beginDatum = beginDatum;
+    }
+
+    public void setEindDatum(LocalDate eindDatum) {
+        this.eindDatum = eindDatum;
+    }
+
+    public void setStudiePunten(int studiePunten) {
+        this.studiePunten = studiePunten;
+    }
+
+    public void setOpleiding(Opleiding opleiding) {
+        this.opleiding = opleiding;
     }
 }

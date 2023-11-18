@@ -1,12 +1,14 @@
 package nl.hu.inno.humc.student.application;
 
 import jakarta.transaction.Transactional;
+import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
 import nl.hu.inno.humc.student.data.StudentRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
+import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,12 @@ import java.util.Optional;
 public class StudentService {
 
     private final StudentRepository studentRepo;
+    private final VakService vakService;
 
-    StudentService(StudentRepository studentRepository) {
+    StudentService(StudentRepository studentRepository, VakService vakService) {
         this.studentRepo = studentRepository;
+        this.vakService = vakService;
+
     }
 
     public StudentDto getStudentById(String id){
@@ -62,19 +67,12 @@ public class StudentService {
           throw new StudentBestaatNietException();
     }
 
-    public StudentDto vraagVrijstellingAan(String studentId, Long vakId) {
-        Optional<Student> maybeStudent = studentRepo.findById(studentId);
+    public StudentDto vraagVrijstellingAan(String studentId, String vakId) throws VakBestaatNietException {
 
-
-
-        // Vak maybeVak = vakService.findById(vakId);
-
-        if (maybeStudent.isPresent()) {
-            Student student = maybeStudent.get();
-            student.geefStudentVrijstellingVoorVak(Vak.getAlleVakken().get(0)); // TODO Vak opvragen uit de vak module/service
-            studentRepo.save(student);
-            return StudentDto.Of(student);
-        }
-        throw new StudentBestaatNietException();
+        Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
+        Vak vak = vakService.getVakById(vakId).orElseThrow(VakBestaatNietException::new);
+        student.geefStudentVrijstellingVoorVak(vak);
+        studentRepo.save(student);
+        return StudentDto.Of(student);
     }
 }
