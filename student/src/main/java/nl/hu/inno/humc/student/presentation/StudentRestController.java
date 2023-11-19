@@ -1,7 +1,6 @@
 package nl.hu.inno.humc.student.presentation;
 
 import nl.hu.inno.humc.student.application.StudentService;
-import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.presentation.dto.InschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VrijstellingDto;
@@ -12,14 +11,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/students")
-public class StudentController {
+public class StudentRestController {
     private final StudentService studentService;
 
-    StudentController(StudentService studentService){
+    StudentRestController(StudentService studentService){
         this.studentService = studentService;
     }
 
@@ -55,8 +53,6 @@ public class StudentController {
     @PatchMapping("/opleiding")
     public ResponseEntity<StudentDto> schrijfInVoorOpleiding(@RequestBody @Validated InschrijvingDto dto){
         try {
-
-
             StudentDto student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
 
             return new ResponseEntity<>(student, HttpStatus.OK);

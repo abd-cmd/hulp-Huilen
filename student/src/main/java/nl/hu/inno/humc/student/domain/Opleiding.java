@@ -19,16 +19,12 @@ public class Opleiding {
     private LocalDate startDatum;
     private LocalDate eindDatum;
 
-    private static List<Opleiding> alleOpleidingen = new ArrayList<>();
-    public Opleiding() {
-    }
 
-    public Opleiding(String naam, LocalDate startDatum, LocalDate eindDatum) {
+    public Opleiding(String id, String naam, LocalDate startDatum, LocalDate eindDatum) {
+        this.opleidingId = id; // Id word meegegeven omdat deze vanuit een andere microservice komt
         this.naam = naam;
         this.startDatum = startDatum;
         this.eindDatum = eindDatum;
-
-        alleOpleidingen.add(this);
     }
 
 
@@ -62,10 +58,6 @@ public class Opleiding {
 
     public void setEindDatum(LocalDate eindDatum) {
         this.eindDatum = eindDatum;
-    }
-
-    public static List<Opleiding> getAlleOpleidingen() {
-        return alleOpleidingen;
     }
 
     @Override
