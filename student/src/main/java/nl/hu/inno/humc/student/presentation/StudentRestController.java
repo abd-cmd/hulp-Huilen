@@ -53,8 +53,6 @@ public class StudentRestController {
     @PatchMapping("/opleiding")
     public ResponseEntity<StudentDto> schrijfInVoorOpleiding(@RequestBody @Validated InschrijvingDto dto){
         try {
-
-
             StudentDto student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
 
             return new ResponseEntity<>(student, HttpStatus.OK);
