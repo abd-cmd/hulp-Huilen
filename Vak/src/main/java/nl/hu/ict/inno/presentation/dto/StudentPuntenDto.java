@@ -3,12 +3,10 @@ package nl.hu.ict.inno.presentation.dto;
 public class StudentPuntenDto {
     private String VakId;
     private String StudentId;
-    private int Punten;
 
-    public StudentPuntenDto(String vakId, String studentId, int punten) {
+    public StudentPuntenDto(String vakId, String studentId) {
         VakId = vakId;
         StudentId = studentId;
-        Punten = punten;
     }
 
     public String getVakId() {
@@ -17,9 +15,5 @@ public class StudentPuntenDto {
 
     public String getStudentId() {
         return StudentId;
-    }
-
-    public int getPunten() {
-        return Punten;
     }
 }

@@ -22,9 +22,9 @@ public class Producer {
     public void sendDeletedVakId(String id) {
         rabbitTemplate.convertAndSend("vak","Delete-Vak",id);
     }
-    public void sendPuntenVanVak(String vakid,String studentId ,int ec) {
+    public void sendPuntenVanVak(String vakid,String studentId ) {
 
-        StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId,ec);
+        StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId);
 
         rabbitTemplate.convertAndSend("vak","sendPuntenVak",studentPuntenDto);
     }

@@ -162,7 +162,7 @@ public class VakService {
         if (vak != null) {
             for (Student student:vak.getStudents()){
                 if(student.getId().equals(studentId)){
-                    this.producer.sendPuntenVanVak(vakid,studentId,vak.getIngangEisen().getEC());
+                    this.producer.sendPuntenVanVak(vakid,studentId);
                 }
             }
         }

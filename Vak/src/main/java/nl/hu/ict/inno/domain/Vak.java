@@ -170,8 +170,6 @@ public class Vak {
         return opleiding.getOpleidingId() != null;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
