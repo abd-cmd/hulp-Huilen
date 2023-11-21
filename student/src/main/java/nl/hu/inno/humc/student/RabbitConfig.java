@@ -28,7 +28,7 @@ public class RabbitConfig {
 
     @Bean
     public Queue deletedStudentQueue(){
-        return QueueBuilder.durable("new-student-queue").build();
+        return QueueBuilder.durable("deleted-student-queue").build();
     }
 
 

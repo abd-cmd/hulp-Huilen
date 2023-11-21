@@ -7,21 +7,17 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OpleidingRabbitController {
 
-    private final RabbitTemplate rabbitTemplate;
     private final MessageConverter messageConverter;
     private final OpleidingService opleidingService;
 
-    public OpleidingRabbitController(RabbitTemplate rabbitTemplate, MessageConverter messageConverter, OpleidingService opleidingService) {
-        this.rabbitTemplate = rabbitTemplate;
+    public OpleidingRabbitController(MessageConverter messageConverter, OpleidingService opleidingService) {
         this.messageConverter = messageConverter;
         this.opleidingService = opleidingService;
-    }
-
-    public void newInschrijving(OpleidingInschrijvingDto inschrijvingDto) {
-        rabbitTemplate.convertAndSend("opleiding-inschrijving-queue", inschrijvingDto);
     }
 
     @RabbitListener(queues = "opleiding-queue")
@@ -29,4 +25,5 @@ public class OpleidingRabbitController {
         OpleidingDto opleidingDto = (OpleidingDto) messageConverter.fromMessage(message);
         opleidingService.verwerkOpleiding(opleidingDto);
     }
+
 }
