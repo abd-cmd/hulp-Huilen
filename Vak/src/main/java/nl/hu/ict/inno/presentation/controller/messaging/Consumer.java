@@ -15,15 +15,15 @@ public class Consumer {
         this.vakService = vakService;
     }
 
-    @RabbitListener(queues={"add-student-queue"})
+    @RabbitListener(queues={"new-student-queue"})
     public void StudentToAdd(Student student,String Vakid){
         vakService.addStudent(student,Vakid);
     }
-    @RabbitListener(queues={"update-student-queue"})
+    @RabbitListener(queues={"updated-student-queue"})
     public void StudentToUpdate(String studentId,String naam , String id){
         vakService.updateStudent(studentId,naam,id);
     }
-    @RabbitListener(queues={"remove-student-queue"})
+    @RabbitListener(queues={"deleted-student-queue"})
     public void StudentToRemove(String studentId,String id){
         vakService.removeStudent(studentId,id);
     }

@@ -18,72 +18,72 @@ public class RabbitConfig {
 
     @Bean
     public Queue QueueAddStudent(){
-        return QueueBuilder.durable("add-student-queue").build();
+        return QueueBuilder.durable("new-student-queue").build();
     }
 
-    @Bean
-    public Binding BindingQueueAddStudent(){
-        return BindingBuilder.bind(QueueAddStudent()).to(Exchange()).with("example-key1").noargs();
-    }
+//    @Bean
+//    public Binding BindingQueueAddStudent(){
+//        return BindingBuilder.bind(QueueAddStudent()).to(Exchange()).with("example-key1").noargs();
+//    }
 
     @Bean
     public Queue QueueUpdateStudent(){
-        return QueueBuilder.durable("update-student-queue").build();
+        return QueueBuilder.durable("updated-student-queue").build();
     }
 
-    @Bean
-    public Binding BindingQueueUpdateStudent(){
-        return BindingBuilder.bind(QueueUpdateStudent()).to(Exchange()).with("example-key2").noargs();
-    }
+//    @Bean
+//    public Binding BindingQueueUpdateStudent(){
+//        return BindingBuilder.bind(QueueUpdateStudent()).to(Exchange()).with("example-key2").noargs();
+//    }
 
     @Bean
     public Queue QueueRemoveStudent(){
-        return QueueBuilder.durable("remove-student-queue").build();
+        return QueueBuilder.durable("deleted-student-queue").build();
     }
 
-    @Bean
-    public Binding BindingQueueremoveStudent(){
-        return BindingBuilder.bind(QueueRemoveStudent()).to(Exchange()).with("example-key3").noargs();
-    }
+//    @Bean
+//    public Binding BindingQueueremoveStudent(){
+//        return BindingBuilder.bind(QueueRemoveStudent()).to(Exchange()).with("example-key3").noargs();
+//    }
 
     @Bean
     public Queue QueueVakMaken(){
-        return QueueBuilder.durable("vak-maken").build();
+        return QueueBuilder.durable("vak-maken-queue").build();
     }
 
     @Bean
     public Binding BindingQueueVakMaken(){
-        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("example-key4").noargs();
+        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("Add-Vak").noargs();
     }
 
     @Bean
     public Queue QueueVakUpdate(){
-        return QueueBuilder.durable("vak-updaten").build();
+        return QueueBuilder.durable("vak-updaten-queue").build();
     }
 
     @Bean
     public Binding BindingQueueVakUpdate(){
-        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("example-key5").noargs();
+        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("Update-Vak").noargs();
     }
 
     @Bean
     public Queue QueueVakDelete(){
-        return QueueBuilder.durable("vak-delete").build();
+        return QueueBuilder.durable("vak-delete-queue").build();
     }
 
     @Bean
     public Binding BindingQueueVakDelete(){
-        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("example-key6").noargs();
+        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("Delete-Vak").noargs();
     }
 
     @Bean
     public Queue QueueVakPunten(){
-        return QueueBuilder.durable("vak-punten-sturen").build();
+        return QueueBuilder.durable("vak-punten-sturen-queue").build();
     }
 
     @Bean
     public Binding BindingQueueVakPunten(){
-        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("example-key7").noargs();
+        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("sendPuntenVak").noargs();
     }
 
     @Bean
