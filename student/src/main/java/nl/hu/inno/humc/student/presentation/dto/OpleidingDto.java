@@ -7,6 +7,7 @@ public class OpleidingDto {
     private String naam;
     private LocalDate startDatum;
     private LocalDate eindDatum;
+    private int beschikbarePlekken;
 
     public String getId() {
         return id;
@@ -22,5 +23,9 @@ public class OpleidingDto {
 
     public LocalDate getEindDatum() {
         return eindDatum;
+    }
+
+    public int getBeschikbarePlekken() {
+        return beschikbarePlekken;
     }
 }

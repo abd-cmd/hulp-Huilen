@@ -19,12 +19,15 @@ public class Opleiding {
     private LocalDate startDatum;
     private LocalDate eindDatum;
 
+    private int beschikbarePlekken;
 
-    public Opleiding(String id, String naam, LocalDate startDatum, LocalDate eindDatum) {
+
+    public Opleiding(String id, String naam, LocalDate startDatum, LocalDate eindDatum, int beschikbarePlekken) {
         this.opleidingId = id; // Id word meegegeven omdat deze vanuit een andere microservice komt
         this.naam = naam;
         this.startDatum = startDatum;
         this.eindDatum = eindDatum;
+        this.beschikbarePlekken = beschikbarePlekken;
     }
 
 
@@ -71,5 +74,9 @@ public class Opleiding {
     @Override
     public int hashCode() {
         return Objects.hash(opleidingId, naam, startDatum, eindDatum);
+    }
+
+    public int getBeschikbarePlekken() {
+        return beschikbarePlekken;
     }
 }

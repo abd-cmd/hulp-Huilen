@@ -1,6 +1,5 @@
 package nl.hu.inno.humc.student.domain;
 
-import jakarta.persistence.ManyToOne;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -34,11 +33,8 @@ public class BSA {
         this.behaaldeStudiepunten += studiePunten;
     }
 
-    public boolean isBSAAdviesBehaald(){
-        if(this.ingangsDatum.isAfter(LocalDate.now().minusYears(1))) {
-            return this.behaaldeStudiepunten >= this.minVerplichteStudiePunten;
-        }
-        else return this.behaaldeStudiepunten == this.minVerplichteStudiePunten;
+    public boolean isBSABehaald(){
+        return this.behaaldeStudiepunten >= this.minVerplichteStudiePunten;
     }
 
     public int getBehaaldeStudiepunten() {

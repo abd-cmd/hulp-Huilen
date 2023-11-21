@@ -8,12 +8,11 @@ import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.presentation.StudentRabbitController;
+import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
-import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +56,7 @@ public class StudentService {
         student = studentRepo.save(student);
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitController.sendStudentToQueue(studentDto);
+        studentRabbitController.sendNewStudentToQueue(studentDto);
         return studentDto;
     }
 
@@ -66,26 +65,32 @@ public class StudentService {
         // TODO Opleiding opvragen uit de opleiding module/service
         Opleiding opleiding = this.opleidingService.getOpleidingById(opleidingId);
         Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
-        student.schrijfInVoorOpleiding(opleiding);
-        studentRepo.save(student);
+        // Als er meer dan 10 plekken beschikbaar zijn, schrijf de student in via messaging
+        if(opleiding.getBeschikbarePlekken() > 10){
+            student.schrijfInVoorOpleiding(opleiding);
+            this.opleidingService.plaatsNieuweInschrijvingInQueue(new OpleidingInschrijvingDto(studentId, opleidingId));
+            studentRepo.save(student);
+        }
+        else {
+            // als er minder dan 10 plekken beschikbaar zijn in dit systeem, check dan nog even via REST of er daadwerkelijk nog plek is
+        }
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitController.sendStudentToQueue(studentDto);
+        studentRabbitController.sendUpdatedStudentToQueue(studentDto);
         return studentDto;
-
     }
 
-    public StudentDto vraagVrijstellingAan(String studentId, String vakId) throws VakBestaatNietException {
+    public StudentDto studentHeeftVakBehaald(String studentId, String vakId) throws VakBestaatNietException {
 
         Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
         Vak vak = vakService.getVakById(vakId).orElseThrow(VakBestaatNietException::new);
-        student.geefStudentVrijstellingVoorVak(vak);
+        student.studentHeeftVakBehaald(vak);
         studentRepo.save(student);
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitController.sendStudentToQueue(studentDto);
+        studentRabbitController.sendUpdatedStudentToQueue(studentDto);
         return studentDto;
     }
 }
