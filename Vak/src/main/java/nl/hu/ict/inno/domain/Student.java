@@ -26,6 +26,10 @@ public class Student {
         return naam;
     }
 
+    public void setNaam(String naam) {
+        this.naam = naam;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -5,7 +5,6 @@ import jakarta.persistence.Embeddable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Embeddable
 public class HerkansingGegevens {
 
     private int herkansingsperiode;

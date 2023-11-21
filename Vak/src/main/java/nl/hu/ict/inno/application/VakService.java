@@ -11,6 +11,8 @@ import nl.hu.ict.inno.domain.vakGegevens.HerkansingGegevens;
 import nl.hu.ict.inno.domain.vakGegevens.IngangEisen;
 import nl.hu.ict.inno.domain.vakGegevens.LoopTijd;
 import nl.hu.ict.inno.domain.vakGegevens.ToetsGegevens;
+import nl.hu.ict.inno.presentation.controller.messaging.Producer;
+import nl.hu.ict.inno.presentation.controller.messaging.SharedMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,40 +22,29 @@ import java.util.List;
 @Transactional
 public class VakService {
     private VakRepository vakRepository;
-
     private OpleidingRestTemplate opleidingRestTemplate;
+    private Producer producer;
 
-
-    public VakService(VakRepository vakRepository,
-                      OpleidingRestTemplate opleidingRestTemplate) {
+    public VakService(VakRepository vakRepository, OpleidingRestTemplate opleidingRestTemplate, Producer producer) {
         this.vakRepository = vakRepository;
         this.opleidingRestTemplate = opleidingRestTemplate;
+        this.producer = producer;
     }
 
-    public Vak saveVak(String id, String naam, int periode, IngangEisen ingangEisen, LoopTijd loopTijd,
+    public Vak saveVak(String naam, int periode, int beschikbaarPleken , IngangEisen ingangEisen, LoopTijd loopTijd,
                        ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens) {
 
-        Vak vak = new Vak(id,naam,periode,ingangEisen,loopTijd,
-                toetsGegevens, herkansingGegevens,null,List.of());
+        Vak vak = new Vak(naam, periode, beschikbaarPleken ,ingangEisen, loopTijd,
+                toetsGegevens, herkansingGegevens, null, List.of());
 
-        return vakRepository.save(vak);
+        Vak savedVak = vakRepository.save(vak);
+
+        this.producer.sendNieuweVak(savedVak);
+
+        return savedVak;
     }
-    public Vak saveStudent(String id,String naam,Long StudentId) {
 
-        Vak vak = this.vakRepository.findById(id)
-                .orElseThrow(() -> new VakNotFoundException());
-
-        Student student = new Student (StudentId,naam);
-        if (vak != null) {
-
-            vak.AddStudent(student);
-
-            return vakRepository.save(vak);
-        }
-
-        return null;
-    }
-    public Vak updateVak(String id, String naam,int periode,IngangEisen ingangEisen,LoopTijd loopTijd,
+    public Vak updateVak(String id, String naam,int beschikbaarPleken ,int periode, IngangEisen ingangEisen, LoopTijd loopTijd,
                          ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,
                          Long opleidingId) {
         Vak vak = findById(id);
@@ -66,88 +57,114 @@ public class VakService {
             vak.setToetsGegevens(toetsGegevens);
             vak.setHerkansingGegevens(herkansingGegevens);
             vak.setOpleiding(opleiding);
-            return this.vakRepository.save(vak);
-        }
+            vak.setBeschikbaarPleken(beschikbaarPleken);
+            Vak updatedVak = vakRepository.save(vak);
 
-        return null;
-    }
+            this.producer.sendUpdatedVak(updatedVak);
 
-    public Vak addVakToOpleiding(Long id,String Id){
-        Opleiding opleiding = this.opleidingRestTemplate.findById(id);
-        Vak vak = findById(Id);
-
-        if (vak != null){
-            vak.setOpleiding(opleiding);
-            opleidingRestTemplate.AddVakToOpleiding(opleiding.getOpleidingId(),vak);
-            return this.vakRepository.save(vak);
+            return updatedVak;
         }
         return null;
     }
 
     public void deleteVak(String id) {
         Vak vak = findById(id);
+        this.producer.sendDeletedVakId(vak.getId());
         this.vakRepository.delete(vak);
     }
+
     public void deleteAll() {
         this.vakRepository.deleteAll();
     }
+
     public Vak findByNaam(String naam) {
         Vak vak = this.vakRepository.findByNaam(naam);
 
-        if(vakRepository.findByNaam(naam) == null){
+        if (vakRepository.findByNaam(naam) == null) {
             return null;
         }
         return vak;
     }
+
     public List<Vak> findByPeriode(int periode) {
         List<Vak> vakken = this.vakRepository.findByPeriode(periode);
 
-        if(vakken.isEmpty()){
+        if (vakken.isEmpty()) {
             return null;
         }
         return vakken;
     }
 
-    public List<Vak> findVakByToetsGegevens(ToetsGegevens toetsGegevens){
+    public List<Vak> findVakByToetsGegevens(ToetsGegevens toetsGegevens) {
         List<Vak> vakken = vakRepository.findVakByToetsGegevens(toetsGegevens);
-        if(vakken.isEmpty()){
+        if (vakken.isEmpty()) {
             return null;
         }
         return vakken;
     }
-    public List<Vak> findVakByToetsGegevensVorm(String vorm){
+
+    public List<Vak> findVakByToetsGegevensVorm(String vorm) {
         List<Vak> vakken = vakRepository.findVakByToetsGegevens_Vorm(vorm);
-        if(vakken.isEmpty()){
+        if (vakken.isEmpty()) {
             return null;
         }
         return vakken;
     }
+
     public Vak findById(String id) {
         Vak vak = this.vakRepository.findById(id)
                 .orElseThrow(() -> new VakNotFoundException());
+
         return vak;
     }
 
-    public Opleiding findOpleidingById(Long id) {
-        return this.opleidingRestTemplate.findById(id);
-    }
-    public List<Vak> findVakByOpleidingId(Long id) {
-        Opleiding opleiding = opleidingRestTemplate.findById(id);
-        List<Vak> vakken = vakRepository.findVakByOpleiding_OpleidingId(opleiding.getOpleidingId());
-        if (vakken.isEmpty()){
-            return null;
-        }
-        return vakken;
-    }
-
-    public List<Opleiding> getOpleidingVakken() {
-        List<Opleiding> OpleidingVakken = new ArrayList<>();
-        this.opleidingRestTemplate.findAll();
-        return OpleidingVakken;
-    }
     public List<Vak> getVakken() {
         List<Vak> vakken = new ArrayList<>();
         this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
         return vakken;
+    }
+
+    public void addStudent(Student student, String id) {
+        Vak vak = this.vakRepository.findById(id).orElseThrow(() -> new VakNotFoundException());
+
+        if (vak != null) {
+            vak.AddStudent(student);
+            vakRepository.save(vak);
+        }
+    }
+
+    public void updateStudent(String StudentId, String naam, String id) {
+        Vak vak = this.vakRepository.findById(id).orElseThrow(() -> new VakNotFoundException());
+
+        if (vak != null) {
+            for (Student student : vak.getStudents()) {
+                if (student.getId().equals(StudentId)) {
+                    student.setNaam(naam);
+                }
+            }
+            vakRepository.save(vak);
+        }
+    }
+
+    public void removeStudent(String studentId, String id) {
+        Vak vak = this.vakRepository.findById(id).orElseThrow(() -> new VakNotFoundException());
+
+        if (vak != null) {
+            vak.getStudents().removeIf(student -> student.getId().equals(studentId));
+            vakRepository.save(vak);
+        }
+    }
+
+    public void studentHeeftPuntenBehaald(String vakid, String studentId)
+    {
+        Vak vak = this.vakRepository.findById(vakid).orElseThrow(() -> new VakNotFoundException());
+
+        if (vak != null) {
+            for (Student student:vak.getStudents()){
+                if(student.getId().equals(studentId)){
+                    this.producer.sendPuntenVanVak(vakid,studentId,vak.getIngangEisen().getEC());
+                }
+            }
+        }
     }
 }

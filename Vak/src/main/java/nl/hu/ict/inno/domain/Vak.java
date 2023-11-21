@@ -15,48 +15,42 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-@Document
+@Document(collection  = "Vak")
 public class Vak {
-//    @Id
-////    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private String id;
     @Id
     private String id;
 
     private String naam;
     private int periode;
-    @Embedded
+    private int beschikbaarPleken;
     private IngangEisen ingangEisen;
-    @Embedded
     private LoopTijd loopTijd;
-    @Embedded
     private ToetsGegevens toetsGegevens;
-    @Embedded
     private HerkansingGegevens herkansingGegevens;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "opleidingId")
 //    @JsonIgnore
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name="id",column = @Column(name="opleidingId")),
-            @AttributeOverride(name="naam",column = @Column(name="opleidingNaam")),
-    })
+//    @Embedded
+//    @AttributeOverrides({
+//            @AttributeOverride(name="id",column = @Column(name="opleidingId")),
+//            @AttributeOverride(name="naam",column = @Column(name="opleidingNaam")),
+//    })
     private Opleiding opleiding;
 
-    @Embedded
-    @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "vak_id"))
-    @AttributeOverrides({
-            @AttributeOverride(name="id",column = @Column(name="studentId")),
-            @AttributeOverride(name="naam",column = @Column(name="studentNaam")),
-    })
+//    @Embedded
+//    @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "vak_id"))
+//    @AttributeOverrides({
+//            @AttributeOverride(name="id",column = @Column(name="studentId")),
+//            @AttributeOverride(name="naam",column = @Column(name="studentNaam")),
+//    })
     private List<Student> students = new ArrayList<>();
 
 
     public Vak() {
     }
 
-    public Vak(String naam, int periode,
+    public Vak(String naam, int periode, int beschikbaarPleken,
                IngangEisen ingangEisen, LoopTijd loopTijd,
                ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,
                Opleiding opleiding, List<Student> students) {
@@ -68,10 +62,11 @@ public class Vak {
         this.herkansingGegevens = herkansingGegevens;
         this.opleiding = opleiding;
         this.students = students;
-
+        this.beschikbaarPleken = beschikbaarPleken;
     }
 
-    public Vak(String id, String naam, int periode, IngangEisen ingangEisen,
+    public Vak(String id, String naam, int periode,int beschikbaarPleken,
+               IngangEisen ingangEisen,
                LoopTijd loopTijd, ToetsGegevens toetsGegevens,
                HerkansingGegevens herkansingGegevens,
                Opleiding opleiding, List<Student> students) {
@@ -84,6 +79,7 @@ public class Vak {
         this.herkansingGegevens = herkansingGegevens;
         this.opleiding = opleiding;
         this.students = students;
+        this.beschikbaarPleken = beschikbaarPleken;
     }
 
     public Opleiding getOpleiding() {
@@ -147,17 +143,34 @@ public class Vak {
         this.herkansingGegevens = herkansingGegevens;
     }
 
-    public List<Student> getStudent() {
+    public int getBeschikbaarPleken() {
+        return beschikbaarPleken;
+    }
+
+    public void setBeschikbaarPleken(int beschikbaarPleken) {
+        this.beschikbaarPleken = beschikbaarPleken;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<Student> getStudents() {
         return students;
     }
 
     public void AddStudent(Student student) {
-        this.students.add(student);
+        if(students.size() < beschikbaarPleken) {
+            beschikbaarPleken = beschikbaarPleken - 1;
+            this.students.add(student);
+        }
     }
 
     public boolean ValidateVakGekoppledAanOpleiding(Opleiding opleiding){
         return opleiding.getOpleidingId() != null;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

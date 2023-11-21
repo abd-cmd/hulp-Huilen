@@ -1,14 +1,16 @@
 package nl.hu.ict.inno.domain.vakGegevens;
 
 import jakarta.persistence.Embeddable;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Embeddable
 public class LoopTijd {
 
     private LocalDate beginDatum;
+
     private LocalDate eindDatum;
 
     public LoopTijd(LocalDate beginDatum, LocalDate eindDatum) {
