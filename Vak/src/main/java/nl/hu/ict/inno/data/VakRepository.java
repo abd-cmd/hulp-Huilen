@@ -16,5 +16,4 @@ public interface VakRepository extends MongoRepository<Vak,String> {
     List<Vak> findVakByToetsGegevens_Vorm( String vorm);
     Vak findByNaam(String naam);
     List<Vak> findByPeriode(int periode);
-
 }

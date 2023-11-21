@@ -7,18 +7,18 @@ import java.util.Objects;
 
 public class Student {
 
-    private Long id;
+    private String id;
     private String naam;
 
     public Student() {
     }
 
-    public Student(Long id, String naam) {
+    public Student(String id, String naam) {
         this.id = id;
         this.naam = naam;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
