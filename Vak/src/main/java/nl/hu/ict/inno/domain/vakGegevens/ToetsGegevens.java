@@ -5,10 +5,10 @@ import jakarta.persistence.Embeddable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-@Embeddable
 public class ToetsGegevens {
 
     private String vorm;
+
     private LocalDate toetsDatum;
     private int toetsPunten;
 

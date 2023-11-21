@@ -22,14 +22,12 @@ public class OpleidingRestTemplate implements OpleidingRepository {
     @Override
     public Opleiding AddVakToOpleiding(Long id,Vak vak) {
 
-        Object data = new Object();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> request = new HttpEntity<Object> (vak,headers);
         String url = "http://localhost:8080/opleidingen/"+id+"/vak";
 
         ResponseEntity<Opleiding> response = restTemplate.postForEntity(url, request, Opleiding.class);
-
 
         return response.getBody();
     }

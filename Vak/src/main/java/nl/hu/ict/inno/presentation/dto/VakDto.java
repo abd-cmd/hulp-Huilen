@@ -7,9 +7,10 @@ import nl.hu.ict.inno.domain.vakGegevens.LoopTijd;
 import nl.hu.ict.inno.domain.vakGegevens.ToetsGegevens;
 
 public class VakDto {
-    public String id;
+
     public String naam;
     public int periode;
+    public int beschikbaarPleken;
     public IngangEisen ingangEisen;
     public LoopTijd loopTijd;
     public ToetsGegevens toetsGegevens;
