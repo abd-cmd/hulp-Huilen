@@ -2,6 +2,7 @@ package nl.hu.inno.humc.monoliet.domain.student;
 
 import jakarta.persistence.*;
 import nl.hu.inno.humc.monoliet.domain.opleiding.Opleiding;
+import nl.hu.inno.humc.monoliet.domain.student.exceptions.InvalidVooropleidingException;
 import nl.hu.inno.humc.monoliet.domain.student.persoonsgegevens.PersoonsGegevens;
 import nl.hu.inno.humc.monoliet.domain.vak.Vak;
 import org.hibernate.annotations.Cascade;
@@ -72,11 +73,9 @@ public class Student {
             if(bsaVanOpleiding == null) {
                 return true;
             }
-
             return bsaVanOpleiding.isBSAAdviesBehaald();
-
         }
-        throw new RuntimeException();
+        throw new InvalidVooropleidingException();
     }
 
     public void geefStudentVrijstellingVoorVak(Vak vak){

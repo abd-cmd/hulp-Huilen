@@ -20,6 +20,7 @@ public class Vak {
     private int studiePunten;
 
     private Opleiding opleiding;
+    private int beschikbarePlekken;
 
     public Vak(
             String id, // Hier word ID meegegeven omdat deze word verkregen vanuit een andere service
@@ -27,7 +28,8 @@ public class Vak {
             LocalDate beginDatum,
             LocalDate eindDatum,
             int studiePunten,
-            Opleiding opleiding
+            Opleiding opleiding,
+            int beschikbarePlekken
     ) {
         this.id = id;
         this.naam = naam;
@@ -35,6 +37,7 @@ public class Vak {
         this.eindDatum = eindDatum;
         this.studiePunten = studiePunten;
         this.opleiding = opleiding;
+        this.beschikbarePlekken = beschikbarePlekken;
     }
 
 

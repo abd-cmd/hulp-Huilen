@@ -1,6 +1,7 @@
 package nl.hu.inno.humc.student.application;
 
 import jakarta.transaction.Transactional;
+import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
 import nl.hu.inno.humc.student.data.VakRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Vak;
@@ -25,35 +26,45 @@ public class VakService {
         return vakRepo.findById(id);
     }
 
+    public void saveNewVak(VakDto vakDto) {
 
-    public void verwerkVak(VakDto vakDto) {
+        Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
+
+        Vak vak = new Vak(
+                vakDto.getId(),
+                vakDto.getNaam(),
+                vakDto.getBeginDatum(),
+                vakDto.getEindDatum(),
+                vakDto.getStudiePunten(),
+                opleiding,
+                vakDto.getBeschikbarePlekken()
+        );
+        vakRepo.save(vak);
+    }
+
+
+    public void updateVak(VakDto vakDto) throws VakBestaatNietException {
 
         Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
         // Todo als opleiding (nog) niet bestaat, via REST checken of er nieuwe opleidingen zijn
 
         Optional<Vak> maybeVak = vakRepo.findById(vakDto.getId());
 
-        if(maybeVak.isEmpty()) {
-            Vak vak = new Vak(
-                    vakDto.getId(),
-                    vakDto.getNaam(),
-                    vakDto.getBeginDatum(),
-                    vakDto.getEindDatum(),
-                    vakDto.getStudiePunten(),
-                    opleiding
-            );
-            vakRepo.save(vak);
-        }
-        else {
-            Vak vak = maybeVak.get();
-            vak.setNaam(vakDto.getNaam());
-            vak.setBeginDatum(vakDto.getBeginDatum());
-            vak.setEindDatum(vakDto.getEindDatum());
-            vak.setStudiePunten(vakDto.getStudiePunten());
-            vak.setOpleiding(opleiding);
-        }
+        if (maybeVak.isEmpty()) throw new VakBestaatNietException();
+
+        Vak vak = maybeVak.get();
+        vak.setNaam(vakDto.getNaam());
+        vak.setBeginDatum(vakDto.getBeginDatum());
+        vak.setEindDatum(vakDto.getEindDatum());
+        vak.setOpleiding(opleiding);
+        vakRepo.save(vak);
+    }
+
+    public void deleteVak(VakDto vakDto){
+
+        Vak vak = vakRepo.findById(vakDto.getId()).orElseThrow();
 
 
-
+        vakRepo.delete(vak);
     }
 }

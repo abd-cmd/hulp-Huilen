@@ -1,6 +1,6 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
-public class InschrijvingDto {
+public class OpleidingInschrijvingDto {
 
     private String studentId;
     private String opleidingId;
@@ -19,6 +19,11 @@ public class InschrijvingDto {
     }
 
     public void setOpleidingId(String opleidingId) {
+        this.opleidingId = opleidingId;
+    }
+
+    public OpleidingInschrijvingDto(String studentId, String opleidingId) {
+        this.studentId = studentId;
         this.opleidingId = opleidingId;
     }
 }

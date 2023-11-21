@@ -10,6 +10,7 @@ public class VakDto {
     private int studiePunten;
 
     private OpleidingDto opleiding;
+    private int beschikbarePlekken;
 
 
 
@@ -35,5 +36,9 @@ public class VakDto {
 
     public OpleidingDto getOpleidingDto() {
         return opleiding;
+    }
+
+    public int getBeschikbarePlekken() {
+        return beschikbarePlekken;
     }
 }

@@ -1,7 +1,7 @@
 package nl.hu.inno.humc.student.presentation;
 
 import nl.hu.inno.humc.student.application.StudentService;
-import nl.hu.inno.humc.student.presentation.dto.InschrijvingDto;
+import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VrijstellingDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
@@ -51,7 +51,7 @@ public class StudentRestController {
     }
 
     @PatchMapping("/opleiding")
-    public ResponseEntity<StudentDto> schrijfInVoorOpleiding(@RequestBody @Validated InschrijvingDto dto){
+    public ResponseEntity<StudentDto> schrijfInVoorOpleiding(@RequestBody @Validated OpleidingInschrijvingDto dto){
         try {
             StudentDto student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
 
@@ -67,7 +67,7 @@ public class StudentRestController {
     @PatchMapping("/vrijstelling")
     public ResponseEntity<StudentDto> vraagVrijstellingAan(@RequestBody @Validated VrijstellingDto dto){
         try {
-            StudentDto student = studentService.vraagVrijstellingAan(dto.getStudentId(), dto.getVakId());
+            StudentDto student = studentService.studentHeeftVakBehaald(dto.getStudentId(), dto.getVakId());
             return new ResponseEntity<>(student, HttpStatus.OK);
 
         } catch (Exception e) {
