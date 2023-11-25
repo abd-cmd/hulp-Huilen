@@ -1,6 +1,7 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
@@ -13,6 +14,8 @@ public class VakDto {
     private int studiePunten;
 
     private OpleidingDto opleiding;
+
+    @JsonProperty("beschikbaarPleken")
     private int beschikbarePlekken;
 
 

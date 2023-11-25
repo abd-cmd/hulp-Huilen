@@ -17,5 +17,8 @@ public class VakInschrijvingDto {
         this.studentId = studentId;
         this.vakId = vakId;
     }
+
+    public VakInschrijvingDto() {
+    }
 }
 
