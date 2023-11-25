@@ -13,7 +13,7 @@ public class VakRestController {
     }
 
     public VakDto getVakById(String id) {
-        return restTemplate.getForObject("http://localhost:8080/vak/" + id, VakDto.class);
+        return restTemplate.getForObject("http://localhost:8082/Vakken/getById/" + id, VakDto.class);
     }
 
 }

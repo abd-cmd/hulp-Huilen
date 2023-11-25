@@ -53,7 +53,7 @@ public class VakService {
 
     public void updateVak(VakDto vakDto) throws VakBestaatNietException {
 
-        Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
+        //Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
         // Todo als opleiding (nog) niet bestaat, via REST checken of er nieuwe opleidingen zijn
 
         Vak vak = getVakById(vakDto.getId());
@@ -61,7 +61,7 @@ public class VakService {
         vak.setNaam(vakDto.getNaam());
         vak.setBeginDatum(vakDto.getBeginDatum());
         vak.setEindDatum(vakDto.getEindDatum());
-        vak.setOpleiding(opleiding);
+        //vak.setOpleiding(opleiding);
         vak.setStudiePunten(vakDto.getStudiePunten());
         vak.setBeschikbarePlekken(vakDto.getBeschikbarePlekken());
         vakRepo.save(vak);
