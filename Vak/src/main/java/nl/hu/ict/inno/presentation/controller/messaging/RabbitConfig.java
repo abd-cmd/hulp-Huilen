@@ -18,7 +18,7 @@ public class RabbitConfig {
 
     @Bean
     public Queue QueueAddStudent(){
-        return QueueBuilder.durable("new-student-queue").build();
+        return QueueBuilder.durable("vak-inschrijving-queue").build();
     }
 
 //    @Bean
