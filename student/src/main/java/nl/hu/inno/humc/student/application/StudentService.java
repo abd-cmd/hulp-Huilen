@@ -87,8 +87,9 @@ public class StudentService {
         Vak vak = vakService.getVakById(dto.getVakId());
 
         if (vak.getBeschikbarePlekken() > 10) {
-            vakService.plaatseNieuweInschrijvingInQueue(dto);
+
             student.schrijfInVoorVak(vak);
+            vakService.plaatseNieuweInschrijvingInQueue(dto);
             studentRepo.save(student);
         }
         else {
@@ -96,8 +97,9 @@ public class StudentService {
             vakService.ManuallyUpdateVakViaRest(dto.getVakId());
             Vak updatedVak = vakService.getVakById(dto.getVakId());
             if(updatedVak.getBeschikbarePlekken() > 0){
-                vakService.plaatseNieuweInschrijvingInQueue(dto);
+
                 student.schrijfInVoorVak(vak);
+                vakService.plaatseNieuweInschrijvingInQueue(dto);
                 studentRepo.save(student);
             }
 
