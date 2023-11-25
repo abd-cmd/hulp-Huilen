@@ -10,6 +10,7 @@ import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.presentation.StudentRabbitProducer;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
+import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.stereotype.Service;
 
@@ -81,10 +82,39 @@ public class StudentService {
         return studentDto;
     }
 
+    public StudentDto schrijfStudentInVoorVak(VakInschrijvingDto dto) throws VakBestaatNietException {
+        Student student = studentRepo.findById(dto.getStudentId()).orElseThrow(StudentBestaatNietException::new);
+        Vak vak = vakService.getVakById(dto.getVakId());
+
+        if (vak.getBeschikbarePlekken() > 10) {
+            vakService.plaatseNieuweInschrijvingInQueue(dto);
+            student.schrijfInVoorVak(vak);
+            studentRepo.save(student);
+        }
+        else {
+            // als er minder dan 10 plekken beschikbaar zijn in dit systeem, check dan nog even via RPC of er daadwerkelijk nog plek is
+            vakService.ManuallyUpdateVakViaRest(dto.getVakId());
+            Vak updatedVak = vakService.getVakById(dto.getVakId());
+            if(updatedVak.getBeschikbarePlekken() > 0){
+                vakService.plaatseNieuweInschrijvingInQueue(dto);
+                student.schrijfInVoorVak(vak);
+                studentRepo.save(student);
+            }
+
+        }
+
+        studentRepo.save(student);
+
+        StudentDto studentDto = StudentDto.Of(student);
+        // Send student to queue so the other microservices can process it
+        studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        return studentDto;
+    }
+
     public StudentDto studentHeeftVakBehaald(String studentId, String vakId) throws VakBestaatNietException {
 
         Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
-        Vak vak = vakService.getVakById(vakId).orElseThrow(VakBestaatNietException::new);
+        Vak vak = vakService.getVakById(vakId);
         student.studentHeeftVakBehaald(vak);
         studentRepo.save(student);
 

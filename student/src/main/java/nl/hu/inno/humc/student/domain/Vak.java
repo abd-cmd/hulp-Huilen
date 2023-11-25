@@ -49,8 +49,12 @@ public class Vak {
         return studiePunten;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return this.id;
+    }
+
+    public int getBeschikbarePlekken() {
+        return beschikbarePlekken;
     }
 
     public void setNaam(String naam) {
@@ -71,5 +75,9 @@ public class Vak {
 
     public void setOpleiding(Opleiding opleiding) {
         this.opleiding = opleiding;
+    }
+
+    public void setBeschikbarePlekken(int beschikbarePlekken) {
+        this.beschikbarePlekken = beschikbarePlekken;
     }
 }

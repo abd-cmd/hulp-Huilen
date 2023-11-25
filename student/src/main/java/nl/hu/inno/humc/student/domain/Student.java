@@ -17,6 +17,7 @@ public class Student {
     private Vooropleiding vooropleiding;
     private List<BSA> bsaList;
     private List<Opleiding> opleidingen;
+    private List<Vak> ingeschrevenVakken;
     private List<Vak> behaaldeVakken;
 
     protected Student(){}
@@ -27,6 +28,7 @@ public class Student {
         }
         this.persoonsGegevens = persoonsGegevens;
         this.vooropleiding = vooropleiding;
+        this.ingeschrevenVakken = new ArrayList<>();
         this.behaaldeVakken = new ArrayList<>();
         this.bsaList = new ArrayList<>();
         this.opleidingen = new ArrayList<>();
@@ -35,10 +37,19 @@ public class Student {
     public void schrijfInVoorOpleiding(Opleiding opleiding){
         if(opleiding == null) throw new IllegalArgumentException("Opleiding mag niet leeg zijn");
         if(this.opleidingen.contains(opleiding)) throw new IllegalArgumentException("Student is al ingeschreven voor deze opleiding");
+        if(!isStudentToegestaanOpOpleiding(opleiding)) throw new IllegalStateException("Student is niet toegestaan op deze opleiding");
+        if(opleiding.getBeschikbarePlekken() <= 0) throw new IllegalStateException("Er zijn geen plekken meer beschikbaar op deze opleiding");
 
-        if(isStudentToegestaanOpOpleiding(opleiding)){
-            this.opleidingen.add(opleiding);
-        }
+        this.opleidingen.add(opleiding);
+    }
+
+    public void schrijfInVoorVak(Vak vak){
+        if(vak == null) throw new IllegalArgumentException("vak mag niet leeg zijn");
+        if(!this.opleidingen.contains(vak.getOpleiding())) throw new IllegalArgumentException("Vak behoort niet tot een opleiding waar de student voor is ingeschreven");
+        if(this.ingeschrevenVakken.contains(vak)) throw new IllegalArgumentException("Student is al ingeschreven voor dit vak");
+        if(this.behaaldeVakken.contains(vak)) throw new IllegalArgumentException("Student heeft dit vak al behaald");
+
+        this.ingeschrevenVakken.add(vak);
     }
 
     private boolean isStudentToegestaanOpOpleiding(Opleiding opleiding) {
@@ -67,7 +78,9 @@ public class Student {
         if(!this.opleidingen.contains(vak.getOpleiding())) throw new IllegalStateException("Student is nog niet ingeschreven voor deze opleiding");
         if(this.behaaldeVakken.contains(vak)) throw new IllegalArgumentException("Student heeft dit vak al behaald");
 
+
         this.behaaldeVakken.add(vak);
+        this.ingeschrevenVakken.remove(vak);
 
         // Voeg de studiepunten van het vak toe aan het bsa van de opleiding
         Optional<BSA> bsaVanOpleiding = this.bsaList.stream().filter(bsa -> bsa.getOpleiding().equals(vak.getOpleiding())).findFirst();
@@ -103,6 +116,14 @@ public class Student {
     }
 
     public List<Vak> getVrijstellingen() {
+        return behaaldeVakken;
+    }
+
+    public List<Vak> getIngeschrevenVakken() {
+        return ingeschrevenVakken;
+    }
+
+    public List<Vak> getBehaaldeVakken() {
         return behaaldeVakken;
     }
 }
