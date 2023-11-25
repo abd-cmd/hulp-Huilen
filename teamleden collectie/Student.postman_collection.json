@@ -94,7 +94,35 @@
 					"response": []
 				},
 				{
-					"name": "Schrijf student in voor opleiding",
+					"name": "Schrijf student in voor vak",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"studentId\": \"6561e355f9b67e56c4413c2d\",\n    \"vakId\": \"398762346823\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/students/vak",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"students",
+								"vak"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Schrijf student in voor opleiding Copy",
 					"request": {
 						"method": "PATCH",
 						"header": [],
