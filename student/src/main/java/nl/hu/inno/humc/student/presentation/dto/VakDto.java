@@ -1,7 +1,10 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDate;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VakDto {
     private String id;
     private String naam;

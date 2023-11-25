@@ -2,6 +2,7 @@ package nl.hu.inno.humc.student.presentation;
 
 import nl.hu.inno.humc.student.application.VakService;
 import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
+import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import org.springframework.amqp.core.Message;
@@ -23,23 +24,20 @@ public class VakRabbitListener {
     }
 
     @RabbitListener(queues = "Add-Vak")
-    public void newVakListener(Message message){
-        System.out.println("Vak toegevoegd");
-        VakDto vakDto = (VakDto) messageConverter.fromMessage(message);
+    public void newVakListener(VakDto vakDto){
+
         vakService.saveNewVak(vakDto);
         System.out.println("Vak toegevoegd");
     }
 
     @RabbitListener(queues = "Update-Vak")
-    public void UpdatedVakListener(Message message) throws VakBestaatNietException {
-        VakDto vakDto = (VakDto) messageConverter.fromMessage(message);
+    public void UpdatedVakListener(VakDto vakDto) throws VakBestaatNietException {
         vakService.updateVak(vakDto);
         System.out.println("Vak geupdate");
     }
 
     @RabbitListener(queues = "Delete-Vak")
-    public void DeletedVakListener(Message message){
-        VakDto vakDto = (VakDto) messageConverter.fromMessage(message);
+    public void DeletedVakListener(VakDto vakDto) throws VakBestaatNietException {
         vakService.deleteVak(vakDto);
         System.out.println("Vak verwijderd");
     }

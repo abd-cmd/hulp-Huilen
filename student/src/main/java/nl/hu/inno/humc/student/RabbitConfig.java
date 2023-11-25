@@ -61,12 +61,14 @@ public class RabbitConfig {
     }
 
     @Bean
-    MessageConverter getConverter(){
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule()); // Voeg ondersteuning toe voor Java 8 datatypes zoals LocalDate
 
-        // Add support for LocalDate objects
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-
+        return objectMapper;
+    }
+    @Bean
+    MessageConverter getConverter(ObjectMapper mapper){
         return new Jackson2JsonMessageConverter(mapper);
     }
 }

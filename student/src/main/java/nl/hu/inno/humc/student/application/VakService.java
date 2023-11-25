@@ -35,7 +35,7 @@ public class VakService {
 
     public void saveNewVak(VakDto vakDto) {
 
-        Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
+        //Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
 
         Vak vak = new Vak(
                 vakDto.getId(),
@@ -43,7 +43,8 @@ public class VakService {
                 vakDto.getBeginDatum(),
                 vakDto.getEindDatum(),
                 vakDto.getStudiePunten(),
-                opleiding,
+                //opleiding
+                null,
                 vakDto.getBeschikbarePlekken()
         );
         vakRepo.save(vak);
