@@ -24,19 +24,23 @@ public class VakRabbitListener {
 
     @RabbitListener(queues = "Add-Vak")
     public void newVakListener(Message message){
+        System.out.println("Vak toegevoegd");
         VakDto vakDto = (VakDto) messageConverter.fromMessage(message);
         vakService.saveNewVak(vakDto);
+        System.out.println("Vak toegevoegd");
     }
 
     @RabbitListener(queues = "Update-Vak")
     public void UpdatedVakListener(Message message) throws VakBestaatNietException {
         VakDto vakDto = (VakDto) messageConverter.fromMessage(message);
         vakService.updateVak(vakDto);
+        System.out.println("Vak geupdate");
     }
 
     @RabbitListener(queues = "Delete-Vak")
     public void DeletedVakListener(Message message){
         VakDto vakDto = (VakDto) messageConverter.fromMessage(message);
         vakService.deleteVak(vakDto);
+        System.out.println("Vak verwijderd");
     }
 }
