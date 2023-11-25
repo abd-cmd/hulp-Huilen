@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "303b732e-1177-4a67-8e9a-6bf0e35f7f32",
+		"name": "Osiris",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "Create Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Insomnia/2023.5.7"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"voornaam\": \"John\",\r\n    \"achternaam\": \"Doe\",\r\n    \"roepnaam\": \"Johny\",\r\n    \"email\": \"johndoe@example.com\",\r\n    \"telefoonNummer\": \"+1234567890\",\r\n    \"geboortedatum\": \"2000-10-10\",\r\n    \"straat\": \"123 Main Street\",\r\n    \"huisnummer\": \"A1\",\r\n    \"postcode\": \"1234PP\",\r\n    \"plaats\": \"City\",\r\n    \"vooropleiding\": \"HAVO\"\r\n}"
+						},
+						"url": {
+							"raw": "{{BASEURL}}/students",
+							"host": [
+								"{{BASEURL}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get students",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/students",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create opleiding",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"naam\": \"Informatica\",\r\n  \"beschrijving\": \"Een opleiding in informatica\",\r\n  \"type\": \"BACHELOR\",\r\n  \"punten\": 180,\r\n  \"locatie\": \"Amsterdam\",\r\n  \"taal\": \"Nederlands\",\r\n  \"startDatum\": \"2023-09-01\",\r\n  \"eindDatum\": \"2026-06-30\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/opleidingen",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"opleidingen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Schrijf student in voor opleiding",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\": 1,\r\n    \"opleidingId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/students/opleiding",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"students",
+								"opleiding"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Vak",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"naam\": \"Vaknaam\",\r\n  \"beginDatum\": \"2023-09-15\",\r\n  \"eindDatum\": \"2023-12-15\",\r\n  \"periode\": 2,\r\n  \"toetsGegevens\": {\r\n      \"vorm\": \"vorm\",\r\n      \"punten\": 5\r\n  },\r\n  \"herkansingGegevens\": {\r\n      \"herkansingsperiode\": 2\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://huilen.huilen.p.azurewebsites.net/Vakken/create",
+							"protocol": "https",
+							"host": [
+								"huilen",
+								"huilen",
+								"p",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"Vakken",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vak behaald",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\": 1,\r\n    \"vakId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL1}}/students/vrijstelling",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"students",
+								"vrijstelling"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL1",
+			"value": "localhost:8080"
+		}
+	]
+}
