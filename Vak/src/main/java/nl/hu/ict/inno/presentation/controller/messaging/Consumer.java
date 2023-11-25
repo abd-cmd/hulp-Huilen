@@ -2,6 +2,7 @@ package nl.hu.ict.inno.presentation.controller.messaging;
 
 import nl.hu.ict.inno.application.VakService;
 import nl.hu.ict.inno.domain.Student;
+import nl.hu.ict.inno.presentation.dto.AddStudentDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
 import org.springframework.stereotype.Component;
@@ -15,9 +16,12 @@ public class Consumer {
         this.vakService = vakService;
     }
 
-    @RabbitListener(queues={"new-student-queue"})
+    @RabbitListener(queues={"vak-inschrijving-queue"})
     public void StudentToAdd(Student student,String Vakid){
-        vakService.addStudent(student,Vakid);
+
+        AddStudentDto addStudentDto = new AddStudentDto(Vakid,student);
+
+        vakService.addStudent(addStudentDto);
     }
     @RabbitListener(queues={"updated-student-queue"})
     public void StudentToUpdate(String studentId,String naam , String id){
