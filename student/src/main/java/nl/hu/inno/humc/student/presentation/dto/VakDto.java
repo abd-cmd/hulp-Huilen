@@ -41,4 +41,6 @@ public class VakDto {
     public int getBeschikbarePlekken() {
         return beschikbarePlekken;
     }
+
+
 }

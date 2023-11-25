@@ -11,16 +11,13 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VakRabbitController {
+public class VakRabbitListener {
 
     private final MessageConverter messageConverter;
     private final VakService vakService;
 
-    private final RabbitTemplate rabbitTemplate;
-
-    public VakRabbitController(MessageConverter messageConverter, VakService vakService, RabbitTemplate rabbitTemplate) {
+    public VakRabbitListener(MessageConverter messageConverter, VakService vakService) {
         this.messageConverter = messageConverter;
-        this.rabbitTemplate = rabbitTemplate;
         this.vakService = vakService;
 
     }
@@ -41,9 +38,5 @@ public class VakRabbitController {
     public void DeletedVakListener(Message message){
         VakDto vakDto = (VakDto) messageConverter.fromMessage(message);
         vakService.deleteVak(vakDto);
-    }
-
-    public void sendInschrijvingToQueue(VakInschrijvingDto vakInschrijvingDto) {
-        rabbitTemplate.convertAndSend("vak-inschrijving-queue", vakInschrijvingDto);
     }
 }

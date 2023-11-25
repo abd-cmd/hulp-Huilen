@@ -5,7 +5,10 @@ import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
 import nl.hu.inno.humc.student.data.VakRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Vak;
+import nl.hu.inno.humc.student.presentation.VakRabbitProducer;
+import nl.hu.inno.humc.student.presentation.VakRestController;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
+import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,14 +19,18 @@ public class VakService {
 
     private final VakRepository vakRepo;
     private final OpleidingService opleidingService;
+    private final VakRabbitProducer vakRabbitProducer;
+    private final VakRestController vakRestController;
 
-    public VakService(VakRepository vakRepo, OpleidingService opleidingService) {
+    public VakService(VakRepository vakRepo, OpleidingService opleidingService, VakRabbitProducer vakRabbitProducer, VakRestController vakRestController) {
         this.vakRepo = vakRepo;
         this.opleidingService = opleidingService;
+        this.vakRabbitProducer = vakRabbitProducer;
+        this.vakRestController = vakRestController;
     }
 
-    public Optional<Vak> getVakById(String id) {
-        return vakRepo.findById(id);
+    public Vak getVakById(String id) throws VakBestaatNietException {
+        return vakRepo.findById(id).orElseThrow(VakBestaatNietException::new);
     }
 
     public void saveNewVak(VakDto vakDto) {
@@ -48,15 +55,14 @@ public class VakService {
         Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
         // Todo als opleiding (nog) niet bestaat, via REST checken of er nieuwe opleidingen zijn
 
-        Optional<Vak> maybeVak = vakRepo.findById(vakDto.getId());
+        Vak vak = getVakById(vakDto.getId());
 
-        if (maybeVak.isEmpty()) throw new VakBestaatNietException();
-
-        Vak vak = maybeVak.get();
         vak.setNaam(vakDto.getNaam());
         vak.setBeginDatum(vakDto.getBeginDatum());
         vak.setEindDatum(vakDto.getEindDatum());
         vak.setOpleiding(opleiding);
+        vak.setStudiePunten(vakDto.getStudiePunten());
+        vak.setBeschikbarePlekken(vakDto.getBeschikbarePlekken());
         vakRepo.save(vak);
     }
 
@@ -66,5 +72,13 @@ public class VakService {
 
 
         vakRepo.delete(vak);
+    }
+
+    public void plaatseNieuweInschrijvingInQueue(VakInschrijvingDto dto) {
+        this.vakRabbitProducer.sendInschrijvingToQueue(dto);
+    }
+
+    public void ManuallyUpdateVakViaRest(String id) throws VakBestaatNietException {
+        updateVak(vakRestController.getVakById(id));
     }
 }

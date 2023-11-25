@@ -1,0 +1,19 @@
+package nl.hu.inno.humc.student.presentation;
+
+import nl.hu.inno.humc.student.presentation.dto.VakDto;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class VakRestController {
+    private final RestTemplate restTemplate;
+
+    public VakRestController() {
+        this.restTemplate = new RestTemplate();
+    }
+
+    public VakDto getVakById(String id) {
+        return restTemplate.getForObject("http://localhost:8080/vak/" + id, VakDto.class);
+    }
+
+}

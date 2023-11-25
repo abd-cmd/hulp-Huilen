@@ -2,12 +2,17 @@ package nl.hu.inno.humc.student.presentation.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Student;
+import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.domain.Vooropleiding;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.toList;
 
 public class StudentDto {
 
@@ -22,8 +27,10 @@ public class StudentDto {
     private String huisnummer;
     private String postcode;
     private String plaats;
-
     private Vooropleiding vooropleiding;
+    private List<String> opleidingen;
+    private List<String> ingeschrevenVakken;
+    private List<String> behaaldeVakken;
 
 
     public static StudentDto Of(Student student) {
@@ -40,6 +47,9 @@ public class StudentDto {
         dto.postcode = student.getPersoonsGegevens().getAdres().getPostcode();
         dto.plaats = student.getPersoonsGegevens().getAdres().getPlaats();
         dto.vooropleiding = student.getVooropleiding();
+        dto.opleidingen = student.getOpleidingen().stream().map(Opleiding::getOpleidingId).collect(toList());
+        dto.ingeschrevenVakken = student.getIngeschrevenVakken().stream().map(Vak::getId).collect(toList());
+        dto.behaaldeVakken = student.getBehaaldeVakken().stream().map(Vak::getId).collect(toList());
         return dto;
     }
 
