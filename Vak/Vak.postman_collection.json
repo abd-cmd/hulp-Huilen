@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "0b42159b-5a9b-428c-9296-9654c102975d",
+		"name": "Vak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15787237"
+	},
+	"item": [
+		{
+			"name": "CreateVak",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"naam\":\"CISQ2\",\r\n    \"periode\":1,\r\n    \"ingangEisen\":{\r\n        \"vrijstelling\":false,\r\n        \"ec\":5\r\n    },\r\n    \"loopTijd\":{\r\n        \"beginDatum\":\"2020-01-01\",\r\n        \"eindDatum\":\"2020-04-01\"\r\n    },\r\n    \"toetsGegevens\":{\r\n        \"vorm\":\"open_vragen\",\r\n        \"toetsDatum\":\"2020-02-01\",\r\n        \"toetsPunten\":70\r\n    },\r\n    \"herkansingGegevens\":{\r\n        \"herkansingsperiode\":1,\r\n        \"herkansingDatum\":\"2020-03-01\",\r\n        \"herkansingPunten\":70\r\n    },\r\n    \"opleidingId\":102\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/Vakken/create",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateVak",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"naam\":\"CISQ3\",\r\n    \"periode\":1,\r\n    \"ingangEisen\":{\r\n        \"vrijstelling\":false,\r\n        \"ec\":5\r\n    },\r\n    \"loopTijd\":{\r\n        \"beginDatum\":\"2020-01-01\",\r\n        \"eindDatum\":\"2020-04-01\"\r\n    },\r\n    \"toetsGegevens\":{\r\n        \"vorm\":\"open_vragen\",\r\n        \"toetsDatum\":\"2020-02-01\",\r\n        \"toetsPunten\":70\r\n    },\r\n    \"herkansingGegevens\":{\r\n        \"herkansingsperiode\":1,\r\n        \"herkansingDatum\":\"2020-03-01\",\r\n        \"herkansingPunten\":70\r\n    },\r\n    \"opleidingId\":102\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/Vakken/update/654a4cd956d66a336706724a",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"update",
+						"654a4cd956d66a336706724a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteVak",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/Vakken/Delete/654a4cd956d66a336706724a",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"Delete",
+						"654a4cd956d66a336706724a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOpleidingById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/Vakken/getOpleiding/102",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"getOpleiding",
+						"102"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindVakById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/Vakken/getById/654a4cd956d66a336706724a",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"getById",
+						"654a4cd956d66a336706724a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindAlleVakken",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/Vakken/getAlleVakken",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"getAlleVakken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindVakkenOpleiding",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/Vakken/getVakByOpleidingId/102",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"getVakByOpleidingId",
+						"102"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAlleVakken",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/Vakken/DeleteAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"DeleteAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindByToetsGegevens",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "FindByPeriode",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "puntenSturen",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"VakId\":\"\",\r\n    \"studentId\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/Vakken/puntenSturen",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"Vakken",
+						"puntenSturen"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
