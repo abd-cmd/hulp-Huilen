@@ -1,10 +1,11 @@
 package nl.hu.ict.inno.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.OneToMany;
 
 import java.util.Objects;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Student {
 
     private String id;

@@ -9,9 +9,9 @@ public class VakInschrijvingDto {
 
     private String vakId;
     @JsonProperty("studentDto")
-    private Student student;
+    private StudentDto student;
 
-    public VakInschrijvingDto(String vakId, Student student) {
+    public VakInschrijvingDto(StudentDto studentDto,String vakId) {
         this.vakId = vakId;
         this.student = student;
     }
@@ -23,7 +23,7 @@ public class VakInschrijvingDto {
         return vakId;
     }
 
-    public Student getStudent() {
+    public StudentDto getStudent() {
         return student;
     }
 }
