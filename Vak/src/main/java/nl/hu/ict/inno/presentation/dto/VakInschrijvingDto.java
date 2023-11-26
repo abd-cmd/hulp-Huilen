@@ -7,13 +7,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class VakInschrijvingDto {
 
     private String vakId;
-    @JsonProperty("studentDto")
-    private StudentDto studentDto;
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    private String studentId;
+
+    public String getVoornaam() {
+        return voornaam;
+    }
+
+    private String voornaam;
 
 
-    public VakInschrijvingDto(StudentDto studentDto,String vakId) {
+    public VakInschrijvingDto(String vakId, String studentId, String voornaam) {
         this.vakId = vakId;
-        this.studentDto = studentDto;
+        this.studentId = studentId;
+        this.voornaam = voornaam;
+
     }
 
 
@@ -24,7 +36,4 @@ public class VakInschrijvingDto {
         return vakId;
     }
 
-    public StudentDto getStudentDto() {
-        return studentDto;
-    }
 }

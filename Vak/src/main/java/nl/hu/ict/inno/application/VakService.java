@@ -127,7 +127,7 @@ public class VakService {
     public void addStudent(VakInschrijvingDto vakInschrijvingDto) {
         Vak vak = this.vakRepository.findById(vakInschrijvingDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
 
-        Student student = new Student(vakInschrijvingDto.getStudentDto().getId(),vakInschrijvingDto.getStudentDto().getNaam());
+        Student student = new Student(vakInschrijvingDto.getStudentId(),vakInschrijvingDto.getVoornaam());
 
         if (vak != null) {
             vak.AddStudent(student);

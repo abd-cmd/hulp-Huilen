@@ -18,6 +18,8 @@ public class Consumer {
 
     @RabbitListener(queues={"vak-inschrijving-queue"})
     public void StudentToAdd(VakInschrijvingDto vakInschrijvingDto){
+        System.out.println("vak inschrijving");
+        System.out.println(vakInschrijvingDto.getStudentId());
         vakService.addStudent(vakInschrijvingDto);
     }
     @RabbitListener(queues={"updated-student-queue"})
