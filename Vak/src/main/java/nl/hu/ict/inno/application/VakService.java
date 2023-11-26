@@ -12,8 +12,7 @@ import nl.hu.ict.inno.domain.vakGegevens.IngangEisen;
 import nl.hu.ict.inno.domain.vakGegevens.LoopTijd;
 import nl.hu.ict.inno.domain.vakGegevens.ToetsGegevens;
 import nl.hu.ict.inno.presentation.controller.messaging.Producer;
-import nl.hu.ict.inno.presentation.controller.messaging.SharedMessage;
-import nl.hu.ict.inno.presentation.dto.AddStudentDto;
+import nl.hu.ict.inno.presentation.dto.VakInschrijvingDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -125,11 +124,11 @@ public class VakService {
         return vakken;
     }
 
-    public void addStudent(AddStudentDto addStudentDto) {
-        Vak vak = this.vakRepository.findById(addStudentDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
+    public void addStudent(VakInschrijvingDto vakInschrijvingDto) {
+        Vak vak = this.vakRepository.findById(vakInschrijvingDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
 
         if (vak != null) {
-            vak.AddStudent(addStudentDto.getStudent());
+            vak.AddStudent(vakInschrijvingDto.getStudent());
             vakRepository.save(vak);
         }
     }

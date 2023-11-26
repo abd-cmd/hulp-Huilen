@@ -14,19 +14,19 @@ public class Producer {
     }
 
     public void sendNieuweVak(Vak vak) {
-        rabbitTemplate.convertAndSend("vak","Add-Vak",vak);
+        rabbitTemplate.convertAndSend("Add-Vak",vak);
     }
     public void sendUpdatedVak(Vak vak) {
-        rabbitTemplate.convertAndSend("vak","Update-Vak",vak);
+        rabbitTemplate.convertAndSend("Update-Vak",vak);
     }
     public void sendDeletedVakId(String id) {
-        rabbitTemplate.convertAndSend("vak","Delete-Vak",id);
+        rabbitTemplate.convertAndSend("Delete-Vak",id);
     }
     public void sendPuntenVanVak(String vakid,String studentId ) {
 
         StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId);
 
-        rabbitTemplate.convertAndSend("vak","sendPuntenVak",studentPuntenDto);
+        rabbitTemplate.convertAndSend("sendPuntenVak",studentPuntenDto);
     }
 }
 
