@@ -99,7 +99,8 @@ public class StudentService {
             if(updatedVak.getBeschikbarePlekken() > 0){
 
                 student.schrijfInVoorVak(vak);
-                vakService.plaatseNieuweInschrijvingInQueue(dto);
+                StudentDto studentDto = StudentDto.Of(student);
+                vakService.plaatseNieuweInschrijvingInQueue(new VakInschrijvingDto(studentDto, dto.getVakId()));
                 studentRepo.save(student);
             }
 
