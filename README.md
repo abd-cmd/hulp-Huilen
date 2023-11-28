@@ -1,70 +1,37 @@
-# HULP Start Repository
+# Osiris microservices
+In deze repo staan de microservices die samen Osiris vormen.
+De applicatie is te starten door eerst `docker-compose up`  te runnen in de root van de repo.
+Hierna kan elke microservice apart gestart worden op de localhost.
 
-Bij deze de start-repository voor de HULP opdracht.
+## Student microservice (Jan)
+De student microservice is te bereiken op `localhost:8083`.
+Deze service is in staat om studenten te registreren, en om deze in te schrijven voor opleidingen en vakken uit de vak microservice.
+Het inschrijven voor opleidingen gebeurt nu nog met dummy data, omdat koppeling met de service van Abuzar nog niet aan bod is gekomen.
 
-In deze repository wordt er verteld qua programmeren hoe de Monoliet opgebouwed wordt. 
-Boverdien wordt er laten zien wat voor technieken gebruikt worden en wat voor programmer taal gebruikt wordt om code te implementeren.  
-Daarnaast wordt er getoond wat de use cases zijn die geïmplementeerd zijn en die behersed worden. Het Vak class is gekozen in dit branch 
-van het hele domain. Er is ook gebruik gemaakt van de Opleiding class in andere branch die aangesproken moet worden met het vak class
+De service praat met de vak microservice via messaging, en met RPC.
 
-Er is een controller package gemaakt die gebruikt wordt als een infra structure. Dat houdt in dat het nu mogelijk is om vak te beheren.
-Hiermee wordt bedoeldt dat het nu mogelijk is om vak te creeren , wijzgen , updaten en halen. boviendien is er een application package die 
-die de benoemde cases de mogelijkheid geeft om geactiveerd te worden dus in dit geval spreekt de controller de application package aan.
-Daarnaast is er een data package die de application package aanspreekt en dit geeft toegang tot de database.
+### Endpoint en queues
+De service heeft de volgende endpoints:
+- `POST /student` om een student te registreren
+- `GET /student/{id}` om een student op te halen
+- `GET /student` om alle studenten op te halen
+- `DELETE /student/{id}` om een student te verwijderen
+- `PATCH /student/vak` om een student in te schrijven voor een vak
+- `PATCH /student/opleiding` om een student in te schrijven voor een opleiding
 
-De applicatie is ook ondersteuned met unit tests. Het doel van unit-testen is om te valideren dat elke eenheid van de software werkt zoals bedoeld en aan de vereisten voldoet.
-Bovendien is de applicatie ondersteund met integratie tests om te checken of use cases werkend zijn.
+De service produceert berichten op de volgende queues:
+- `new-student-queue` Hier komen berichten op als er een nieuwe student is geregistreerd
+- `updated-student-queue` Hier komen berichten op als er een student is geupdate
+- `deleted-student-queue` Hier komen berichten op als er een student is verwijderd
+- `opleiding-inschrijving-queue` Hier komen berichten op als er een student is ingeschreven voor een opleiding
+- `vak-inschrijving-queue` Hier komen berichten op als er een student is ingeschreven voor een vak
 
-# De technieken:
-* Database : Postgressql
-* DBMS : Pgadmin
-* Programmeer Taal: JAVA
-* Application Framework : Springboot
-* Versiebeer : Github
-* Docker: Docker compose file voor de database 
-
-Voor database is er gebruik gemaakt van Postgressql. het is een specifiek softwaretool of systeem 
-waarmee u databases in uw softwaretoepassingen kunt maken, beheren en ermee kunt communiceren. 
-
-De programmer taal java wordt gebruikt in de springboot application omdat het betrouwbaar en veelzijdig hulpmiddel is om softwareapplicaties te bouwen.
-
-Voor framewwork is er gebruik gemaakt van Springboot. Spring Boot is een framework waarmee ontwikkelaars softwareapplicaties gemakkelijker kunnen maken en uitvoeren
-Spring Boot biedt automatische configuratie voor veel algemene Spring Framework-componenten,
-waardoor de hoeveelheid standaardcode die ontwikkelaars moeten schrijven wordt verminderd. 
-
-Github is een versiebeheer waarin de springboot applicatie met de code ingestopt wordt. Bovendien toon github hoe het werk opgebouwed wordt tijdnes ontwikkling.
-
-Er is ook een collicetie van Postman requests die demonstreert Hoe het toegevoegd , gewijzgd,verwijdeerd of gehaald wordt.
-Met Postman is het mogelijk om de benoemde cases te testen.
-
-Na opstarten kun je alvast kijken op
+De service consumeert berichten van de volgende queues:
+- `new-opleding-queue` Hier komen berichten op als er een nieuwe opleiding is aangemaakt vanuit de opleiding microservice
+- `Add-Vak` Hier komen berichten op als er een vak is aangemaakt vanuit de vak microservice
+- `Update-Vak` Hier komen berichten op als er een vak is geupdate vanuit de vak microservice
+- `Delete-Vak` Hier komen berichten op als er een vak is verwijderd vanuit de vak microservice
+- `SendPuntenVak` Hier komen berichten op als een student een vak behaald heeft
 
 
-* http://localhost:5050 voor de DBMS, login is admin@admin.com en wachtwoord is admin.
-* login voor postgress is is username postgres en wachtwoord postgres
-* [Azure deploy](https://huilen.huilen.p.azurewebsites.net)
----
-# Splitsing monoliet (Osiris)
-Wij hebben er voor gekozen om de splitsing aan te houden die ook als suggestie op canvas staat
 
-> * Studenten in/uitschrijven (met allerhande regeltjes). 
-Denk hierbij aan vooropleiding, BSAs, herkomst. Bij uitschrijving kan er misschieen een deelgraad (propedeuse, bachelor, minor, etc.) 
-behaald worden. Een decaan kan voor sommige vereisten juist weer vrijstellingen verlenen.
-
->* Vakken beheren, en hoe de cijfers opgebouwd zijn (toetsen, herkansingen, vervangende opdrachten etc.)
-  Per jaar kunnen er uiteraard andere regels gelden, maar standaard is het ‘hetzelfde als vorig jaar’
-
->* Opleidingen beheren, en welke vakken er nodig zijn om het te halen (vervangingen, bezemvakken, vrijstellingen etc.).
-
-### Jan
-Ik heb de splitsing over de studenten op me genomen, en heb geprobeerd om me hier aan de DDD principes te houden,
-dit is vooral in de persoonsgegevens terug te vinden. 
-
-## Abuzar
-Ik heb het domein opleiding gemaakt. Binnen dit domein kan een opleiding bestaan uit meerdere vakken.
-
-### Het gebruik van collega module
-Ik maak gebruik van het domein "vak" dit is ontwikkeld door Abdul, binnen een opleiding kunnen verschillende vakken vallen. Daarom heb ik een lijst met vakken voor de opleiding opgesteld. In deze lijst zijn twee methodes geïmplementeerd: één om een vak toe te voegen ('add') en een andere om een vak te verwijderen ('remove').
-
-### Besteede aandacht
-Ik heb mij voornamelijk gericht op de implementatie van het domein en de overwegingen bij het opzetten van het Docker Compose-bestand en het creëren van een eventuele service voor de monoliet. Helaas heb ik niet voldoende aandacht kunnen besteden aan de unit tests
