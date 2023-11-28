@@ -3,15 +3,12 @@ package nl.hu.inno.humc.student.application;
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
 import nl.hu.inno.humc.student.data.VakRepository;
-import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Vak;
-import nl.hu.inno.humc.student.presentation.VakRabbitProducer;
-import nl.hu.inno.humc.student.presentation.VakRestController;
+import nl.hu.inno.humc.student.presentation.vak.VakRabbitProducer;
+import nl.hu.inno.humc.student.presentation.vak.VakRestController;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Transactional

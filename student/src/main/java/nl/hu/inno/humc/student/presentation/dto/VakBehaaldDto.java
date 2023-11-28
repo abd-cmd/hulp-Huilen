@@ -1,6 +1,6 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
-public class VrijstellingDto {
+public class VakBehaaldDto {
     private String studentId;
     private String vakId;
 
