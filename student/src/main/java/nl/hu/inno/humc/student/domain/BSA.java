@@ -1,15 +1,10 @@
 package nl.hu.inno.humc.student.domain;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
-
 import java.time.LocalDate;
 
-@Document
+
 public class BSA {
 
-    @MongoId
-    private String id;
     private int minVerplichteStudiePunten;
     private int behaaldeStudiepunten;
     private LocalDate ingangsDatum;
@@ -43,10 +38,6 @@ public class BSA {
 
     public Opleiding getOpleiding() {
         return opleiding;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public int getMinVerplichteStudiePunten() {
