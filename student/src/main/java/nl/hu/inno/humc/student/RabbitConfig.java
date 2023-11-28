@@ -57,7 +57,7 @@ public class RabbitConfig {
     // opleiding queues
     @Bean
     public Queue opleidingQueue(){
-        return QueueBuilder.durable("opleiding-queue").build();
+        return QueueBuilder.durable("new-opleiding-queue").build();
     }
 
     @Bean
