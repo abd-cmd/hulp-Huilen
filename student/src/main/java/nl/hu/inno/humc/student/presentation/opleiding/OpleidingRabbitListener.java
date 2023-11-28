@@ -18,7 +18,12 @@ public class OpleidingRabbitListener {
 
     @RabbitListener(queues = "new-opleiding-queue")
     public void newOrUpdatedOpleidingListener(OpleidingDto opleidingDto){
-        opleidingService.verwerkOpleiding(opleidingDto);
+        try {
+            opleidingService.verwerkOpleiding(opleidingDto);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
 }

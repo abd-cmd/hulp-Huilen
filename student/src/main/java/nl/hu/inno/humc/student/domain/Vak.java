@@ -80,4 +80,17 @@ public class Vak {
     public void setBeschikbarePlekken(int beschikbarePlekken) {
         this.beschikbarePlekken = beschikbarePlekken;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vak vak = (Vak) o;
+        return studiePunten == vak.studiePunten && beschikbarePlekken == vak.beschikbarePlekken && Objects.equals(id, vak.id) && Objects.equals(naam, vak.naam) && Objects.equals(beginDatum, vak.beginDatum) && Objects.equals(eindDatum, vak.eindDatum) && Objects.equals(opleiding, vak.opleiding);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, naam, beginDatum, eindDatum, studiePunten, opleiding, beschikbarePlekken);
+    }
 }

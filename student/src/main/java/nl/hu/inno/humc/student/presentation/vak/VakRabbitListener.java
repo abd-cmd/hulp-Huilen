@@ -25,20 +25,33 @@ public class VakRabbitListener {
 
     @RabbitListener(queues = "Add-Vak")
     public void newVakListener(VakDto vakDto){
-
-        vakService.saveNewVak(vakDto);
-        System.out.println("Vak toegevoegd");
+        try {
+            vakService.saveNewVak(vakDto);
+            System.out.println("Vak toegevoegd");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @RabbitListener(queues = "Update-Vak")
     public void UpdatedVakListener(VakDto vakDto) throws VakBestaatNietException {
-        vakService.updateVak(vakDto);
-        System.out.println("Vak geupdate");
+        try {
+            vakService.updateVak(vakDto);
+            System.out.println("Vak geupdate");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @RabbitListener(queues = "Delete-Vak")
     public void DeletedVakListener(String id) throws VakBestaatNietException {
-        vakService.deleteVak(id);
-        System.out.println("Vak verwijderd");
+        try{
+            vakService.deleteVak(id);
+            System.out.println("Vak verwijderd");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }

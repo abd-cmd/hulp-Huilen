@@ -23,7 +23,10 @@ public class StudentRabbitListener {
 
     @RabbitListener(queues = "sendPuntenVak")
     public void behaaldeStudiepuntenListener(VakBehaaldDto vakBehaaldDto) throws VakBestaatNietException {
-        System.out.println("hello");
-        this.studentService.studentHeeftVakBehaald(vakBehaaldDto.getStudentId(), vakBehaaldDto.getVakId());
+        try {
+            this.studentService.studentHeeftVakBehaald(vakBehaaldDto.getStudentId(), vakBehaaldDto.getVakId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

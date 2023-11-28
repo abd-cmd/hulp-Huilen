@@ -23,36 +23,36 @@ public class StudentRestController {
     }
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<StudentDto> getStudent(@PathVariable String studentId) {
+    public ResponseEntity<?> getStudent(@PathVariable String studentId) {
         try {
             StudentDto student = studentService.getStudentById(studentId);
             return new ResponseEntity<>(student, HttpStatus.OK);
 
         } catch (StudentBestaatNietException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentDto>> getAllStudents() {
+    public ResponseEntity<?> getAllStudents() {
         List<StudentDto> students = studentService.getAllStudents();
 
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
+    public @ResponseBody ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto) {
         try {
             StudentDto createdStudent = studentService.registreerStudent(studentDto);
             return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PatchMapping("/opleiding")
-    public ResponseEntity<StudentDto> schrijfInVoorOpleiding(@RequestBody @Validated OpleidingInschrijvingDto dto){
+    public ResponseEntity<?> schrijfInVoorOpleiding(@RequestBody @Validated OpleidingInschrijvingDto dto){
         try {
             StudentDto student = studentService.schrijfStudentInVoorOpleiding(dto.getStudentId(), dto.getOpleidingId());
 
@@ -61,12 +61,12 @@ public class StudentRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PatchMapping("/vak")
-    public ResponseEntity<StudentDto> schrijfInVoorVak(@RequestBody @Validated VakInschrijvingDto dto){
+    public ResponseEntity<?> schrijfInVoorVak(@RequestBody @Validated VakInschrijvingDto dto){
         try {
             StudentDto student = studentService.schrijfStudentInVoorVak(dto);
 
@@ -75,18 +75,18 @@ public class StudentRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PatchMapping("/vrijstelling")
-    public ResponseEntity<StudentDto> vakIsBehaald(@RequestBody @Validated VakBehaaldDto dto){
+    public ResponseEntity<?> vakIsBehaald(@RequestBody @Validated VakBehaaldDto dto){
         try {
             StudentDto student = studentService.studentHeeftVakBehaald(dto.getStudentId(), dto.getVakId());
             return new ResponseEntity<>(student, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }
