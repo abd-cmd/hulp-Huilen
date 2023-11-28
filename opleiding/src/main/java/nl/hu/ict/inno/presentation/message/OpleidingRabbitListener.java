@@ -18,7 +18,7 @@ public class OpleidingRabbitListener {
         this.opleidingService = opleidingService;
     }
 
-    @RabbitListener(queues = "addVakToOpleiding")
+    @RabbitListener(queues = "Add-Vak")
     public void voegVakListener(Message message){
         VakOpleidingDto vakOpleidingDto = (VakOpleidingDto) messageConverter.fromMessage(message);
         this.opleidingService.addVakToOpleiding(vakOpleidingDto.opleidingId(), vakOpleidingDto.vakId());
