@@ -1,14 +1,20 @@
 package nl.hu.ict.inno.domain;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
 
 public class OpleidingDetails {
 
     private String beschrijving;
+
+    @JsonValue
     private Type type;
     private Long punten;
     private String locatie;
     private String taal;
+
+    public OpleidingDetails() {
+    }
 
     public OpleidingDetails(String beschrijving, Type type, Long punten, String locatie, String taal) {
         this.beschrijving = beschrijving;

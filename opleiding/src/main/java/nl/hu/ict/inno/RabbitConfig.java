@@ -1,6 +1,7 @@
 package nl.hu.ict.inno;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -25,8 +26,15 @@ public class RabbitConfig {
         return QueueBuilder.durable("deleted-opleiding-queue").build();
     }
     @Bean
-    public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        return objectMapper;
+    }
+    @Bean
+    MessageConverter getConverter(ObjectMapper mapper){
+        return new Jackson2JsonMessageConverter(mapper);
     }
 
 }

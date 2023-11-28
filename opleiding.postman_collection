@@ -1,0 +1,186 @@
+{
+	"info": {
+		"_postman_id": "39146398-ec4c-4104-8001-06a5a1230b86",
+		"name": "Osiris",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17394738"
+	},
+	"item": [
+		{
+			"name": "opleiding",
+			"item": [
+				{
+					"name": "Get All Opleidingen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/opleidingen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"opleidingen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Opleiding By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8085/opleidingen/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"opleidingen",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Opleiding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vakken\": [],\n    \"naam\": \"Dans\",\n    \"periode\": {\n        \"startDatum\": \"2023-09-01\",\n        \"eindDatum\": \"2024-06-30\"\n    },\n    \"inschrijfDatum\": {\n        \"datum\": \"2023-04-15\"\n    },\n    \"opleidingDetails\": {\n        \"beschrijving\": \"Bacheloropleiding Informatica\",\n        \"type\": \"BACHELOR\",\n        \"punten\": 180,\n        \"locatie\": \"utrecht\",\n        \"taal\": \"dutch\"\n    }\n}\n"
+						},
+						"url": {
+							"raw": "localhost:8085/opleidingen",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"opleidingen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Opleiding",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vakken\": [],\n    \"naam\": \"Informatica\",\n    \"periode\": {\n        \"startDatum\": \"2023-09-01\",\n        \"eindDatum\": \"2024-06-30\"\n    },\n    \"inschrijfDatum\": {\n        \"datum\": \"2023-04-15\"\n    },\n    \"opleidingDetails\": {\n        \"beschrijving\": \"Bacheloropleiding Informatica\",\n        \"type\": \"BACHELOR\",\n        \"punten\": 180,\n        \"locatie\": \"utrecht\",\n        \"taal\": \"dutch\"\n    }\n}\n"
+						},
+						"url": {
+							"raw": "localhost:8085/opleidingen/28986180-cd2e-49a0-9317-b89f0cd55026",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"opleidingen",
+								"28986180-cd2e-49a0-9317-b89f0cd55026"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Opleiding",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8085/opleidingen/28986180-cd2e-49a0-9317-b89f0cd55026",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"opleidingen",
+								"28986180-cd2e-49a0-9317-b89f0cd55026"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Vak to Opleiding",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8085/opleidingen/1/vak/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"opleidingen",
+								"1",
+								"vak",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Vak from Opleiding",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8085/opleidingen/1/vak/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"opleidingen",
+								"1",
+								"vak",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL1",
+			"value": "localhost:8080"
+		},
+		{
+			"key": "baseUrl",
+			"value": "localhost:8080"
+		}
+	]
+}
