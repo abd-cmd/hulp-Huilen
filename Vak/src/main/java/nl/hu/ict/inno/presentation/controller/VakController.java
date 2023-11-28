@@ -130,19 +130,27 @@ public class VakController {
         }
     }
 
-    @PostMapping("/addVakToOpleiding/")
-    public void addVakToOpleiding(@Validated @RequestBody AddVakToOpleiding addVakToOpleiding) {
+    @PostMapping("/addVakToOpleiding")
+    public Opleiding addVakToOpleiding(@Validated @RequestBody AddVakToOpleiding addVakToOpleiding) {
         try {
-            this.vakService.addVakToOpeliding(addVakToOpleiding.getVakId(),addVakToOpleiding.getOpleidingId());
+            return this.vakService.addVakToOpeliding(addVakToOpleiding.getVakId(),addVakToOpleiding.getOpleidingId());
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
     }
 
-    @GetMapping("/findOpleidingByNaam/{naam}")
-    public Opleiding findOpleidingByNaam(@PathVariable("naam") String naam) {
+    @GetMapping("/findOpleidingById/{id}")
+    public Opleiding findOpleidingById(@PathVariable("id") String id) {
         try {
-            return this.vakService.findOpleidingByNaam(naam);
+            return this.vakService.findOpleidingByNaam(id);
+        } catch (VakNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+    @GetMapping("/getAllOpleidingen")
+    public List<Opleiding> getAllOpleidingen() {
+        try {
+            return this.vakService.getOpleidingen();
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }

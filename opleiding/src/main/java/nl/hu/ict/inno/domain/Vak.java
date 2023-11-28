@@ -20,8 +20,6 @@ public class Vak {
     private LocalDate beginDatum;
     private LocalDate eindDatum;
     private int studiePunten;
-
-
     private Opleiding opleiding;
     private int beschikbarePlekken;
 

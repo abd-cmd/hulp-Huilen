@@ -57,12 +57,18 @@ public class OpleidingRestController {
         return ResponseEntity.ok(vak);
     }
 
-    @PostMapping("/{id}/vak/{vakId}")
-    public ResponseEntity<OpleidingDto> addVakToOpleiding(@PathVariable String id, @PathVariable String vakId) {
-        OpleidingDto opleiding = opleidingService.addVakToOpleiding(id, vakId);
+//    @PostMapping("/{id}/vak/{vakId}")
+//    public ResponseEntity<OpleidingDto> addVakToOpleiding(@PathVariable String id, @PathVariable String vakId) {
+//        OpleidingDto opleiding = opleidingService.addVakToOpleiding(id, vakId);
+//        return ResponseEntity.ok(opleiding);
+//    }
+
+    @PostMapping("/{id}/vak")
+    public ResponseEntity<OpleidingDto> addVakToOpleiding(@PathVariable("id") String id,@Validated @RequestBody Vak vak) {
+        System.out.println(vak.getId());
+        OpleidingDto opleiding = opleidingService.addVakToOpleiding(id, vak);
         return ResponseEntity.ok(opleiding);
     }
-
 
     @DeleteMapping("/{id}/vak/{vakId}")
     public ResponseEntity<OpleidingDto> removeVakFromOpleiding(@PathVariable String id, @PathVariable String vakId) {
