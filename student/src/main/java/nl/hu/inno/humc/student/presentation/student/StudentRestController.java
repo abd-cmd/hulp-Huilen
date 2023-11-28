@@ -1,10 +1,10 @@
-package nl.hu.inno.humc.student.presentation;
+package nl.hu.inno.humc.student.presentation.student;
 
 import nl.hu.inno.humc.student.application.StudentService;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
-import nl.hu.inno.humc.student.presentation.dto.VrijstellingDto;
+import nl.hu.inno.humc.student.presentation.dto.VakBehaaldDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,7 +80,7 @@ public class StudentRestController {
     }
 
     @PatchMapping("/vrijstelling")
-    public ResponseEntity<StudentDto> vraagVrijstellingAan(@RequestBody @Validated VrijstellingDto dto){
+    public ResponseEntity<StudentDto> vakIsBehaald(@RequestBody @Validated VakBehaaldDto dto){
         try {
             StudentDto student = studentService.studentHeeftVakBehaald(dto.getStudentId(), dto.getVakId());
             return new ResponseEntity<>(student, HttpStatus.OK);

@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.student.presentation;
+package nl.hu.inno.humc.student.presentation.vak;
 
 import nl.hu.inno.humc.student.application.VakService;
 import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;

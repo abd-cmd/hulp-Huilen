@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.student.application.exceptions.OpleidingBestaatNietException;
 import nl.hu.inno.humc.student.data.OpleidingRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
-import nl.hu.inno.humc.student.presentation.OpleidingRabbitProducer;
+import nl.hu.inno.humc.student.presentation.opleiding.OpleidingRabbitProducer;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingDto;
 import org.springframework.stereotype.Service;
