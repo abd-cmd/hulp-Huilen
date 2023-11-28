@@ -25,10 +25,13 @@ public class OpleidingService {
     private final OpleidingRabbitProducer opleidingRabbitProducer;
     private final VakRepository vakRepository;
 
-    public OpleidingService(OpleidingRepository opleidingRepository, OpleidingRabbitProducer opleidingRabbitProducer, VakRepository vakRepository) {
+    private final VakService vakService;
+
+    public OpleidingService(OpleidingRepository opleidingRepository, OpleidingRabbitProducer opleidingRabbitProducer, VakRepository vakRepository, VakService vakService) {
         this.opleidingRepository = opleidingRepository;
         this.opleidingRabbitProducer = opleidingRabbitProducer;
         this.vakRepository = vakRepository;
+        this.vakService = vakService;
     }
 
     public List<OpleidingDto> getAllOpleidingen() {
@@ -93,8 +96,13 @@ public class OpleidingService {
         Opleiding opleiding = opleidingRepository.findById(opleidingId)
                 .orElseThrow(() -> new OpleidingNotFoundException(opleidingId));
 
-        Vak vak = vakRepository.findById(vakId)
-                .orElseThrow(() -> new VakNotFoundException(vakId));
+        Vak vak;
+        try {
+            vak = vakRepository.findById(vakId)
+                    .orElseThrow(() -> new VakNotFoundException(vakId));
+        } catch (VakNotFoundException e) {
+            vak = vakService.getVak(vakId);
+        }
 
         opleiding.getVakken().add(vak);
         vakRepository.save(vak);

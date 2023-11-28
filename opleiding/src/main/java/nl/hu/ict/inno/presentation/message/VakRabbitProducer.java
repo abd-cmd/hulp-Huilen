@@ -14,12 +14,7 @@ public class VakRabbitProducer {
 
     }
 
-    public void sendNewVakToQueue(VakDto vakDto) {
+    public void sendAddVakToQueue(VakDto vakDto) {
     }
 
-    public void sendUpdatedVakToQueue(VakDto vakDto) {
-    }
-
-    public void sendDeletedVakToQueue(String vakId) {
-    }
 }
