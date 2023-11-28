@@ -5,8 +5,8 @@ services:
     restart: always
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5673:5673"
+      - "15673:15673"
     environment:
       RABBITMQ_NODENAME: bep3-rabbitmq-node
 

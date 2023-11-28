@@ -59,7 +59,7 @@ public class OpleidingRestController {
 
     @PostMapping("/{id}/vak/{vakId}")
     public ResponseEntity<OpleidingDto> addVakToOpleiding(@PathVariable String id, @PathVariable String vakId) {
-        OpleidingDto opleiding = opleidingService.addVakToOpleiding(id, id);
+        OpleidingDto opleiding = opleidingService.addVakToOpleiding(id, vakId);
         return ResponseEntity.ok(opleiding);
     }
 
