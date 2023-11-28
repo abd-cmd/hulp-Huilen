@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>nl.hu.ict.inno</groupId>
+    <groupId>org.example</groupId>
     <artifactId>Opleiding</artifactId>
 
     <properties>
@@ -39,11 +39,6 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
 
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
