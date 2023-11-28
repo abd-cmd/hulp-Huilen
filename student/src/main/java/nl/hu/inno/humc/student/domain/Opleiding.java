@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Document
+
 public class Opleiding {
 
-    @MongoId
+
     private String opleidingId;
     private String naam;
     private LocalDate startDatum;
@@ -28,6 +28,9 @@ public class Opleiding {
         this.startDatum = startDatum;
         this.eindDatum = eindDatum;
         this.beschikbarePlekken = beschikbarePlekken;
+    }
+
+    public Opleiding() {
     }
 
 

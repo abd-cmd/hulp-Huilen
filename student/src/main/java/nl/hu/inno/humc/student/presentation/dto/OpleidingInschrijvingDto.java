@@ -26,4 +26,7 @@ public class OpleidingInschrijvingDto {
         this.studentId = studentId;
         this.opleidingId = opleidingId;
     }
+
+    public OpleidingInschrijvingDto() {
+    }
 }

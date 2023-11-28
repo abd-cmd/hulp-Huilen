@@ -106,4 +106,20 @@ public class StudentDto {
     public Vooropleiding getVooropleiding() {
         return vooropleiding;
     }
+
+    public List<String> getOpleidingen() {
+        return opleidingen;
+    }
+
+    public List<String> getIngeschrevenVakken() {
+        return ingeschrevenVakken;
+    }
+
+    public List<String> getBehaaldeVakken() {
+        return behaaldeVakken;
+    }
+
+    public List<BsaDto> getStudieAdviezen() {
+        return studieAdviezen;
+    }
 }

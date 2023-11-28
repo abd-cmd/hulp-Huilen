@@ -14,6 +14,7 @@ import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,9 @@ public class StudentService {
     public StudentDto schrijfStudentInVoorOpleiding(String studentId, String opleidingId) {
 
         // TODO Opleiding opvragen uit de opleiding module/service
-        Opleiding opleiding = this.opleidingService.getOpleidingById(opleidingId);
+        // TODO Opleiding microservice koppelen aan de gehele applicatie wanneer deze beschikbaar is
+        //Opleiding opleiding = this.opleidingService.getOpleidingById(opleidingId);
+        Opleiding opleiding = new Opleiding("398762346823", "HBO-ICT", LocalDate.now().minusYears(1), LocalDate.now().plusYears(1), 100);
         Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
         // Als er meer dan 10 plekken beschikbaar zijn, schrijf de student in via messaging
         if(opleiding.getBeschikbarePlekken() > 10){
@@ -93,6 +96,7 @@ public class StudentService {
             // Abdel toevoeging
             vakService.plaatseNieuweInschrijvingInQueue(new VakInschrijvingDto(student.getStudentId(), vak.getId(), student.getPersoonsGegevens().getNaam().getVoornaam()));
             studentRepo.save(student);
+            System.out.println("Student is ingeschreven voor vak");
         }
         else {
             // als er minder dan 10 plekken beschikbaar zijn in dit systeem, check dan nog even via RPC of er daadwerkelijk nog plek is
@@ -103,6 +107,7 @@ public class StudentService {
                 student.schrijfInVoorVak(vak);
                 vakService.plaatseNieuweInschrijvingInQueue(new VakInschrijvingDto(student.getStudentId(), vak.getId(), student.getPersoonsGegevens().getNaam().getVoornaam()));
                 studentRepo.save(student);
+                System.out.println("Student is ingeschreven voor vak");
             }
 
         }

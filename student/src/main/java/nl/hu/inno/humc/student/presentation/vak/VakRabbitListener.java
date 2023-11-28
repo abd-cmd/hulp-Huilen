@@ -37,8 +37,8 @@ public class VakRabbitListener {
     }
 
     @RabbitListener(queues = "Delete-Vak")
-    public void DeletedVakListener(VakDto vakDto) throws VakBestaatNietException {
-        vakService.deleteVak(vakDto);
+    public void DeletedVakListener(String id) throws VakBestaatNietException {
+        vakService.deleteVak(id);
         System.out.println("Vak verwijderd");
     }
 }
