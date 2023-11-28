@@ -85,7 +85,7 @@ public class StudentService {
     public StudentDto schrijfStudentInVoorVak(VakInschrijvingDto dto) throws VakBestaatNietException {
         Student student = studentRepo.findById(dto.getStudentId()).orElseThrow(StudentBestaatNietException::new);
         Vak vak = vakService.getVakById(dto.getVakId());
-
+        System.out.println(dto.getVakId());
 
         if (vak.getBeschikbarePlekken() > 10) {
 

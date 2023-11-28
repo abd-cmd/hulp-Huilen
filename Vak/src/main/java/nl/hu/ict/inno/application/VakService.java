@@ -37,7 +37,11 @@ public class VakService {
         Vak vak = new Vak(naam, periode, beschikbaarPleken ,ingangEisen, loopTijd,
                 toetsGegevens, herkansingGegevens, null, List.of());
 
-        return vakRepository.save(vak);
+        Vak savedVak = vakRepository.save(vak);
+
+        this.vakProducer.sendNieuweVak(savedVak);
+
+        return savedVak;
     }
 
     public Vak updateVak(String id, String naam,int beschikbaarPleken ,int periode, IngangEisen ingangEisen, LoopTijd loopTijd,
@@ -62,7 +66,7 @@ public class VakService {
                     updatedVak.getLoopTijd().getEindDatum(),updatedVak.getIngangEisen().getEC(),
                     updatedVak.getOpleiding(),updatedVak.getBeschikbaarPleken());
 
-            this.opleidingRestTemplate.sendUpdatedVakToOpleiding(updatedVak);
+//            this.opleidingRestTemplate.sendUpdatedVakToOpleiding(updatedVak);
 
             this.vakProducer.sendUpdatedVak(vakUpdatedDto);
 
@@ -74,7 +78,7 @@ public class VakService {
     public void deleteVak(String id) {
         Vak vak = findById(id);
         this.vakProducer.sendDeletedVakId(vak.getId());
-        this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
+//        this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
         this.vakRepository.delete(vak);
     }
 
@@ -83,8 +87,8 @@ public class VakService {
         this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
 
         for (Vak vak:vakken){
-            this.vakProducer.sendDeletedVakId(vak.getId());
-            this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
+//            this.vakProducer.sendDeletedVakId(vak.getId());
+//            this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
         }
 
         this.vakRepository.deleteAll();
@@ -155,10 +159,10 @@ public class VakService {
     public void addStudent(VakInschrijvingDto vakInschrijvingDto) {
         Vak vak = this.vakRepository.findById(vakInschrijvingDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
 
-//        VakInschrijvingDto vakInschrijvingDto1 = new VakInschrijvingDto(
-//                vakInschrijvingDto.getStudentId(), vakInschrijvingDto.getVakId(),vakInschrijvingDto.getVoornaam());
+        VakInschrijvingDto vakInschrijvingDto1 = new VakInschrijvingDto(
+                vakInschrijvingDto.getStudentId(), vakInschrijvingDto.getVakId(),vakInschrijvingDto.getVoornaam());
 
-        Student student = new Student(vakInschrijvingDto.getStudentId(),vakInschrijvingDto.getVoornaam());
+        Student student = new Student(vakInschrijvingDto1.getStudentId(),vakInschrijvingDto1.getVoornaam());
 
         if (vak != null) {
             vak.AddStudent(student);
@@ -192,7 +196,7 @@ public class VakService {
     {
         Vak vak = this.vakRepository.findById(vakid).orElseThrow(() -> new VakNotFoundException());
 
-        StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId,vak.getIngangEisen().getEC());
+        StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId);
 
         for (Student student : vak.getStudents()) {
             if (student.getId().equals(studentId)) {

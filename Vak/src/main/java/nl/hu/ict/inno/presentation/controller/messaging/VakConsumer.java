@@ -26,10 +26,10 @@ public class VakConsumer {
     }
     @RabbitListener(queues={"updated-student-queue"})
     public void StudentToUpdate(StudentUpdateDto studentUpdateDto){
-        vakService.updateStudent(studentUpdateDto);
+//        vakService.updateStudent(studentUpdateDto);
     }
     @RabbitListener(queues={"deleted-student-queue"})
     public void StudentToRemove(StudentRemoveDto studentRemoveDto){
-        vakService.removeStudent(studentRemoveDto);
+//        vakService.removeStudent(studentRemoveDto);
     }
 }
