@@ -51,13 +51,13 @@ public class OpleidingRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}/vak/{id}")
+    @GetMapping("/{id}/vak/{vakId}")
     public ResponseEntity<Vak> getVakFromOpleiding(@PathVariable String id, @PathVariable String vakId) {
         Vak vak = opleidingService.getVakFromOpleiding(id, vakId);
         return ResponseEntity.ok(vak);
     }
 
-    @PostMapping("/{id}/vak/{id}")
+    @PostMapping("/{id}/vak/{vakId}")
     public ResponseEntity<OpleidingDto> addVakToOpleiding(@PathVariable String id, @PathVariable String vakId) {
         OpleidingDto opleiding = opleidingService.addVakToOpleiding(id, id);
         return ResponseEntity.ok(opleiding);

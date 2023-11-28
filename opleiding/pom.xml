@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>nl.hu.ict.inno</groupId>
-    <artifactId>Opleiding</artifactId>
+    <artifactId>opleiding</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

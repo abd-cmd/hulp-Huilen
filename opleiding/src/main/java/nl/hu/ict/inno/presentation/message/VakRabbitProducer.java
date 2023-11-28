@@ -1,5 +1,6 @@
 package nl.hu.ict.inno.presentation.message;
 
+import nl.hu.ict.inno.presentation.dto.VakDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
@@ -13,4 +14,12 @@ public class VakRabbitProducer {
 
     }
 
+    public void sendNewVakToQueue(VakDto vakDto) {
+    }
+
+    public void sendUpdatedVakToQueue(VakDto vakDto) {
+    }
+
+    public void sendDeletedVakToQueue(String vakId) {
+    }
 }

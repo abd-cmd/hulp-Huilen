@@ -3,6 +3,7 @@ package nl.hu.ict.inno.presentation.dto;
 import java.time.LocalDate;
 
 public record VakDto(
+        String id,
         String naam,
         int periode,
         int beschikbaarPleken,

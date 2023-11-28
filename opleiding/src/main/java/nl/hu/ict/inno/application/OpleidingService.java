@@ -96,7 +96,6 @@ public class OpleidingService {
         Vak vak = vakRepository.findById(vakId)
                 .orElseThrow(() -> new VakNotFoundException(vakId));
 
-
         opleiding.getVakken().add(vak);
         vakRepository.save(vak);
         opleidingRepository.save(opleiding);

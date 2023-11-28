@@ -1,18 +1,17 @@
 package nl.hu.ict.inno.domain;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.util.List;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash
+@RedisHash("opleiding")
 public class Opleiding {
 
     @Id
@@ -21,13 +20,10 @@ public class Opleiding {
     private List<Vak> vakken;
     private String naam;
 
-    @Embedded
     private Periode periode;
 
-    @Embedded
     private InschrijfDatum inschrijfDatum;
 
-    @Embedded
     private OpleidingDetails opleidingDetails;
 
 

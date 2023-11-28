@@ -1,9 +1,9 @@
 package nl.hu.ict.inno.domain;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash
+@RedisHash("vak")
 public class Vak {
     @Id
     private String id;
@@ -20,6 +20,7 @@ public class Vak {
     private LocalDate beginDatum;
     private LocalDate eindDatum;
     private int studiePunten;
+
 
     private Opleiding opleiding;
     private int beschikbarePlekken;
@@ -79,4 +80,6 @@ public class Vak {
     public void setBeschikbarePlekken(int beschikbarePlekken) {
         this.beschikbarePlekken = beschikbarePlekken;
     }
+
+
 }
