@@ -86,10 +86,12 @@ public class StudentService {
         Student student = studentRepo.findById(dto.getStudentId()).orElseThrow(StudentBestaatNietException::new);
         Vak vak = vakService.getVakById(dto.getVakId());
 
+
         if (vak.getBeschikbarePlekken() > 10) {
 
             student.schrijfInVoorVak(vak);
-            vakService.plaatseNieuweInschrijvingInQueue(dto);
+            // Abdel toevoeging
+            vakService.plaatseNieuweInschrijvingInQueue(new VakInschrijvingDto(student.getStudentId(), vak.getId(), student.getPersoonsGegevens().getNaam().getVoornaam()));
             studentRepo.save(student);
         }
         else {
@@ -99,7 +101,6 @@ public class StudentService {
             if(updatedVak.getBeschikbarePlekken() > 0){
 
                 student.schrijfInVoorVak(vak);
-
                 vakService.plaatseNieuweInschrijvingInQueue(new VakInschrijvingDto(student.getStudentId(), vak.getId(), student.getPersoonsGegevens().getNaam().getVoornaam()));
                 studentRepo.save(student);
             }

@@ -76,6 +76,7 @@ public class VakService {
     }
 
     public void plaatseNieuweInschrijvingInQueue(VakInschrijvingDto dto) {
+        System.out.println(dto.getVoornaam());
         this.vakRabbitProducer.sendInschrijvingToQueue(dto);
     }
 

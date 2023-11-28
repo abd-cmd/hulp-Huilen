@@ -5,7 +5,11 @@ public class VakInschrijvingDto {
     private String studentId;
     private String vakId;
     private String voornaam;
-    
+
+    public String getVoornaam() {
+        return voornaam;
+    }
+
     public String getStudentId() {
         return studentId;
     }

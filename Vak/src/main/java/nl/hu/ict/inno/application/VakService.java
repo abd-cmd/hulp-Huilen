@@ -11,8 +11,9 @@ import nl.hu.ict.inno.domain.vakGegevens.HerkansingGegevens;
 import nl.hu.ict.inno.domain.vakGegevens.IngangEisen;
 import nl.hu.ict.inno.domain.vakGegevens.LoopTijd;
 import nl.hu.ict.inno.domain.vakGegevens.ToetsGegevens;
-import nl.hu.ict.inno.presentation.controller.messaging.Producer;
+import nl.hu.ict.inno.presentation.controller.messaging.VakProducer;
 import nl.hu.ict.inno.presentation.dto.VakInschrijvingDto;
+import nl.hu.ict.inno.presentation.dto.VakUpdatedDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ import java.util.List;
 public class VakService {
     private VakRepository vakRepository;
     private OpleidingRestTemplate opleidingRestTemplate;
-    private Producer producer;
+    private VakProducer vakProducer;
 
-    public VakService(VakRepository vakRepository, OpleidingRestTemplate opleidingRestTemplate, Producer producer) {
+    public VakService(VakRepository vakRepository, OpleidingRestTemplate opleidingRestTemplate, VakProducer vakProducer) {
         this.vakRepository = vakRepository;
         this.opleidingRestTemplate = opleidingRestTemplate;
-        this.producer = producer;
+        this.vakProducer = vakProducer;
     }
 
     public Vak saveVak(String naam, int periode, int beschikbaarPleken , IngangEisen ingangEisen, LoopTijd loopTijd,
@@ -39,7 +40,7 @@ public class VakService {
 
         Vak savedVak = vakRepository.save(vak);
 
-        this.producer.sendNieuweVak(savedVak);
+        this.vakProducer.sendNieuweVak(savedVak);
 
         return savedVak;
     }
@@ -60,7 +61,7 @@ public class VakService {
             vak.setBeschikbaarPleken(beschikbaarPleken);
             Vak updatedVak = vakRepository.save(vak);
 
-            this.producer.sendUpdatedVak(updatedVak);
+            this.vakProducer.sendUpdatedVak(updatedVak);
 
             return updatedVak;
         }
@@ -69,7 +70,7 @@ public class VakService {
 
     public void deleteVak(String id) {
         Vak vak = findById(id);
-        this.producer.sendDeletedVakId(vak.getId());
+        this.vakProducer.sendDeletedVakId(vak.getId());
         this.vakRepository.delete(vak);
     }
 
@@ -127,7 +128,10 @@ public class VakService {
     public void addStudent(VakInschrijvingDto vakInschrijvingDto) {
         Vak vak = this.vakRepository.findById(vakInschrijvingDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
 
-        Student student = new Student(vakInschrijvingDto.getStudentId(),vakInschrijvingDto.getVoornaam());
+        VakInschrijvingDto vakInschrijvingDto1 = new VakInschrijvingDto(
+                vakInschrijvingDto.getStudentId(), vakInschrijvingDto.getVakId(),vakInschrijvingDto.getVoornaam());
+
+        Student student = new Student(vakInschrijvingDto1.getStudentId(),vakInschrijvingDto1.getVoornaam());
 
         if (vak != null) {
             vak.AddStudent(student);
@@ -164,7 +168,7 @@ public class VakService {
         if (vak != null) {
             for (Student student:vak.getStudents()){
                 if(student.getId().equals(studentId)){
-                    this.producer.sendPuntenVanVak(vakid,studentId);
+                    this.vakProducer.sendPuntenVanVak(vakid,studentId,vak.getIngangEisen().getEC());
                 }
             }
         }

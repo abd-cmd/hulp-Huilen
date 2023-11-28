@@ -8,20 +8,12 @@ public class VakInschrijvingDto {
 
     private String vakId;
 
-    public String getStudentId() {
-        return studentId;
-    }
-
     private String studentId;
-
-    public String getVoornaam() {
-        return voornaam;
-    }
 
     private String voornaam;
 
 
-    public VakInschrijvingDto(String vakId, String studentId, String voornaam) {
+    public VakInschrijvingDto(String studentId, String vakId,String voornaam) {
         this.vakId = vakId;
         this.studentId = studentId;
         this.voornaam = voornaam;
@@ -36,4 +28,11 @@ public class VakInschrijvingDto {
         return vakId;
     }
 
+    public String getVoornaam() {
+        return voornaam;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
 }

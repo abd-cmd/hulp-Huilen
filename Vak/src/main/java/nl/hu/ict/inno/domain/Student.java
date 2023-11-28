@@ -9,26 +9,26 @@ import java.util.Objects;
 public class Student {
 
     private String id;
-    private String naam;
+    private String voornaam;
 
     public Student() {
     }
 
-    public Student(String id, String naam) {
+    public Student(String id, String voornaam) {
         this.id = id;
-        this.naam = naam;
+        this.voornaam = voornaam;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getNaam() {
-        return naam;
+    public String getVoornaam() {
+        return voornaam;
     }
 
     public void setNaam(String naam) {
-        this.naam = naam;
+        this.voornaam = naam;
     }
 
     @Override
@@ -36,11 +36,11 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(naam, student.naam);
+        return Objects.equals(id, student.id) && Objects.equals(voornaam, student.voornaam);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, naam);
+        return Objects.hash(id, voornaam);
     }
 }

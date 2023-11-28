@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import nl.hu.ict.inno.domain.Student;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sound.midi.MidiMessage;
 
 @Configuration
 public class RabbitConfig {
@@ -96,4 +99,7 @@ public class RabbitConfig {
 
         return new Jackson2JsonMessageConverter(mapper);
     }
+
+
+
 }

@@ -8,11 +8,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Consumer {
+public class VakConsumer {
 
     private VakService vakService;
 
-    public Consumer(VakService vakService) {
+    public VakConsumer(VakService vakService) {
         this.vakService = vakService;
     }
 
@@ -20,14 +20,15 @@ public class Consumer {
     public void StudentToAdd(VakInschrijvingDto vakInschrijvingDto){
         System.out.println("vak inschrijving");
         System.out.println(vakInschrijvingDto.getStudentId());
+        System.out.println(vakInschrijvingDto.getVoornaam());
         vakService.addStudent(vakInschrijvingDto);
     }
     @RabbitListener(queues={"updated-student-queue"})
     public void StudentToUpdate(StudentDto studentDto){
-       // vakService.updateStudent(studentId,naam,id);
+//        vakService.updateStudent(studentId,naam,id);
     }
     @RabbitListener(queues={"deleted-student-queue"})
     public void StudentToRemove(StudentDto studentDto){
-        //vakService.removeStudent(studentId,id);
+//        vakService.removeStudent(studentId,id);
     }
 }

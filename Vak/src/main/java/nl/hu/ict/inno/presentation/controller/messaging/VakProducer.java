@@ -5,11 +5,11 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Producer {
+public class VakProducer {
 
     private RabbitTemplate rabbitTemplate;
 
-    public Producer(RabbitTemplate rabbitTemplate) {
+    public VakProducer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
@@ -22,9 +22,9 @@ public class Producer {
     public void sendDeletedVakId(String id) {
         rabbitTemplate.convertAndSend("Delete-Vak",id);
     }
-    public void sendPuntenVanVak(String vakid,String studentId ) {
+    public void sendPuntenVanVak(String vakid,String studentId ,int EC) {
 
-        StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId);
+        StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId,EC);
 
         rabbitTemplate.convertAndSend("sendPuntenVak",studentPuntenDto);
     }

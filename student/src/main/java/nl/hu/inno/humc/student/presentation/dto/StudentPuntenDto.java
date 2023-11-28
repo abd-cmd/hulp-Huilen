@@ -1,8 +1,12 @@
-package nl.hu.ict.inno.presentation.dto;
+package nl.hu.inno.humc.student.presentation.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class StudentPuntenDto {
     private String VakId;
     private String StudentId;
+
     private int EC;
 
     public StudentPuntenDto(String vakId, String studentId, int EC) {
