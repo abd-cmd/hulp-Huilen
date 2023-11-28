@@ -31,6 +31,7 @@ public class StudentDto {
     private List<String> opleidingen;
     private List<String> ingeschrevenVakken;
     private List<String> behaaldeVakken;
+    private List<BsaDto> studieAdviezen;
 
 
     public static StudentDto Of(Student student) {
@@ -50,6 +51,7 @@ public class StudentDto {
         dto.opleidingen = student.getOpleidingen().stream().map(Opleiding::getOpleidingId).collect(toList());
         dto.ingeschrevenVakken = student.getIngeschrevenVakken().stream().map(Vak::getId).collect(toList());
         dto.behaaldeVakken = student.getBehaaldeVakken().stream().map(Vak::getId).collect(toList());
+        dto.studieAdviezen = student.getStudieAdviezen().stream().map(BsaDto::Of).collect(toList());
         return dto;
     }
 

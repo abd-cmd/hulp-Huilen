@@ -82,13 +82,9 @@ public class RabbitConfig {
 
     @Bean
     public Queue QueueVakPunten(){
-        return QueueBuilder.durable("vak-punten-sturen-queue").build();
+        return QueueBuilder.durable("sendPuntenVak").build();
     }
 
-    @Bean
-    public Binding BindingQueueVakPunten(){
-        return BindingBuilder.bind(QueueVakMaken()).to(Exchange()).with("sendPuntenVak").noargs();
-    }
 
     @Bean
     MessageConverter getConverter(){

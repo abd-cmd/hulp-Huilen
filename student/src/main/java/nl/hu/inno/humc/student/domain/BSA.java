@@ -44,4 +44,16 @@ public class BSA {
     public Opleiding getOpleiding() {
         return opleiding;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public int getMinVerplichteStudiePunten() {
+        return minVerplichteStudiePunten;
+    }
+
+    public LocalDate getIngangsDatum() {
+        return ingangsDatum;
+    }
 }

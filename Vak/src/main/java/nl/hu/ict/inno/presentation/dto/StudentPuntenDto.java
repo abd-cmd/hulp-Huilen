@@ -1,14 +1,19 @@
 package nl.hu.ict.inno.presentation.dto;
 
-public class StudentPuntenDto {
-    private String VakId;
-    private String StudentId;
-    private int EC;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-    public StudentPuntenDto(String vakId, String studentId, int EC) {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class StudentPuntenDto {
+    public String VakId;
+    public String StudentId;
+
+    public StudentPuntenDto(String vakId, String studentId) {
         VakId = vakId;
         StudentId = studentId;
-        this.EC = EC;
+
+    }
+
+    public StudentPuntenDto() {
     }
 
     public String getVakId() {
@@ -19,7 +24,4 @@ public class StudentPuntenDto {
         return StudentId;
     }
 
-    public int getEC() {
-        return EC;
-    }
 }
