@@ -26,8 +26,8 @@ public class VakService {
     }
 
 
-    public Vak getVak(String id) {
-        return convertToEntity(vakRestController.getVakById(id));
+    public Vak getVak(String id) throws VakNotFoundException {
+        return convertToEntity(vakRestController.getVakById(id))  ;
     }
 
     private Vak convertToEntity(VakDto vakDto) {
