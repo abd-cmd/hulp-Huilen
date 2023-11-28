@@ -3,24 +3,21 @@ package nl.hu.ict.inno.presentation.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class StudentDto {
+public class StudentRemoveDto {
 
     private String studentId;
-    private String voornaam;
+    private String vakId;
 
-    public StudentDto(String studentId, String voornaam) {
+    public StudentRemoveDto(String studentId, String vakId) {
         this.studentId = studentId;
-        this.voornaam = voornaam;
+        this.vakId = vakId;
     }
 
-    public StudentDto() {
-    }
-
-    public String getId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public String getNaam() {
-        return voornaam;
+    public String getVakId() {
+        return vakId;
     }
 }

@@ -3,11 +3,10 @@ package nl.hu.ict.inno.presentation.controller;
 
 import nl.hu.ict.inno.application.VakService;
 import nl.hu.ict.inno.domain.Opleiding;
-import nl.hu.ict.inno.domain.Student;
 import nl.hu.ict.inno.domain.Vak;
 import nl.hu.ict.inno.domain.exceptions.OpleidingNotFoundException;
 import nl.hu.ict.inno.domain.exceptions.VakNotFoundException;
-import nl.hu.ict.inno.presentation.dto.StudentDto;
+import nl.hu.ict.inno.presentation.dto.AddVakToOpleiding;
 import nl.hu.ict.inno.presentation.dto.StudentPuntenDto;
 import nl.hu.ict.inno.presentation.dto.ToetsGegevensDto;
 import nl.hu.ict.inno.presentation.dto.VakDto;
@@ -130,4 +129,23 @@ public class VakController {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
     }
+
+    @PostMapping("/addVakToOpleiding/")
+    public void addVakToOpleiding(@Validated @RequestBody AddVakToOpleiding addVakToOpleiding) {
+        try {
+            this.vakService.addVakToOpeliding(addVakToOpleiding.getVakId(),addVakToOpleiding.getOpleidingId());
+        } catch (VakNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
+        }
+    }
+
+    @GetMapping("/findOpleidingByNaam/{naam}")
+    public Opleiding findOpleidingByNaam(@PathVariable("naam") String naam) {
+        try {
+            return this.vakService.findOpleidingByNaam(naam);
+        } catch (VakNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
 }

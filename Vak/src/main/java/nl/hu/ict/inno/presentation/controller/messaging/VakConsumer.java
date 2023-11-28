@@ -1,7 +1,8 @@
 package nl.hu.ict.inno.presentation.controller.messaging;
 
 import nl.hu.ict.inno.application.VakService;
-import nl.hu.ict.inno.presentation.dto.StudentDto;
+import nl.hu.ict.inno.presentation.dto.StudentRemoveDto;
+import nl.hu.ict.inno.presentation.dto.StudentUpdateDto;
 import nl.hu.ict.inno.presentation.dto.VakInschrijvingDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 
@@ -24,11 +25,11 @@ public class VakConsumer {
         vakService.addStudent(vakInschrijvingDto);
     }
     @RabbitListener(queues={"updated-student-queue"})
-    public void StudentToUpdate(StudentDto studentDto){
-//        vakService.updateStudent(studentId,naam,id);
+    public void StudentToUpdate(StudentUpdateDto studentUpdateDto){
+        vakService.updateStudent(studentUpdateDto);
     }
     @RabbitListener(queues={"deleted-student-queue"})
-    public void StudentToRemove(StudentDto studentDto){
-//        vakService.removeStudent(studentId,id);
+    public void StudentToRemove(StudentRemoveDto studentRemoveDto){
+        vakService.removeStudent(studentRemoveDto);
     }
 }

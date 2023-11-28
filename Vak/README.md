@@ -20,7 +20,10 @@ Student bevat id en naam
 Opleiding bevat opleidingId , naam en begindatum 
 
 In dit module zijn er twee soorten koppelingen RPC en Messaging.
-De messaging wordt gebruikt om student object te krijgen van Student module en toe te voegen aan de list van students van het vak.
+
+De messaging wordt gebruikt om student object te krijgen van Student module en toe te voegen aan de list van students van het vak voor het geval de student een id opleiding heeft.
+Voor het geval dat student zijn gegevens wijzgt , wordt een message gekrijgen in het vak om zijn gegevens te wijzgen in database van het vak.
+Voor het geval dat student verwijdeerd wordt , wordt een message gekrijgen in het vak om student weg te halen in database van het vak.
 Bovendien wordt messaging gebruikt om de updatedGegevens van vak te sturen naar Studnet module en ook voor het geval het wordt verwijdeerd wordt een message gestuurd naar de student module dat het vak verwijdeerd is
 Daarnasst stuurt het vak module EC punten naar student module voor het geval dat de student toets haalt.
 

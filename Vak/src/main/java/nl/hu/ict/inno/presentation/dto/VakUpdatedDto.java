@@ -9,18 +9,17 @@ public class VakUpdatedDto {
     private String naam;
     private LocalDate beginDatum;
     private LocalDate eindDatum;
-    private int studiePunten;
-
+    private int EC;
     private Opleiding opleiding;
     private int beschikbarePlekken;
 
     public VakUpdatedDto(String id, String naam, LocalDate beginDatum,
-                         LocalDate eindDatum, int studiePunten, Opleiding opleiding, int beschikbarePlekken) {
+                         LocalDate eindDatum, int EC, Opleiding opleiding, int beschikbarePlekken) {
         this.id = id;
         this.naam = naam;
         this.beginDatum = beginDatum;
         this.eindDatum = eindDatum;
-        this.studiePunten = studiePunten;
+        this.EC = EC;
         this.opleiding = opleiding;
         this.beschikbarePlekken = beschikbarePlekken;
     }
@@ -42,7 +41,7 @@ public class VakUpdatedDto {
     }
 
     public int getStudiePunten() {
-        return studiePunten;
+        return EC;
     }
 
     public Opleiding getOpleiding() {

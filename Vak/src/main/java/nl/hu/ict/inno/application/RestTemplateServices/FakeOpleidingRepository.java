@@ -18,12 +18,27 @@ public class FakeOpleidingRepository implements OpleidingRepository {
         this.fakeData.add(new Opleiding(42l, "ICT"));
     }
     @Override
-    public Opleiding AddVakToOpleiding(Long id, Vak vak) {
+    public Opleiding AddVakToOpleiding(Vak id, String vak) {
         return null;
     }
 
     @Override
-    public Opleiding findById(Long id) {
+    public void sendRemovedVakIdToOpleiding(Vak vak) {
+
+    }
+
+    @Override
+    public void sendUpdatedVakToOpleiding(Vak vak) {
+
+    }
+
+    @Override
+    public Opleiding findByNaam(String naam) {
+        return null;
+    }
+
+    @Override
+    public Opleiding findById(String id) {
         return null;
     }
 

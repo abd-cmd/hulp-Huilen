@@ -1,6 +1,7 @@
 package nl.hu.ict.inno.presentation.controller.messaging;
 import nl.hu.ict.inno.domain.Vak;
 import nl.hu.ict.inno.presentation.dto.StudentPuntenDto;
+import nl.hu.ict.inno.presentation.dto.VakUpdatedDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
@@ -16,15 +17,13 @@ public class VakProducer {
     public void sendNieuweVak(Vak vak) {
         rabbitTemplate.convertAndSend("Add-Vak",vak);
     }
-    public void sendUpdatedVak(Vak vak) {
-        rabbitTemplate.convertAndSend("Update-Vak",vak);
+    public void sendUpdatedVak(VakUpdatedDto vakUpdatedDto) {
+        rabbitTemplate.convertAndSend("Update-Vak",vakUpdatedDto);
     }
     public void sendDeletedVakId(String id) {
         rabbitTemplate.convertAndSend("Delete-Vak",id);
     }
-    public void sendPuntenVanVak(String vakid,String studentId ,int EC) {
-
-        StudentPuntenDto studentPuntenDto = new StudentPuntenDto(vakid,studentId,EC);
+    public void sendPuntenVanVak(StudentPuntenDto studentPuntenDto) {
 
         rabbitTemplate.convertAndSend("sendPuntenVak",studentPuntenDto);
     }

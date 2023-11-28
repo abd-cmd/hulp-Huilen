@@ -15,5 +15,5 @@ public class VakDto {
     public LoopTijd loopTijd;
     public ToetsGegevens toetsGegevens;
     public HerkansingGegevens herkansingGegevens;
-    public Long opleidingId;
+    public String opleidingId;
 }

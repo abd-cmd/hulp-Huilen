@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface OpleidingRepository {
 
-    Opleiding AddVakToOpleiding(Long id, Vak vak);
-    Opleiding findById(Long id);
+    Opleiding AddVakToOpleiding(Vak vak, String opleidingId);
+    void sendRemovedVakIdToOpleiding(Vak vak);
+    void sendUpdatedVakToOpleiding(Vak vak);
+    Opleiding findByNaam(String naam);
+    Opleiding findById(String id);
     List<Opleiding> findAll();
 }
