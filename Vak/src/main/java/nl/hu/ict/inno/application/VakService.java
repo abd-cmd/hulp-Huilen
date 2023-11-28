@@ -77,6 +77,8 @@ public class VakService {
 
     public void deleteVak(String id) {
         Vak vak = findById(id);
+
+
         this.vakProducer.sendDeletedVakId(vak.getId());
 //        this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
         this.vakRepository.delete(vak);
@@ -87,7 +89,7 @@ public class VakService {
         this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
 
         for (Vak vak:vakken){
-//            this.vakProducer.sendDeletedVakId(vak.getId());
+            this.vakProducer.sendDeletedVakId(vak.getId());
 //            this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
         }
 
@@ -151,7 +153,6 @@ public class VakService {
         this.vakRepository.save(vak);
     }
 
-
     public Opleiding findOpleidingByNaam(String naam){
         return this.opleidingRestTemplate.findByNaam(naam);
     }
@@ -170,27 +171,6 @@ public class VakService {
         }
     }
 
-    public void updateStudent(StudentUpdateDto studentUpdateDto) {
-        Vak vak = this.vakRepository.findById(studentUpdateDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
-
-        if (vak != null) {
-            for (Student student : vak.getStudents()) {
-                if (student.getId().equals(studentUpdateDto.getStudentId())) {
-                    student.setNaam(studentUpdateDto.getVoornaam());
-                }
-            }
-            vakRepository.save(vak);
-        }
-    }
-
-    public void removeStudent(StudentRemoveDto studentRemoveDto) {
-        Vak vak = this.vakRepository.findById(studentRemoveDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
-
-        if (vak != null) {
-            vak.getStudents().removeIf(student -> student.getId().equals(studentRemoveDto.getStudentId()));
-            vakRepository.save(vak);
-        }
-    }
 
     public void studentHeeftPuntenBehaald(String vakid, String studentId)
     {
