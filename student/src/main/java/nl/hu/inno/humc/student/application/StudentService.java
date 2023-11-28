@@ -125,6 +125,7 @@ public class StudentService {
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
         studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        System.out.println("Student heeft vak behaald, " + vak.getStudiePunten() + "studiepunten toegevoegd aan " + studentId );
         return studentDto;
     }
 }

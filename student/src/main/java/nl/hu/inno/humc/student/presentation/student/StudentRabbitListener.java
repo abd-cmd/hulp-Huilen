@@ -2,6 +2,7 @@ package nl.hu.inno.humc.student.presentation.student;
 
 import nl.hu.inno.humc.student.application.StudentService;
 import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
+import nl.hu.inno.humc.student.presentation.dto.VakBehaaldDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -19,8 +20,8 @@ public class StudentRabbitListener {
     }
 
     @RabbitListener(queues = "sendPuntenVak")
-    public void behaaldeStudiepuntenListener(Message message) throws VakBestaatNietException {
-        VakInschrijvingDto vakInschrijvingDto = (VakInschrijvingDto) messageConverter.fromMessage(message);
-        this.studentService.studentHeeftVakBehaald(vakInschrijvingDto.getStudentId(), vakInschrijvingDto.getVakId());
+    public void behaaldeStudiepuntenListener(VakBehaaldDto vakBehaaldDto) throws VakBestaatNietException {
+        System.out.println("hello");
+        this.studentService.studentHeeftVakBehaald(vakBehaaldDto.getStudentId(), vakBehaaldDto.getVakId());
     }
 }
