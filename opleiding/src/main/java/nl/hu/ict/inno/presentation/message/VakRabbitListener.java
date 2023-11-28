@@ -19,7 +19,8 @@ public class VakRabbitListener {
 
     @RabbitListener(queues = "Add-Vak")
     public void newVakListener(VakDto vakDto){
-        vakService.saveNewVak(vakDto);
+        // Jan - dit even uitgezet omdat de method niet bestaat en voor build errors zorgt
+        // vakService.saveNewVak(vakDto);
     }
 
 }
