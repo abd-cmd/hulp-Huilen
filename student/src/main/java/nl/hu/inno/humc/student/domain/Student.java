@@ -75,7 +75,7 @@ public class Student {
 
     public void studentHeeftVakBehaald(Vak vak){
         if(vak == null) throw new IllegalArgumentException("Vak mag niet leeg zijn");
-        if(!this.opleidingen.contains(vak.getOpleiding())) throw new IllegalStateException("Student is nog niet ingeschreven voor deze opleiding");
+        // if(!this.opleidingen.contains(vak.getOpleiding())) throw new IllegalStateException("Student is nog niet ingeschreven voor deze opleiding");
         if(this.behaaldeVakken.contains(vak)) throw new IllegalArgumentException("Student heeft dit vak al behaald");
 
 

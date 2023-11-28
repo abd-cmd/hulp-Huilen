@@ -1,5 +1,8 @@
 package nl.hu.inno.humc.student.presentation.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VakInschrijvingDto {
 
     private String studentId;

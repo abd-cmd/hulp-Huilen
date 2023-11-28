@@ -8,14 +8,16 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StudentRabbitListener {
 
-    private final MessageConverter messageConverter;
+
     private final StudentService studentService;
 
-    public StudentRabbitListener(MessageConverter messageConverter, StudentService studentService) {
-        this.messageConverter = messageConverter;
+    public StudentRabbitListener(StudentService studentService) {
+
         this.studentService = studentService;
     }
 
