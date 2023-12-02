@@ -100,14 +100,19 @@ public class StudentService {
         }
         else {
             // als er minder dan 10 plekken beschikbaar zijn in dit systeem, check dan nog even via RPC of er daadwerkelijk nog plek is
-            vakService.ManuallyUpdateVakViaRest(dto.getVakId());
-            Vak updatedVak = vakService.getVakById(dto.getVakId());
-            if(updatedVak.getBeschikbarePlekken() > 0){
+            try {
+                vakService.ManuallyUpdateVakViaRest(dto.getVakId());
+                Vak updatedVak = vakService.getVakById(dto.getVakId());
+                if (updatedVak.getBeschikbarePlekken() > 0) {
 
-                student.schrijfInVoorVak(vak);
-                vakService.plaatseNieuweInschrijvingInQueue(new VakInschrijvingDto(student.getStudentId(), vak.getId(), student.getPersoonsGegevens().getNaam().getVoornaam()));
-                studentRepo.save(student);
-                System.out.println("Student is ingeschreven voor vak");
+                    student.schrijfInVoorVak(vak);
+                    vakService.plaatseNieuweInschrijvingInQueue(new VakInschrijvingDto(student.getStudentId(), vak.getId(), student.getPersoonsGegevens().getNaam().getVoornaam()));
+                    studentRepo.save(student);
+                    System.out.println("Student is ingeschreven voor vak");
+                }
+            }
+            catch (Exception e){
+                System.out.println("Vakken service is tijdelijk niet beschrikbaar, probeer het later nog eens");
             }
 
         }

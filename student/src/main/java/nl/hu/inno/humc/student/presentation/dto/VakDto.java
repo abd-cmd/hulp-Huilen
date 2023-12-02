@@ -11,8 +11,9 @@ public class VakDto {
     private String naam;
     private LocalDate beginDatum;
     private LocalDate eindDatum;
-    private int studiePunten;
 
+    @JsonProperty("toetsGegevens")
+    private ToetsGegevensDto toetsGegevens;
     private OpleidingDto opleiding;
 
     @JsonProperty("beschikbaarPleken")
@@ -37,7 +38,7 @@ public class VakDto {
     }
 
     public int getStudiePunten() {
-        return studiePunten;
+        return toetsGegevens.getStudiepunten();
     }
 
     public OpleidingDto getOpleidingDto() {
