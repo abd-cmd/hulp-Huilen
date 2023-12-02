@@ -28,8 +28,11 @@ public class Opleiding {
         this.beschikbarePlekken = beschikbarePlekken;
     }
 
+    public Opleiding() {
+    }
 
-    public String getOpleidingId() {
+
+        public String getOpleidingId() {
         return opleidingId;
     }
 
