@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Document
 public class Opleiding {
 
-    @MongoId
     private String opleidingId;
     private String naam;
     private LocalDate startDatum;

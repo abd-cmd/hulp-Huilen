@@ -10,18 +10,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class OpleidingRabbitListener {
 
-    private final MessageConverter messageConverter;
     private final OpleidingService opleidingService;
-
-    public OpleidingRabbitListener(MessageConverter messageConverter, OpleidingService opleidingService) {
-        this.messageConverter = messageConverter;
+    public OpleidingRabbitListener(OpleidingService opleidingService) {
         this.opleidingService = opleidingService;
     }
 
-    @RabbitListener(queues = "opleiding-queue")
-    public void newOrUpdatedOpleidingListener(Message message){
-        OpleidingDto opleidingDto = (OpleidingDto) messageConverter.fromMessage(message);
-        opleidingService.verwerkOpleiding(opleidingDto);
+    @RabbitListener(queues = "new-opleiding-queue")
+    public void newOrUpdatedOpleidingListener(OpleidingDto opleidingDto) {
+        try {
+            opleidingService.verwerkOpleiding(opleidingDto);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
-
 }
