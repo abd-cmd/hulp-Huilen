@@ -3,12 +3,15 @@ package nl.hu.inno.humc.student.application;
 import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
 import nl.hu.inno.humc.student.data.VakRepository;
+import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.presentation.vak.VakRabbitProducer;
 import nl.hu.inno.humc.student.presentation.vak.VakRestController;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 @Transactional
@@ -32,6 +35,8 @@ public class VakService {
 
     public void saveNewVak(VakDto vakDto) {
 
+        // TODO Opleiding microservice koppelen aan de gehele applicatie wanneer deze beschikbaar is
+
         //Opleiding opleiding = opleidingService.getOpleidingById(vakDto.getOpleidingDto().getId());
 
         Vak vak = new Vak(
@@ -40,8 +45,8 @@ public class VakService {
                 vakDto.getBeginDatum(),
                 vakDto.getEindDatum(),
                 vakDto.getStudiePunten(),
-                //opleiding
-                null,
+                //vakDto.getOpleidingDto(),
+                new Opleiding("398762346823", "HBO-ICT", LocalDate.now().minusYears(1), LocalDate.now().plusYears(1), 100),
                 vakDto.getBeschikbarePlekken()
         );
         vakRepo.save(vak);
@@ -55,18 +60,18 @@ public class VakService {
 
         Vak vak = getVakById(vakDto.getId());
 
-        vak.setNaam(vakDto.getNaam());
-        vak.setBeginDatum(vakDto.getBeginDatum());
-        vak.setEindDatum(vakDto.getEindDatum());
+        if (!vakDto.getNaam().isEmpty()) vak.setNaam(vakDto.getNaam());
+        if (vakDto.getBeginDatum() != null) vak.setBeginDatum(vakDto.getBeginDatum());
+        if (vakDto.getEindDatum() != null) vak.setEindDatum(vakDto.getEindDatum());
         //vak.setOpleiding(opleiding);
-        vak.setStudiePunten(vakDto.getStudiePunten());
-        vak.setBeschikbarePlekken(vakDto.getBeschikbarePlekken());
+        if (vakDto.getStudiePunten() >= 0) vak.setStudiePunten(vakDto.getStudiePunten());
+        if (vakDto.getStudiePunten() >= 0) vak.setBeschikbarePlekken(vakDto.getBeschikbarePlekken());
         vakRepo.save(vak);
     }
 
-    public void deleteVak(VakDto vakDto){
+    public void deleteVak(String id){
 
-        Vak vak = vakRepo.findById(vakDto.getId()).orElseThrow();
+        Vak vak = vakRepo.findById(id).orElseThrow();
 
 
         vakRepo.delete(vak);

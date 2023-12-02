@@ -5,7 +5,6 @@ import nl.hu.ict.inno.domain.Opleiding;
 
 import java.time.LocalDate;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class SendVakToOpleiding {
 
     private String id;

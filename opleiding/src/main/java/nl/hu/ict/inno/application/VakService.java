@@ -25,27 +25,9 @@ public class VakService {
         this.vakRestController = vakRestController;
     }
 
-    public Vak getVakById(String id) throws VakNotFoundException {
-        return vakRepository.findById(id).orElseThrow(VakNotFoundException::new);
-    }
 
-    public void saveNewVak(VakDto vakDto) {
-        Vak vak = convertToEntity(vakDto);
-        vakRepository.save(vak);
-        vakRabbitProducer.sendNewVakToQueue(vakDto);
-    }
-
-    public void updateVak(VakDto vakDto) throws VakNotFoundException {
-        Vak vak = getVakById(vakDto.id());
-        convertToDto(vak, vakDto);
-        vakRepository.save(vak);
-        vakRabbitProducer.sendUpdatedVakToQueue(vakDto);
-    }
-
-    public void deleteVak(String vakId) throws VakNotFoundException {
-        Vak vak = getVakById(vakId);
-        vakRepository.delete(vak);
-        vakRabbitProducer.sendDeletedVakToQueue(vakId);
+    public Vak getVak(String id) throws VakNotFoundException {
+        return convertToEntity(vakRestController.getVakById(id))  ;
     }
 
     private Vak convertToEntity(VakDto vakDto) {
