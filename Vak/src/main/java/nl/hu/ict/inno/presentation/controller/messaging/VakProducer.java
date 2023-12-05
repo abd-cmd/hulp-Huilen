@@ -24,7 +24,7 @@ public class VakProducer {
         rabbitTemplate.convertAndSend("Delete-Vak",id);
     }
     public void sendPuntenVanVak(StudentPuntenDto studentPuntenDto) {
-
+        System.out.println(studentPuntenDto.StudentId);
         rabbitTemplate.convertAndSend("sendPuntenVak",studentPuntenDto);
     }
 }

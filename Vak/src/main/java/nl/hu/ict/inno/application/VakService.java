@@ -144,17 +144,26 @@ public class VakService {
     }
 
 
-    public void addVakToOpeliding(String vakId,String opleidingId){
+    public Opleiding addVakToOpeliding(String vakId,String opleidingId){
         Vak vak = this.vakRepository.findById(vakId).orElseThrow(() -> new VakNotFoundException());
         Opleiding opleiding = this.opleidingRestTemplate.findById(opleidingId);
+        vak.setOpleiding(opleiding);
 
         this.opleidingRestTemplate.AddVakToOpleiding(vak,opleidingId);
-        vak.setOpleiding(opleiding);
         this.vakRepository.save(vak);
+        return opleiding;
     }
 
-    public Opleiding findOpleidingByNaam(String naam){
-        return this.opleidingRestTemplate.findByNaam(naam);
+    public List<Opleiding> getOpleidingen() {
+        List<Opleiding> OpleidingList = new ArrayList<>();
+        this.opleidingRestTemplate.findAll().forEach(opleiding -> OpleidingList.add(opleiding));
+        return OpleidingList;
+    }
+
+
+
+    public Opleiding findOpleidingByNaam(String id){
+        return this.opleidingRestTemplate.findById(id);
     }
 
     public void addStudent(VakInschrijvingDto vakInschrijvingDto) {

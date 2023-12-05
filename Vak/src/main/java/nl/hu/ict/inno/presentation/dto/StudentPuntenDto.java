@@ -10,7 +10,6 @@ public class StudentPuntenDto {
     public StudentPuntenDto(String vakId, String studentId) {
         VakId = vakId;
         StudentId = studentId;
-
     }
 
     public StudentPuntenDto() {

@@ -3,6 +3,7 @@ package nl.hu.ict.inno.application.RestTemplateServices;
 import nl.hu.ict.inno.data.FakeRepositories.OpleidingRepository;
 import nl.hu.ict.inno.domain.Opleiding;
 import nl.hu.ict.inno.domain.Vak;
+import nl.hu.ict.inno.presentation.dto.SendVakToOpleiding;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,14 +21,19 @@ public class OpleidingRestTemplate implements OpleidingRepository {
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public Opleiding AddVakToOpleiding(Vak vak,String OpeleidingId) {
+    public Opleiding AddVakToOpleiding(Vak vak,String Id) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Object> request = new HttpEntity<Object> (vak,headers);
-        String url = "http://localhost:8080/opleidingen/"+OpeleidingId+"/vak";
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<Object> request = new HttpEntity<Object> (vak,headers);
+        String url = "http://localhost:8085/opleidingen/"+Id+"/vak";
 
-        ResponseEntity<Opleiding> response = restTemplate.postForEntity(url, request, Opleiding.class);
+        SendVakToOpleiding sendVakToOpleiding =
+                new SendVakToOpleiding(vak.getId(),vak.getNaam(),vak.getLoopTijd().getBeginDatum()
+                                        ,vak.getLoopTijd().getEindDatum(),vak.getIngangEisen().getEC(),
+                                            vak.getOpleiding(),vak.getBeschikbaarPleken());
+
+        ResponseEntity<Opleiding> response = restTemplate.postForEntity(url, sendVakToOpleiding, Opleiding.class);
 
         return response.getBody();
     }
@@ -38,7 +44,7 @@ public class OpleidingRestTemplate implements OpleidingRepository {
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.setContentType(MediaType.APPLICATION_JSON);
 //        HttpEntity<Object> request = new HttpEntity<Object> (vak,headers);
-        String url = "http://localhost:8080/opleidingen/"+vak.getOpleiding().getOpleidingId()+"/vak";
+        String url = "http://localhost:8085/opleidingen/"+vak.getOpleiding().getOpleidingId()+"/vak";
         restTemplate.put(url, vak, Opleiding.class);
     }
 
@@ -48,7 +54,7 @@ public class OpleidingRestTemplate implements OpleidingRepository {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> request = new HttpEntity<Object> (vak,headers);
-        String url = "http://localhost:8080/opleidingen/"+vak.getOpleiding().getOpleidingId()+"/vak";
+        String url = "http://localhost:8085/opleidingen/"+vak.getOpleiding().getOpleidingId()+"/vak";
 
          restTemplate.delete(url, request, Opleiding.class);
     }
@@ -56,7 +62,7 @@ public class OpleidingRestTemplate implements OpleidingRepository {
     @Override
     public Opleiding findByNaam(String naam) {
         ResponseEntity<Opleiding> response = restTemplate.
-                getForEntity("http://localhost:8080/opleidingen/"+naam,Opleiding.class);
+                getForEntity("http://localhost:8085/opleidingen/"+naam,Opleiding.class);
 
         return response.getBody();
     }
@@ -65,7 +71,7 @@ public class OpleidingRestTemplate implements OpleidingRepository {
     @Override
     public Opleiding findById(String id) {
         ResponseEntity<Opleiding> response = restTemplate.
-                getForEntity("http://localhost:8080/opleidingen/"+id,Opleiding.class);
+                getForEntity("http://localhost:8085/opleidingen/"+id,Opleiding.class);
 
         return response.getBody();
     }
@@ -73,7 +79,7 @@ public class OpleidingRestTemplate implements OpleidingRepository {
     @Override
     public List<Opleiding> findAll() {
         ResponseEntity<Opleiding[]> response = restTemplate.
-                getForEntity("http://localhost:8080/opleidingen",Opleiding[].class);
+                getForEntity("http://localhost:8085/opleidingen",Opleiding[].class);
 
         return List.of(response.getBody());
     }
