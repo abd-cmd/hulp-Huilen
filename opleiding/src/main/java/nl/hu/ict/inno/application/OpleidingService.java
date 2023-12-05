@@ -95,14 +95,14 @@ public class OpleidingService {
 
         Opleiding opleiding = opleidingRepository.findById(opleidingId)
                 .orElseThrow(() -> new OpleidingNotFoundException(opleidingId));
-
-        Vak vak1;
-        try {
-            vak1 = vakRepository.findById(null)
-                    .orElseThrow(() -> new VakNotFoundException(null));
-        } catch (VakNotFoundException e) {
-            vak1 = vakService.getVak(null);
-        }
+//
+//        Vak vak1;
+//        try {
+//            vak1 = vakRepository.findById(null)
+//                    .orElseThrow(() -> new VakNotFoundException(null));
+//        } catch (VakNotFoundException e) {
+//            vak1 = vakService.getVak(null);
+//        }
 
         opleiding.getVakken().add(vak);
         vakRepository.save(vak);

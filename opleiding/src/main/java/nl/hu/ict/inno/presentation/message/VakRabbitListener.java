@@ -1,3 +1,5 @@
+
+
 package nl.hu.ict.inno.presentation.message;
 
 import nl.hu.ict.inno.application.VakService;
@@ -17,9 +19,10 @@ public class VakRabbitListener {
 
     }
 
-//    @RabbitListener(queues = "Add-Vak")
-//    public void newVakListener(VakDto vakDto){
-//        vakService.saveNewVak(vakDto);
-//    }
+    @RabbitListener(queues = "Add-Vak")
+    public void newVakListener(VakDto vakDto){
+        // Jan - dit even uitgezet omdat de method niet bestaat en voor build errors zorgt
+        // vakService.saveNewVak(vakDto);
+    }
 
 }

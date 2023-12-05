@@ -19,7 +19,7 @@ public class Opleiding {
     @Id
     private String opleidingId;
 
-    private List<Vak> vakken;
+    private List<Vak> vakken = new ArrayList<>();
     private String naam;
 
     private Periode periode;
