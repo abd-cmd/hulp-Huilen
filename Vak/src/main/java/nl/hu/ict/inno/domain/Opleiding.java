@@ -9,18 +9,18 @@ import java.util.Objects;
 
 public class Opleiding {
 
-    private Long opleidingId;
+    private String opleidingId;
     private String naam;
 
     public Opleiding() {
     }
 
-    public Opleiding(Long opleidingId, String naam) {
+    public Opleiding(String opleidingId, String naam) {
         this.opleidingId = opleidingId;
         this.naam = naam;
     }
 
-    public Long getOpleidingId() {
+    public String getOpleidingId() {
         return opleidingId;
     }
 

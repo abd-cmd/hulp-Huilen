@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-
 public class Opleiding {
-
 
     private String opleidingId;
     private String naam;
@@ -34,7 +32,7 @@ public class Opleiding {
     }
 
 
-    public String getOpleidingId() {
+        public String getOpleidingId() {
         return opleidingId;
     }
 

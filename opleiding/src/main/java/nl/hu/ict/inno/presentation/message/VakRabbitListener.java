@@ -1,3 +1,5 @@
+
+
 package nl.hu.ict.inno.presentation.message;
 
 import nl.hu.ict.inno.application.VakService;

@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
+
+
     @Bean
     public Queue newOpleidingQueue(){
         return QueueBuilder.durable("new-opleiding-queue").build();

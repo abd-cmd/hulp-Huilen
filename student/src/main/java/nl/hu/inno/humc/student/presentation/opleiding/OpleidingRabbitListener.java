@@ -11,19 +11,16 @@ import org.springframework.stereotype.Component;
 public class OpleidingRabbitListener {
 
     private final OpleidingService opleidingService;
-
     public OpleidingRabbitListener(OpleidingService opleidingService) {
         this.opleidingService = opleidingService;
     }
 
     @RabbitListener(queues = "new-opleiding-queue")
-    public void newOrUpdatedOpleidingListener(OpleidingDto opleidingDto){
+    public void newOrUpdatedOpleidingListener(OpleidingDto opleidingDto) {
         try {
             opleidingService.verwerkOpleiding(opleidingDto);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
 }

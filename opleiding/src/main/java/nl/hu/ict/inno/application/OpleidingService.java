@@ -91,18 +91,18 @@ public class OpleidingService {
         opleidingRepository.deleteById(opleidingId);
     }
 
-    public OpleidingDto addVakToOpleiding(String opleidingId, String vakId) {
+    public OpleidingDto addVakToOpleiding(String opleidingId, Vak vak) {
 
         Opleiding opleiding = opleidingRepository.findById(opleidingId)
                 .orElseThrow(() -> new OpleidingNotFoundException(opleidingId));
-
-        Vak vak;
-        try {
-            vak = vakRepository.findById(vakId)
-                    .orElseThrow(() -> new VakNotFoundException(vakId));
-        } catch (VakNotFoundException e) {
-            vak = vakService.getVak(vakId);
-        }
+//
+//        Vak vak1;
+//        try {
+//            vak1 = vakRepository.findById(null)
+//                    .orElseThrow(() -> new VakNotFoundException(null));
+//        } catch (VakNotFoundException e) {
+//            vak1 = vakService.getVak(null);
+//        }
 
         opleiding.getVakken().add(vak);
         vakRepository.save(vak);

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,7 +19,7 @@ public class Opleiding {
     @Id
     private String opleidingId;
 
-    private List<Vak> vakken;
+    private List<Vak> vakken = new ArrayList<>();
     private String naam;
 
     private Periode periode;
