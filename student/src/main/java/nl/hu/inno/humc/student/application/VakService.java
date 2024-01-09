@@ -6,8 +6,7 @@ import nl.hu.inno.humc.student.data.VakRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.messaging.outbound.VakProducer;
-import nl.hu.inno.humc.student.messaging.outbound.VakRabbitProducer;
-import nl.hu.inno.humc.student.presentation.VakRestController;
+import nl.hu.inno.humc.student.presentation.VakController;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import org.springframework.stereotype.Service;
@@ -21,13 +20,13 @@ public class VakService {
     private final VakRepository vakRepo;
     private final OpleidingService opleidingService;
     private final VakProducer vakProducer;
-    private final VakRestController vakRestController;
+    private final VakController vakController;
 
-    public VakService(VakRepository vakRepo, OpleidingService opleidingService, VakProducer vakProducer, VakRestController vakRestController) {
+    public VakService(VakRepository vakRepo, OpleidingService opleidingService, VakProducer vakProducer, VakController vakRestController) {
         this.vakRepo = vakRepo;
         this.opleidingService = opleidingService;
         this.vakProducer = vakProducer;
-        this.vakRestController = vakRestController;
+        this.vakController = vakRestController;
     }
 
     public Vak getVakById(String id) throws VakBestaatNietException {
@@ -84,6 +83,6 @@ public class VakService {
     }
 
     public void ManuallyUpdateVakViaRest(String id) throws VakBestaatNietException {
-        updateVak(vakRestController.getVakById(id));
+        updateVak(vakController.getVakById(id));
     }
 }

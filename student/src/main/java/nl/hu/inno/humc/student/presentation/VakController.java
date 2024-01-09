@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class VakRestController {
+public class VakController {
     private final RestTemplate restTemplate;
 
-    public VakRestController() {
+    public VakController() {
         this.restTemplate = new RestTemplate();
     }
 

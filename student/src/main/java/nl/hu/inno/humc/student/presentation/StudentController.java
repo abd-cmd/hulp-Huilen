@@ -15,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/students")
-public class StudentRestController {
+public class StudentController {
     private final StudentService studentService;
 
-    StudentRestController(StudentService studentService){
+    StudentController(StudentService studentService){
         this.studentService = studentService;
     }
 
