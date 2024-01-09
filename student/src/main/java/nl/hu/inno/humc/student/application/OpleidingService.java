@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import nl.hu.inno.humc.student.application.exceptions.OpleidingBestaatNietException;
 import nl.hu.inno.humc.student.data.OpleidingRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
-import nl.hu.inno.humc.student.messaging.outbound.OpleidingRabbitProducer;
+import nl.hu.inno.humc.student.messaging.outbound.OpleidingProducer;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingDto;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ public class OpleidingService {
 
     private final OpleidingRepository opleidingRepo;
 
-    private final OpleidingRabbitProducer opleidingRabbitProducer;
-    public OpleidingService(OpleidingRepository opleidingRepo, OpleidingRabbitProducer opleidingRabbitProducer) {
+    private final OpleidingProducer opleidingProducer;
+    public OpleidingService(OpleidingRepository opleidingRepo, OpleidingProducer opleidingRabbitProducer) {
         this.opleidingRepo = opleidingRepo;
-        this.opleidingRabbitProducer = opleidingRabbitProducer;
+        this.opleidingProducer = opleidingRabbitProducer;
     }
 
     public Opleiding getOpleidingById(String id) {
@@ -49,6 +49,6 @@ public class OpleidingService {
     }
 
     public void plaatsNieuweInschrijvingInQueue(OpleidingInschrijvingDto inschrijvingDto) {
-        this.opleidingRabbitProducer.newInschrijving(inschrijvingDto);
+        this.opleidingProducer.newInschrijving(inschrijvingDto);
     }
 }

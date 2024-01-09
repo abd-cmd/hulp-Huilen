@@ -7,7 +7,7 @@ import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.domain.Vak;
-import nl.hu.inno.humc.student.messaging.outbound.StudentRabbitProducer;
+import nl.hu.inno.humc.student.messaging.outbound.StudentProducer;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
@@ -25,11 +25,11 @@ public class StudentService {
     private final StudentRepository studentRepo;
     private final VakService vakService;
     private final OpleidingService opleidingService;
-    private final StudentRabbitProducer studentRabbitProducer;
+    private final StudentProducer studentProducer;
 
-    StudentService(StudentRepository studentRepository, StudentRabbitProducer studentRabbitProducer, VakService vakService, OpleidingService opleidingService) {
+    StudentService(StudentRepository studentRepository, StudentProducer studentRabbitProducer, VakService vakService, OpleidingService opleidingService) {
         this.studentRepo = studentRepository;
-        this.studentRabbitProducer = studentRabbitProducer;
+        this.studentProducer = studentRabbitProducer;
         this.vakService = vakService;
         this.opleidingService = opleidingService;
     }
@@ -58,7 +58,7 @@ public class StudentService {
         student = studentRepo.save(student);
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendNewStudentToQueue(studentDto);
+        studentProducer.sendNewStudentToQueue(studentDto);
         return studentDto;
     }
 
@@ -81,7 +81,7 @@ public class StudentService {
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
         return studentDto;
     }
 
@@ -121,7 +121,7 @@ public class StudentService {
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
         return studentDto;
     }
 
@@ -134,7 +134,7 @@ public class StudentService {
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
         System.out.println("Student heeft vak behaald, " + vak.getStudiePunten() + " studiepunten toegevoegd aan " + studentId );
         return studentDto;
     }

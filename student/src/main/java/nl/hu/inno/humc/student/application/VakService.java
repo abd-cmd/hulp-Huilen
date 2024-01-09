@@ -5,6 +5,7 @@ import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
 import nl.hu.inno.humc.student.data.VakRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Vak;
+import nl.hu.inno.humc.student.messaging.outbound.VakProducer;
 import nl.hu.inno.humc.student.messaging.outbound.VakRabbitProducer;
 import nl.hu.inno.humc.student.presentation.VakRestController;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
@@ -19,13 +20,13 @@ public class VakService {
 
     private final VakRepository vakRepo;
     private final OpleidingService opleidingService;
-    private final VakRabbitProducer vakRabbitProducer;
+    private final VakProducer vakProducer;
     private final VakRestController vakRestController;
 
-    public VakService(VakRepository vakRepo, OpleidingService opleidingService, VakRabbitProducer vakRabbitProducer, VakRestController vakRestController) {
+    public VakService(VakRepository vakRepo, OpleidingService opleidingService, VakProducer vakProducer, VakRestController vakRestController) {
         this.vakRepo = vakRepo;
         this.opleidingService = opleidingService;
-        this.vakRabbitProducer = vakRabbitProducer;
+        this.vakProducer = vakProducer;
         this.vakRestController = vakRestController;
     }
 
@@ -79,7 +80,7 @@ public class VakService {
 
     public void plaatseNieuweInschrijvingInQueue(VakInschrijvingDto dto) {
         System.out.println(dto.getVoornaam());
-        this.vakRabbitProducer.sendInschrijvingToQueue(dto);
+        this.vakProducer.sendInschrijvingToQueue(dto);
     }
 
     public void ManuallyUpdateVakViaRest(String id) throws VakBestaatNietException {
