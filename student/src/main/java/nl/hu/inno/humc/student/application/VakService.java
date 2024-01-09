@@ -6,7 +6,6 @@ import nl.hu.inno.humc.student.data.VakRepository;
 import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Vak;
 import nl.hu.inno.humc.student.messaging.outbound.VakProducer;
-import nl.hu.inno.humc.student.presentation.VakController;
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
 import org.springframework.stereotype.Service;
@@ -20,13 +19,13 @@ public class VakService {
     private final VakRepository vakRepo;
     private final OpleidingService opleidingService;
     private final VakProducer vakProducer;
-    private final VakController vakController;
+    private final VakClient vakClient;
 
-    public VakService(VakRepository vakRepo, OpleidingService opleidingService, VakProducer vakProducer, VakController vakRestController) {
+    public VakService(VakRepository vakRepo, OpleidingService opleidingService, VakProducer vakProducer, VakClient vakClient) {
         this.vakRepo = vakRepo;
         this.opleidingService = opleidingService;
         this.vakProducer = vakProducer;
-        this.vakController = vakRestController;
+        this.vakClient = vakClient;
     }
 
     public Vak getVakById(String id) throws VakBestaatNietException {
@@ -83,6 +82,6 @@ public class VakService {
     }
 
     public void ManuallyUpdateVakViaRest(String id) throws VakBestaatNietException {
-        updateVak(vakController.getVakById(id));
+        updateVak(vakClient.getVakById(id));
     }
 }

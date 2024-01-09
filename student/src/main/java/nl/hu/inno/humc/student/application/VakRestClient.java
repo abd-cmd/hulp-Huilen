@@ -1,14 +1,14 @@
-package nl.hu.inno.humc.student.presentation;
+package nl.hu.inno.humc.student.application;
 
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class VakController {
+public class VakRestClient implements VakClient {
     private final RestTemplate restTemplate;
 
-    public VakController() {
+    public VakRestClient() {
         this.restTemplate = new RestTemplate();
     }
 
