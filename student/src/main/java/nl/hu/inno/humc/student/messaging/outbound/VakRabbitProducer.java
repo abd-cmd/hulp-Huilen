@@ -5,7 +5,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class VakRabbitProducer {
+public class VakRabbitProducer implements VakProducer {
 
     private final RabbitTemplate rabbitTemplate;
 
