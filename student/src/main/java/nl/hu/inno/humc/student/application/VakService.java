@@ -46,7 +46,7 @@ public class VakService {
                 vakDto.getEindDatum(),
                 vakDto.getStudiePunten(),
                 //vakDto.getOpleidingDto(),
-                new Opleiding("398762346823", "HBO-ICT", LocalDate.now().minusYears(1), LocalDate.now().plusYears(1), 100),
+                new Opleiding("398762346823", "HBO-ICT", LocalDate.now().minusYears(1), LocalDate.now().plusYears(1), 100).getOpleidingId(),
                 vakDto.getBeschikbarePlekken()
         );
         vakRepo.save(vak);

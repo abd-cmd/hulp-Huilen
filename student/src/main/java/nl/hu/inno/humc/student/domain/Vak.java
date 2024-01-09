@@ -19,7 +19,7 @@ public class Vak {
     private LocalDate eindDatum;
     private int studiePunten;
 
-    private Opleiding opleiding;
+    private String opleidingId;
     private int beschikbarePlekken;
 
     public Vak(
@@ -28,7 +28,7 @@ public class Vak {
             LocalDate beginDatum,
             LocalDate eindDatum,
             int studiePunten,
-            Opleiding opleiding,
+            String opleidingId,
             int beschikbarePlekken
     ) {
         this.id = id;
@@ -36,13 +36,13 @@ public class Vak {
         this.beginDatum = beginDatum;
         this.eindDatum = eindDatum;
         this.studiePunten = studiePunten;
-        this.opleiding = opleiding;
+        this.opleidingId = opleidingId;
         this.beschikbarePlekken = beschikbarePlekken;
     }
 
 
-    public Opleiding getOpleiding() {
-        return opleiding;
+    public String getOpleiding() {
+        return opleidingId;
     }
 
     public int getStudiePunten() {
@@ -73,8 +73,8 @@ public class Vak {
         this.studiePunten = studiePunten;
     }
 
-    public void setOpleiding(Opleiding opleiding) {
-        this.opleiding = opleiding;
+    public void setOpleiding(String opleidingId) {
+        this.opleidingId = opleidingId;
     }
 
     public void setBeschikbarePlekken(int beschikbarePlekken) {
@@ -86,11 +86,11 @@ public class Vak {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vak vak = (Vak) o;
-        return studiePunten == vak.studiePunten && beschikbarePlekken == vak.beschikbarePlekken && Objects.equals(id, vak.id) && Objects.equals(naam, vak.naam) && Objects.equals(beginDatum, vak.beginDatum) && Objects.equals(eindDatum, vak.eindDatum) && Objects.equals(opleiding, vak.opleiding);
+        return studiePunten == vak.studiePunten && beschikbarePlekken == vak.beschikbarePlekken && Objects.equals(id, vak.id) && Objects.equals(naam, vak.naam) && Objects.equals(beginDatum, vak.beginDatum) && Objects.equals(eindDatum, vak.eindDatum) && Objects.equals(opleidingId, vak.opleidingId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, naam, beginDatum, eindDatum, studiePunten, opleiding, beschikbarePlekken);
+        return Objects.hash(id, naam, beginDatum, eindDatum, studiePunten, opleidingId, beschikbarePlekken);
     }
 }
