@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.student.presentation.opleiding;
+package nl.hu.inno.humc.student.messaging.outbound;
 
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

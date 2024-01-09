@@ -1,4 +1,4 @@
-package nl.hu.inno.humc.student.presentation.vak;
+package nl.hu.inno.humc.student.presentation;
 
 import nl.hu.inno.humc.student.presentation.dto.VakDto;
 import org.springframework.stereotype.Component;

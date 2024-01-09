@@ -7,7 +7,7 @@ import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.domain.Vak;
-import nl.hu.inno.humc.student.presentation.student.StudentRabbitProducer;
+import nl.hu.inno.humc.student.messaging.outbound.StudentRabbitProducer;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
