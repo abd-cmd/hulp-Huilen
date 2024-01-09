@@ -27,11 +27,14 @@ public class StudentService {
     private final OpleidingService opleidingService;
     private final StudentProducer studentProducer;
 
-    StudentService(StudentRepository studentRepository, StudentProducer studentRabbitProducer, VakService vakService, OpleidingService opleidingService) {
+    private final StudentClient studentClient;
+
+    StudentService(StudentRepository studentRepository, StudentProducer studentRabbitProducer, VakService vakService, OpleidingService opleidingService, StudentClient studentClient) {
         this.studentRepo = studentRepository;
         this.studentProducer = studentRabbitProducer;
         this.vakService = vakService;
         this.opleidingService = opleidingService;
+        this.studentClient = studentClient;
     }
 
     public StudentDto getStudentById(String id){
@@ -59,6 +62,8 @@ public class StudentService {
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
         studentProducer.sendNewStudentToQueue(studentDto);
+        // Send student to the canvas application
+        studentClient.registreerStudent(studentDto.getVoornaam(), studentDto.getAchternaam());
         return studentDto;
     }
 
