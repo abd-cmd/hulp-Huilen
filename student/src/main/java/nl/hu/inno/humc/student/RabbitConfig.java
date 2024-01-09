@@ -3,8 +3,7 @@ package nl.hu.inno.humc.student;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -59,6 +58,24 @@ public class RabbitConfig {
     public Queue opleidingQueue(){
         return QueueBuilder.durable("new-opleiding-queue").build();
     }
+
+
+    // Queues from jjan
+    @Bean
+    public Exchange jjanExchange() {
+        return ExchangeBuilder.directExchange("jjan").build();
+    }
+
+    @Bean
+    public Queue studentRegistratieQueue() {
+        return QueueBuilder.durable("studentRegistratie").build();
+    }
+    @Bean
+    public Binding studentRegistratieBinding() {
+        return BindingBuilder.bind(studentRegistratieQueue()).to(jjanExchange()).with("studentGeregistreerd").noargs();
+    }
+
+
 
     @Bean
     public ObjectMapper objectMapper() {
