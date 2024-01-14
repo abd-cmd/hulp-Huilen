@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "303b732e-1177-4a67-8e9a-6bf0e35f7f32",
-		"name": "Osiris",
+		"_postman_id": "8418bda6-0938-4406-bf6b-708895398a3a",
+		"name": "Student service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -19,7 +19,8 @@
 							},
 							{
 								"key": "User-Agent",
-								"value": "Insomnia/2023.5.7"
+								"value": "Insomnia/2023.5.7",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -27,10 +28,11 @@
 							"raw": "{\r\n    \"voornaam\": \"John\",\r\n    \"achternaam\": \"Doe\",\r\n    \"roepnaam\": \"Johny\",\r\n    \"email\": \"johndoe@example.com\",\r\n    \"telefoonNummer\": \"+1234567890\",\r\n    \"geboortedatum\": \"2000-10-10\",\r\n    \"straat\": \"123 Main Street\",\r\n    \"huisnummer\": \"A1\",\r\n    \"postcode\": \"1234PP\",\r\n    \"plaats\": \"City\",\r\n    \"vooropleiding\": \"HAVO\"\r\n}"
 						},
 						"url": {
-							"raw": "{{BASEURL}}/students",
+							"raw": "localhost:8083/students",
 							"host": [
-								"{{BASEURL}}"
+								"localhost"
 							],
+							"port": "8083",
 							"path": [
 								"students"
 							]
@@ -105,7 +107,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"studentId\": \"6561e355f9b67e56c4413c2d\",\n    \"vakId\": \"398762346823\"\n}"
+							"raw": "{\n\t\"studentId\": \"65a41205eb27f46f55ba75f3\",\n    \"vakId\": \"65a413ff63c3440562c36747\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8083/students/vak",
@@ -128,7 +130,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"studentId\": 1,\r\n    \"opleidingId\": 1\r\n}",
+							"raw": "{\r\n    \"studentId\": \"65a41205eb27f46f55ba75f3\",\r\n    \"opleidingId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,10 +138,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL1}}/students/opleiding",
-							"host": [
-								"{{baseURL1}}"
-							],
+							"raw": "/students/opleiding",
 							"path": [
 								"students",
 								"opleiding"
@@ -155,7 +154,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"naam\": \"Vaknaam\",\r\n  \"beginDatum\": \"2023-09-15\",\r\n  \"eindDatum\": \"2023-12-15\",\r\n  \"periode\": 2,\r\n  \"toetsGegevens\": {\r\n      \"vorm\": \"vorm\",\r\n      \"punten\": 5\r\n  },\r\n  \"herkansingGegevens\": {\r\n      \"herkansingsperiode\": 2\r\n  }\r\n}\r\n",
+							"raw": "{\r\n  \"naam\": \"Vaknaam\",\r\n  \"beginDatum\": \"2023-09-15\",\r\n  \"eindDatum\": \"2023-12-15\",\r\n  \"periode\": 2,\r\n  \"toetsGegevens\": {\r\n      \"vorm\": \"vorm\",\r\n      \"punten\": 5\r\n  },\r\n  \"beschikbaarPleken\": 30,\r\n  \"herkansingGegevens\": {\r\n      \"herkansingsperiode\": 2\r\n  }\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -163,15 +162,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://huilen.huilen.p.azurewebsites.net/Vakken/create",
-							"protocol": "https",
+							"raw": "localhost:8082/Vakken/create",
 							"host": [
-								"huilen",
-								"huilen",
-								"p",
-								"azurewebsites",
-								"net"
+								"localhost"
 							],
+							"port": "8082",
 							"path": [
 								"Vakken",
 								"create"
@@ -202,6 +197,34 @@
 							"path": [
 								"students",
 								"vrijstelling"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Voeg student toe aan klas",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\": \"65a435ce9c4dc91323143e05\",\r\n    \"klasCode\": \"1A\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8083/students/klas",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"students",
+								"klas"
 							]
 						}
 					},
