@@ -44,6 +44,7 @@ Deze service is in staat om studenten te registreren, en om deze in te schrijven
 Het inschrijven voor opleidingen gebeurt nu nog met dummy data, omdat koppeling met de service van Abuzar nog niet aan bod is gekomen.
 
 De service praat met de vak microservice via messaging, en met RPC.
+Ook praat de service met de Student microservice van de Canvas Applicatie van het andere team.
 
 ### Endpoint en queues
 De service heeft de volgende endpoints:
@@ -53,6 +54,7 @@ De service heeft de volgende endpoints:
 - `DELETE /student/{id}` om een student te verwijderen
 - `PATCH /student/vak` om een student in te schrijven voor een vak
 - `PATCH /student/opleiding` om een student in te schrijven voor een opleiding
+- `PATCH /student/klas` om een student in te schrijven voor een klas
 
 De service produceert berichten op de volgende queues:
 - `new-student-queue` Hier komen berichten op als er een nieuwe student is geregistreerd
@@ -67,6 +69,13 @@ De service consumeert berichten van de volgende queues:
 - `Update-Vak` Hier komen berichten op als er een vak is geupdate vanuit de vak microservice
 - `Delete-Vak` Hier komen berichten op als er een vak is verwijderd vanuit de vak microservice
 - `SendPuntenVak` Hier komen berichten op als een student een vak behaald heeft
+
+### Verbeteringen sinds vorige versie
+- Studenten kunnen nu ook ingeschreven worden voor klassen via de Student microservice van Jan (Het andere team)
+- Messaging weggehaald uit de presentation layer
+- RestTemplate weggehaald uit de presentation layer
+- Gebruik van interfaces ipv harde dependencies in de service klasses
+- 
 
 
 
