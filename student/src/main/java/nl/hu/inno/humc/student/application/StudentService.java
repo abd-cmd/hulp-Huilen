@@ -63,6 +63,7 @@ public class StudentService {
         // Send student to queue so the other microservices can process it
         studentProducer.sendNewStudentToQueue(studentDto);
         // Send student to the canvas application
+        // Preferably this would be done via messaging, but REST is the only option for now
         studentClient.registreerStudent(studentDto.getVoornaam(), studentDto.getAchternaam());
         return studentDto;
     }
