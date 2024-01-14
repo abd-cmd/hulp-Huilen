@@ -138,6 +138,19 @@ public class StudentService {
         return studentDto;
     }
 
+    public StudentDto schrijfStudentInVoorKlas(String studentId, String klasCode) {
+        Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
+        // Voeg aan klas toe in Canvas
+        studentClient.voegStudentToeAanKlas(student.getStudentNummer(), klasCode);
+        student.schrijfInVoorKlas(klasCode);
+        studentRepo.save(student);
+
+        StudentDto studentDto = StudentDto.Of(student);
+        // Send student to queue so the other microservices can process it
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
+        return studentDto;
+    }
+
     public StudentDto studentHeeftVakBehaald(String studentId, String vakId) throws VakBestaatNietException {
 
         Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);

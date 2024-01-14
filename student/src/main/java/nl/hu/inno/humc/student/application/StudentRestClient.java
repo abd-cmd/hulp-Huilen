@@ -22,4 +22,8 @@ public class StudentRestClient implements StudentClient{
         System.out.println(studentDto.getStudentNummer());
         return studentDto.getStudentNummer().toString();
     }
+
+    public void voegStudentToeAanKlas(String studentNummer, String klasCode) {
+        restTemplate.postForEntity("http://localhost:8090/klas/" + klasCode + "/student/" + studentNummer, null, Void.class);
+    }
 }

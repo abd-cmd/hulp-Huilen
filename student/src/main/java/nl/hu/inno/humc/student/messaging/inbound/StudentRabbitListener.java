@@ -42,13 +42,13 @@ public class StudentRabbitListener {
         System.out.println(student.getStudentNummer());
     }
 
-    @RabbitListener(queues = "klasInschrijving")
-    public void studentToegevoegdAanKlasListener(String klasInschrijvingMessage) throws JsonProcessingException {
-
-        KlasInschrijvingDto klasInschrijvingDto = new ObjectMapper().readValue(
-                klasInschrijvingMessage,
-                KlasInschrijvingDto.class);
-
-        System.out.println(klasInschrijvingDto.klasCode());
-    }
+//    @RabbitListener(queues = "klasInschrijving")
+//    public void studentToegevoegdAanKlasListener(String klasInschrijvingMessage) throws JsonProcessingException {
+//
+//        KlasInschrijvingDto klasInschrijvingDto = new ObjectMapper().readValue(
+//                klasInschrijvingMessage,
+//                KlasInschrijvingDto.class);
+//
+//        System.out.println(klasInschrijvingDto.klasCode());
+//    }
 }

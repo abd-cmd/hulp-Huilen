@@ -30,6 +30,7 @@ public class StudentDto {
     private String plaats;
     private Vooropleiding vooropleiding;
     private List<String> opleidingen;
+    private List<String> klassen;
     private List<String> ingeschrevenVakken;
     private List<String> behaaldeVakken;
     private List<BsaDto> studieAdviezen;
@@ -51,6 +52,7 @@ public class StudentDto {
         dto.plaats = student.getPersoonsGegevens().getAdres().getPlaats();
         dto.vooropleiding = student.getVooropleiding();
         dto.opleidingen = student.getOpleidingen().stream().map(Opleiding::getOpleidingId).collect(toList());
+        dto.klassen = student.getKlassen();
         dto.ingeschrevenVakken = student.getIngeschrevenVakken().stream().map(Vak::getId).collect(toList());
         dto.behaaldeVakken = student.getBehaaldeVakken().stream().map(Vak::getId).collect(toList());
         dto.studieAdviezen = student.getStudieAdviezen().stream().map(BsaDto::Of).collect(toList());
@@ -128,4 +130,9 @@ public class StudentDto {
     public String getStudentNummer() {
         return studentNummer;
     }
+
+    public List<String> getKlassen() {
+        return klassen;
+    }
+
 }

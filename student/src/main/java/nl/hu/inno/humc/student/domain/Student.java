@@ -34,6 +34,7 @@ public class Student {
         this.behaaldeVakken = new ArrayList<>();
         this.bsaList = new ArrayList<>();
         this.opleidingen = new ArrayList<>();
+        this.klassen = new ArrayList<>();
     }
 
     public void schrijfInVoorOpleiding(Opleiding opleiding){
