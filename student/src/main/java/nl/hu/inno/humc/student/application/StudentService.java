@@ -58,13 +58,20 @@ public class StudentService {
                 .withGeboortedatum(dto.getGeboortedatum())
                 .withVooropleiding(dto.getVooropleiding())
                 .build();
-        student = studentRepo.save(student);
-        StudentDto studentDto = StudentDto.Of(student);
-        // Send student to queue so the other microservices can process it
-        studentProducer.sendNewStudentToQueue(studentDto);
+
+
         // Send student to the canvas application
         // Preferably this would be done via messaging, but REST is the only option for now
-        studentClient.registreerStudent(studentDto.getVoornaam(), studentDto.getAchternaam());
+        // the canvas application generates as student id and returns it to us
+        String studentNummer = studentClient.registreerStudent(dto.getVoornaam(), dto.getAchternaam());
+        student.geefStudentNummer(studentNummer);
+
+        student = studentRepo.save(student);
+
+        // Send student to queue so the other microservices can process it
+        StudentDto studentDto = StudentDto.Of(student);
+        studentProducer.sendNewStudentToQueue(studentDto);
+
         return studentDto;
     }
 

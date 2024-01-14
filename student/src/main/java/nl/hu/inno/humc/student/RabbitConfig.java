@@ -75,6 +75,16 @@ public class RabbitConfig {
         return BindingBuilder.bind(studentRegistratieQueue()).to(jjanExchange()).with("studentGeregistreerd").noargs();
     }
 
+    @Bean
+    public Queue klasInschrijvingQueue() {
+        return QueueBuilder.durable("klasInschrijving").build();
+    }
+
+    @Bean
+    public Binding klasInschrijvingBinding() {
+        return BindingBuilder.bind(klasInschrijvingQueue()).to(jjanExchange()).with("studentToegevoegdAanKlas").noargs();
+    }
+
 
 
     @Bean

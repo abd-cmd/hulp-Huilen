@@ -51,6 +51,20 @@ public class StudentController {
         }
     }
 
+//    @PatchMapping("/klas")
+//    public ResponseEntity<?> schrijfInVoorKlas(@RequestBody @Validated OpleidingInschrijvingDto dto){
+//        try {
+//            StudentDto student = studentService.schrijfStudentInVoorKlas(dto.getStudentId(), dto.getOpleidingId());
+//
+//            return new ResponseEntity<>(student, HttpStatus.OK);
+//        } catch (StudentBestaatNietException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        catch (Exception e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
     @PatchMapping("/opleiding")
     public ResponseEntity<?> schrijfInVoorOpleiding(@RequestBody @Validated OpleidingInschrijvingDto dto){
         try {

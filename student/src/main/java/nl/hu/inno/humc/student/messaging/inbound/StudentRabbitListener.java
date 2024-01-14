@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.hu.inno.humc.student.application.StudentService;
 import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
+import nl.hu.inno.humc.student.presentation.dto.KlasInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentFromJjanDto;
 import nl.hu.inno.humc.student.presentation.dto.VakBehaaldDto;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -39,5 +40,15 @@ public class StudentRabbitListener {
                 StudentFromJjanDto.class);
 
         System.out.println(student.getStudentNummer());
+    }
+
+    @RabbitListener(queues = "klasInschrijving")
+    public void studentToegevoegdAanKlasListener(String klasInschrijvingMessage) throws JsonProcessingException {
+
+        KlasInschrijvingDto klasInschrijvingDto = new ObjectMapper().readValue(
+                klasInschrijvingMessage,
+                KlasInschrijvingDto.class);
+
+        System.out.println(klasInschrijvingDto.klasCode());
     }
 }

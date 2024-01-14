@@ -17,6 +17,7 @@ import static java.util.stream.Collectors.toList;
 public class StudentDto {
 
     private String studentId;
+    private String studentNummer;
     private String voornaam;
     private String achternaam;
     private String roepnaam;
@@ -37,6 +38,7 @@ public class StudentDto {
     public static StudentDto Of(Student student) {
         StudentDto dto = new StudentDto();
         dto.studentId = student.getStudentId();
+        dto.studentNummer = student.getStudentNummer();
         dto.voornaam = student.getPersoonsGegevens().getNaam().getVoornaam();
         dto.achternaam = student.getPersoonsGegevens().getNaam().getAchternaam();
         dto.roepnaam = student.getPersoonsGegevens().getNaam().getRoepnaam();
@@ -121,5 +123,9 @@ public class StudentDto {
 
     public List<BsaDto> getStudieAdviezen() {
         return studieAdviezen;
+    }
+
+    public String getStudentNummer() {
+        return studentNummer;
     }
 }

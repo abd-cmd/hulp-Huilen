@@ -13,12 +13,14 @@ import java.util.Optional;
 public class Student {
     @MongoId
     private String studentId;
+    private String studentNummer;
     private PersoonsGegevens persoonsGegevens;
     private Vooropleiding vooropleiding;
     private List<BSA> bsaList;
     private List<Opleiding> opleidingen;
     private List<Vak> ingeschrevenVakken;
     private List<Vak> behaaldeVakken;
+    private List<String> klassen;
 
     protected Student(){}
 
@@ -88,13 +90,21 @@ public class Student {
         bsaVanOpleiding.ifPresent(bsa -> bsa.voegStudiePuntenToe(vak.getStudiePunten()));
     }
 
-    public void setVooropleiding(Vooropleiding vooropleiding) {
-        this.vooropleiding = vooropleiding;
+    public void schrijfInVoorKlas(String klasCode){
+        if(klasCode == null || klasCode.isEmpty()) throw new IllegalArgumentException("Klascode mag niet leeg zijn");
+        if(this.klassen.contains(klasCode)) throw new IllegalArgumentException("Student is al ingeschreven voor deze klas");
+
+        this.klassen.add(klasCode);
     }
 
-    public void setPesoonsGegevens(PersoonsGegevens persoonsGegevens) {
-        this.persoonsGegevens = persoonsGegevens;
+    public void geefStudentNummer(String studentNummer){
+        if(studentNummer == null || studentNummer.isEmpty()) throw new IllegalArgumentException("Studentnummer mag niet leeg zijn");
+        if(this.studentNummer != null) throw new IllegalArgumentException("Studentnummer is al toegekend aan deze student");
+
+        this.studentNummer = studentNummer;
     }
+
+
 
     public String getStudentId() {
         return studentId;
@@ -126,5 +136,13 @@ public class Student {
 
     public List<Vak> getBehaaldeVakken() {
         return behaaldeVakken;
+    }
+
+    public List<String> getKlassen() {
+        return klassen;
+    }
+
+    public String getStudentNummer() {
+        return studentNummer;
     }
 }
