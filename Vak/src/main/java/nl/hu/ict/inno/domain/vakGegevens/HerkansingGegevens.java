@@ -1,8 +1,11 @@
 package nl.hu.ict.inno.domain.vakGegevens;
 
 import jakarta.persistence.Embeddable;
+import nl.hu.ict.inno.domain.Opdracht;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class HerkansingGegevens {
@@ -11,12 +14,23 @@ public class HerkansingGegevens {
     private LocalDate herkansingDatum;
     private int herkansingPunten;
 
-    public HerkansingGegevens(int herkansingsperiode, LocalDate herkansingDatum, int herkansingPunten) {
+    private List<Opdracht> opdrachtList = new ArrayList<>();
+
+    public HerkansingGegevens(int herkansingsperiode, LocalDate herkansingDatum, int herkansingPunten,
+                              List<Opdracht> opdrachtList) {
         this.herkansingsperiode = herkansingsperiode;
         this.herkansingDatum = herkansingDatum;
         this.herkansingPunten = herkansingPunten;
+        this.opdrachtList = opdrachtList;
     }
 
+    public List<Opdracht> getOpdrachtList() {
+        return opdrachtList;
+    }
+
+    public void AddOpdrachtToHerkansingList(Opdracht opdracht) {
+        opdrachtList.add(opdracht);
+    }
     public HerkansingGegevens() {
 
     }

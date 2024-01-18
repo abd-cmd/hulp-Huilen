@@ -1,13 +1,15 @@
 package nl.hu.ict.inno.domain;
 
 import jakarta.persistence.Embeddable;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+@Document
 public class Opleiding {
+
 
     private String opleidingId;
     private String naam;

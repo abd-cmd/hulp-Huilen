@@ -1,14 +1,13 @@
 package nl.hu.ict.inno.presentation.controller;
 
 
+import nl.hu.ict.inno.application.VakInterface;
 import nl.hu.ict.inno.application.VakService;
+import nl.hu.ict.inno.domain.Opdracht;
 import nl.hu.ict.inno.domain.Opleiding;
 import nl.hu.ict.inno.domain.Vak;
-import nl.hu.ict.inno.domain.exceptions.OpleidingNotFoundException;
 import nl.hu.ict.inno.domain.exceptions.VakNotFoundException;
-import nl.hu.ict.inno.presentation.dto.AddVakToOpleiding;
 import nl.hu.ict.inno.presentation.dto.StudentPuntenDto;
-import nl.hu.ict.inno.presentation.dto.ToetsGegevensDto;
 import nl.hu.ict.inno.presentation.dto.VakDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -21,101 +20,26 @@ import java.util.List;
 @RequestMapping("/Vakken")
 public class VakController {
 
-    private final VakService vakService;
+    private final VakInterface vakInterface;
 
     public VakController(VakService vakService) {
-        this.vakService = vakService;
+        this.vakInterface = vakService;
     }
 
     @PostMapping("/create")
     public Vak save(@Validated @RequestBody VakDto vakDto) {
         try {
-        return this.vakService.saveVak(vakDto.naam,vakDto.periode,vakDto.beschikbaarPleken,
-                vakDto.ingangEisen,
-                vakDto.loopTijd,
-                vakDto.toetsGegevens,
-                vakDto.herkansingGegevens);
+
+        return this.vakInterface.AddVak(vakDto);
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
     }
 
-    @PutMapping("/update/{id}")
-    public Vak update(@PathVariable("id") String VakId, @Validated @RequestBody VakDto vakDto) {
-        try {
-            return this.vakService.updateVak(VakId,vakDto.naam,vakDto.periode,vakDto.beschikbaarPleken,
-                    vakDto.ingangEisen,
-                    vakDto.loopTijd,
-                    vakDto.toetsGegevens,
-                    vakDto.herkansingGegevens,
-                    vakDto.opleidingId);
-        }catch (VakNotFoundException | OpleidingNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
-        }
-    }
-
-    @DeleteMapping("/Delete/{id}")
-    public void delete(@PathVariable("id") String VakId) {
-        try {
-            this.vakService.deleteVak(VakId);
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.OK, exception.getMessage());
-        }
-    }
-    @DeleteMapping("/DeleteAll")
-    public void deleteAll() {
-        try {
-            this.vakService.deleteAll();
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.OK, exception.getMessage());
-        }
-    }
     @GetMapping("/getById/{id}")
     public Vak findById(@PathVariable("id") String VakId) {
         try {
-            return this.vakService.findById(VakId);
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
-        }
-    }
-
-    @GetMapping("/getByNaam/{naam}")
-    public Vak getByNaam(@PathVariable("naam") String VakNaam) {
-        try {
-            return this.vakService.findByNaam(VakNaam);
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
-        }
-    }
-
-    @GetMapping("/getByToetsGegevens")
-    public List<Vak> getByToetsGegevens(@Validated @RequestBody ToetsGegevensDto toetsGegevensDto) {
-        try {
-            return this.vakService.findVakByToetsGegevens(toetsGegevensDto.toetsGegevens);
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
-        }
-    }
-    @GetMapping("/getByToetsGegevensVorm/{vorm}")
-    public List<Vak> getByToetsGegevensVorm(@PathVariable("vorm") String vorm) {
-        try {
-            return this.vakService.findVakByToetsGegevensVorm(vorm);
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
-        }
-    }
-    @GetMapping("/getByPeriode/{periode}")
-    public List<Vak> getByPeriode(@PathVariable("periode") int VakPeriode) {
-        try {
-            return this.vakService.findByPeriode(VakPeriode);
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
-        }
-    }
-    @GetMapping("/getAlleVakken")
-    public List<Vak> getAlleVakken() {
-        try {
-            return this.vakService.getVakken();
+            return this.vakInterface.findById(VakId);
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
@@ -124,36 +48,28 @@ public class VakController {
     @PostMapping("/puntenSturen")
     public void puntenSturen(@Validated @RequestBody StudentPuntenDto studentPuntenDto) {
         try {
-            this.vakService.studentHeeftPuntenBehaald(studentPuntenDto.getVakId(),studentPuntenDto.getStudentId());
+            this.vakInterface.studentHeeftPuntenBehaald(studentPuntenDto.getVakId(),studentPuntenDto.getStudentId());
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
     }
 
-    @PostMapping("/addVakToOpleiding")
-    public Opleiding addVakToOpleiding(@Validated @RequestBody AddVakToOpleiding addVakToOpleiding) {
+    @PostMapping("/opdrachten/{vakid}/{studentId}")
+    public void opdrachtSturen(@PathVariable("vakid") String vakid,@PathVariable("studentId") String studentId) {
         try {
-            return this.vakService.addVakToOpeliding(addVakToOpleiding.getVakId(),addVakToOpleiding.getOpleidingId());
+             this.vakInterface.studentHeeftGeenPuntenBehaald(vakid,studentId);
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
         }
     }
 
-    @GetMapping("/findOpleidingById/{id}")
-    public Opleiding findOpleidingById(@PathVariable("id") String id) {
-        try {
-            return this.vakService.findOpleidingByNaam(id);
-        } catch (VakNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
-        }
-    }
+
     @GetMapping("/getAllOpleidingen")
     public List<Opleiding> getAllOpleidingen() {
         try {
-            return this.vakService.getOpleidingen();
+            return this.vakInterface.getOpleidingen();
         } catch (VakNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
-
 }

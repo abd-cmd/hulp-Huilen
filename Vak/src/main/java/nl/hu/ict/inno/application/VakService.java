@@ -2,16 +2,14 @@ package nl.hu.ict.inno.application;
 
 import jakarta.transaction.Transactional;
 
+import nl.hu.ict.inno.application.RestTemplateServices.OpdrachtRestInterface;
 import nl.hu.ict.inno.application.RestTemplateServices.OpleidingRestTemplate;
+import nl.hu.ict.inno.data.OpdrachtRepository;
 import nl.hu.ict.inno.data.VakRepository;
 import nl.hu.ict.inno.domain.*;
 import nl.hu.ict.inno.domain.exceptions.VakNotFoundException;
 
-import nl.hu.ict.inno.domain.vakGegevens.HerkansingGegevens;
-import nl.hu.ict.inno.domain.vakGegevens.IngangEisen;
-import nl.hu.ict.inno.domain.vakGegevens.LoopTijd;
-import nl.hu.ict.inno.domain.vakGegevens.ToetsGegevens;
-import nl.hu.ict.inno.presentation.controller.messaging.VakProducer;
+import nl.hu.ict.inno.presentation.vakMessaging.VakProducer;
 import nl.hu.ict.inno.presentation.dto.*;
 import org.springframework.stereotype.Service;
 
@@ -20,114 +18,37 @@ import java.util.List;
 
 @Service
 @Transactional
-public class VakService {
+public class VakService implements VakInterface {
     private VakRepository vakRepository;
     private OpleidingRestTemplate opleidingRestTemplate;
     private VakProducer vakProducer;
+    private OpdrachtRestInterface opdrachtRestInterface;
+    private StudentInterface studentInterface;
+    private OpdrachtRepository opdrachtRepository;
 
-    public VakService(VakRepository vakRepository, OpleidingRestTemplate opleidingRestTemplate, VakProducer vakProducer) {
+    public VakService(VakRepository vakRepository, OpleidingRestTemplate opleidingRestTemplate,
+                      VakProducer vakProducer, OpdrachtRestInterface opdrachtRestInterface,
+                      StudentInterface studentInterface, OpdrachtRepository opdrachtRepository) {
         this.vakRepository = vakRepository;
         this.opleidingRestTemplate = opleidingRestTemplate;
         this.vakProducer = vakProducer;
+        this.opdrachtRestInterface = opdrachtRestInterface;
+        this.studentInterface = studentInterface;
+        this.opdrachtRepository = opdrachtRepository;
     }
 
-    public Vak saveVak(String naam, int periode, int beschikbaarPleken , IngangEisen ingangEisen, LoopTijd loopTijd,
-                       ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens) {
+    public Vak AddVak(VakDto vakDto) {
 
-        Vak vak = new Vak(naam, periode, beschikbaarPleken ,ingangEisen, loopTijd,
-                toetsGegevens, herkansingGegevens, null, List.of());
+        Vak vak = new Vak(vakDto.naam, vakDto.periode, vakDto.beschikbaarPleken ,vakDto.ingangEisen, vakDto.loopTijd,
+                vakDto.toetsGegevens, vakDto.herkansingGegevens, null, List.of());
 
         Vak savedVak = vakRepository.save(vak);
 
+        this.vakProducer.sendVakToOpdracht(savedVak);
         this.vakProducer.sendNieuweVak(savedVak);
+        this.vakProducer.sendVakToOpdracht(savedVak);
 
         return savedVak;
-    }
-
-    public Vak updateVak(String id, String naam,int beschikbaarPleken ,int periode, IngangEisen ingangEisen, LoopTijd loopTijd,
-                         ToetsGegevens toetsGegevens, HerkansingGegevens herkansingGegevens,
-                         String opleidingId) {
-        Vak vak = findById(id);
-        Opleiding opleiding = this.opleidingRestTemplate.findById(opleidingId);
-        if (vak != null) {
-            vak.setNaam(naam);
-            vak.setPeriode(periode);
-            vak.setIngangEisen(ingangEisen);
-            vak.setLoopTijd(loopTijd);
-            vak.setToetsGegevens(toetsGegevens);
-            vak.setHerkansingGegevens(herkansingGegevens);
-            vak.setOpleiding(opleiding);
-            vak.setBeschikbaarPleken(beschikbaarPleken);
-
-            Vak updatedVak = vakRepository.save(vak);
-
-            VakUpdatedDto vakUpdatedDto = new VakUpdatedDto(updatedVak.getId(),updatedVak.getNaam(),
-                    updatedVak.getLoopTijd().getBeginDatum(),
-                    updatedVak.getLoopTijd().getEindDatum(),updatedVak.getIngangEisen().getEC(),
-                    updatedVak.getOpleiding(),updatedVak.getBeschikbaarPleken());
-
-//            this.opleidingRestTemplate.sendUpdatedVakToOpleiding(updatedVak);
-
-            this.vakProducer.sendUpdatedVak(vakUpdatedDto);
-
-            return updatedVak;
-        }
-        return null;
-    }
-
-    public void deleteVak(String id) {
-        Vak vak = findById(id);
-
-
-        this.vakProducer.sendDeletedVakId(vak.getId());
-//        this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
-        this.vakRepository.delete(vak);
-    }
-
-    public void deleteAll() {
-        List<Vak> vakken = new ArrayList<>();
-        this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
-
-        for (Vak vak:vakken){
-            this.vakProducer.sendDeletedVakId(vak.getId());
-//            this.opleidingRestTemplate.sendRemovedVakIdToOpleiding(vak);
-        }
-
-        this.vakRepository.deleteAll();
-    }
-
-    public Vak findByNaam(String naam) {
-        Vak vak = this.vakRepository.findByNaam(naam);
-
-        if (vakRepository.findByNaam(naam) == null) {
-            return null;
-        }
-        return vak;
-    }
-
-    public List<Vak> findByPeriode(int periode) {
-        List<Vak> vakken = this.vakRepository.findByPeriode(periode);
-
-        if (vakken.isEmpty()) {
-            return null;
-        }
-        return vakken;
-    }
-
-    public List<Vak> findVakByToetsGegevens(ToetsGegevens toetsGegevens) {
-        List<Vak> vakken = vakRepository.findVakByToetsGegevens(toetsGegevens);
-        if (vakken.isEmpty()) {
-            return null;
-        }
-        return vakken;
-    }
-
-    public List<Vak> findVakByToetsGegevensVorm(String vorm) {
-        List<Vak> vakken = vakRepository.findVakByToetsGegevens_Vorm(vorm);
-        if (vakken.isEmpty()) {
-            return null;
-        }
-        return vakken;
     }
 
     public Vak findById(String id) {
@@ -137,14 +58,7 @@ public class VakService {
         return vak;
     }
 
-    public List<Vak> getVakken() {
-        List<Vak> vakken = new ArrayList<>();
-        this.vakRepository.findAll().forEach(vak -> vakken.add(vak));
-        return vakken;
-    }
-
-
-    public Opleiding addVakToOpeliding(String vakId,String opleidingId){
+    public Opleiding addVakToOpeliding(String vakId,String opleidingId) {
         Vak vak = this.vakRepository.findById(vakId).orElseThrow(() -> new VakNotFoundException());
         Opleiding opleiding = this.opleidingRestTemplate.findById(opleidingId);
         vak.setOpleiding(opleiding);
@@ -161,25 +75,16 @@ public class VakService {
     }
 
 
-
-    public Opleiding findOpleidingByNaam(String id){
-        return this.opleidingRestTemplate.findById(id);
-    }
-
     public void addStudent(VakInschrijvingDto vakInschrijvingDto) {
         Vak vak = this.vakRepository.findById(vakInschrijvingDto.getVakId()).orElseThrow(() -> new VakNotFoundException());
 
-        VakInschrijvingDto vakInschrijvingDto1 = new VakInschrijvingDto(
-                vakInschrijvingDto.getStudentId(), vakInschrijvingDto.getVakId(),vakInschrijvingDto.getVoornaam());
-
-        Student student = new Student(vakInschrijvingDto1.getStudentId(),vakInschrijvingDto1.getVoornaam());
+        Student student = new Student(vakInschrijvingDto.getStudentId(),vakInschrijvingDto.getVoornaam(),vakInschrijvingDto.getAchternaam());
 
         if (vak != null) {
             vak.AddStudent(student);
             vakRepository.save(vak);
         }
     }
-
 
     public void studentHeeftPuntenBehaald(String vakid, String studentId)
     {
@@ -192,5 +97,23 @@ public class VakService {
                 this.vakProducer.sendPuntenVanVak(studentPuntenDto);
             }
         }
+    }
+
+    public void studentHeeftGeenPuntenBehaald(String vakid, String studentId)
+    {
+        Vak vak = this.vakRepository.findById(vakid).orElseThrow(() -> new VakNotFoundException());
+        Student student = this.studentInterface.FindStudent(studentId);
+        List<Opdracht> opdrachts = this.opdrachtRepository.findAllByVakId(vakid);
+
+        List<Opdracht> sendOpdrachten = new ArrayList<>();
+
+        for(Opdracht opdracht: opdrachts){
+            sendOpdrachten.add(opdracht);
+        }
+
+        SendOpdrachtenToStudentDto sendOpdrachtenToStudentDto =
+                new SendOpdrachtenToStudentDto(vak.getId(),student.getId(),sendOpdrachten);
+
+        vakProducer.sendOpdrachtenVanVak(sendOpdrachtenToStudentDto);
     }
 }

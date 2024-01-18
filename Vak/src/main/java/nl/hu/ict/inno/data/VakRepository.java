@@ -12,8 +12,4 @@ import java.util.Optional;
 public interface VakRepository extends MongoRepository<Vak,String> {
 
     Optional<Vak> findById(String id);
-    List<Vak> findVakByToetsGegevens( ToetsGegevens toetsGegevens);
-    List<Vak> findVakByToetsGegevens_Vorm( String vorm);
-    Vak findByNaam(String naam);
-    List<Vak> findByPeriode(int periode);
 }

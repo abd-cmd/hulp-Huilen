@@ -10,17 +10,23 @@ public class Student {
 
     private String id;
     private String voornaam;
+    private String achternaam;
 
     public Student() {
     }
 
-    public Student(String id, String voornaam) {
+    public Student(String id, String voornaam, String achternaam) {
         this.id = id;
         this.voornaam = voornaam;
+        this.achternaam = achternaam;
     }
 
     public String getId() {
         return id;
+    }
+
+    public String getAchternaam() {
+        return achternaam;
     }
 
     public String getVoornaam() {

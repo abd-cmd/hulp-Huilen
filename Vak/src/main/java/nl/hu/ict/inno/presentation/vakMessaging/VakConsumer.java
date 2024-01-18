@@ -1,4 +1,4 @@
-package nl.hu.ict.inno.presentation.controller.messaging;
+package nl.hu.ict.inno.presentation.vakMessaging;
 
 import nl.hu.ict.inno.application.VakService;
 import nl.hu.ict.inno.presentation.dto.VakInschrijvingDto;
@@ -17,9 +17,6 @@ public class VakConsumer {
 
     @RabbitListener(queues={"vak-inschrijving-queue"})
     public void StudentToAdd(VakInschrijvingDto vakInschrijvingDto){
-        System.out.println("vak inschrijving");
-        System.out.println(vakInschrijvingDto.getStudentId());
-        System.out.println(vakInschrijvingDto.getVoornaam());
         vakService.addStudent(vakInschrijvingDto);
     }
 
