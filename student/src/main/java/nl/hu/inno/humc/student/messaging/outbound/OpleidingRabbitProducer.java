@@ -1,11 +1,11 @@
-package nl.hu.inno.humc.student.presentation.opleiding;
+package nl.hu.inno.humc.student.messaging.outbound;
 
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OpleidingRabbitProducer {
+public class OpleidingRabbitProducer implements OpleidingProducer{
 
     private final RabbitTemplate rabbitTemplate;
 

@@ -1,16 +1,11 @@
-package nl.hu.inno.humc.student.presentation.student;
+package nl.hu.inno.humc.student.messaging.outbound;
 
-import nl.hu.inno.humc.student.application.StudentService;
-import nl.hu.inno.humc.student.application.exceptions.VakBestaatNietException;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
-import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentRabbitProducer {
+public class StudentRabbitProducer implements StudentProducer {
 
     private final RabbitTemplate rabbitTemplate;
 

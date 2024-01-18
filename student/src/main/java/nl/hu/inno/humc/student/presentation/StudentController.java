@@ -1,10 +1,7 @@
-package nl.hu.inno.humc.student.presentation.student;
+package nl.hu.inno.humc.student.presentation;
 
 import nl.hu.inno.humc.student.application.StudentService;
-import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
-import nl.hu.inno.humc.student.presentation.dto.StudentDto;
-import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
-import nl.hu.inno.humc.student.presentation.dto.VakBehaaldDto;
+import nl.hu.inno.humc.student.presentation.dto.*;
 import nl.hu.inno.humc.student.presentation.exceptions.StudentBestaatNietException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/students")
-public class StudentRestController {
+public class StudentController {
     private final StudentService studentService;
 
-    StudentRestController(StudentService studentService){
+    StudentController(StudentService studentService){
         this.studentService = studentService;
     }
 
@@ -47,6 +44,20 @@ public class StudentRestController {
             return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
 
         } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("/klas")
+    public ResponseEntity<?> schrijfInVoorKlas(@RequestBody @Validated KlasInschrijvingDto dto){
+        try {
+            StudentDto student = studentService.schrijfStudentInVoorKlas(dto.studentId(), dto.klasCode());
+
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } catch (StudentBestaatNietException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

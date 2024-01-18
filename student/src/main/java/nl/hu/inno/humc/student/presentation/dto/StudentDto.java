@@ -17,6 +17,7 @@ import static java.util.stream.Collectors.toList;
 public class StudentDto {
 
     private String studentId;
+    private String studentNummer;
     private String voornaam;
     private String achternaam;
     private String roepnaam;
@@ -29,6 +30,7 @@ public class StudentDto {
     private String plaats;
     private Vooropleiding vooropleiding;
     private List<String> opleidingen;
+    private List<String> klassen;
     private List<String> ingeschrevenVakken;
     private List<String> behaaldeVakken;
     private List<BsaDto> studieAdviezen;
@@ -37,6 +39,7 @@ public class StudentDto {
     public static StudentDto Of(Student student) {
         StudentDto dto = new StudentDto();
         dto.studentId = student.getStudentId();
+        dto.studentNummer = student.getStudentNummer();
         dto.voornaam = student.getPersoonsGegevens().getNaam().getVoornaam();
         dto.achternaam = student.getPersoonsGegevens().getNaam().getAchternaam();
         dto.roepnaam = student.getPersoonsGegevens().getNaam().getRoepnaam();
@@ -49,6 +52,7 @@ public class StudentDto {
         dto.plaats = student.getPersoonsGegevens().getAdres().getPlaats();
         dto.vooropleiding = student.getVooropleiding();
         dto.opleidingen = student.getOpleidingen().stream().map(Opleiding::getOpleidingId).collect(toList());
+        dto.klassen = student.getKlassen();
         dto.ingeschrevenVakken = student.getIngeschrevenVakken().stream().map(Vak::getId).collect(toList());
         dto.behaaldeVakken = student.getBehaaldeVakken().stream().map(Vak::getId).collect(toList());
         dto.studieAdviezen = student.getStudieAdviezen().stream().map(BsaDto::Of).collect(toList());
@@ -122,4 +126,13 @@ public class StudentDto {
     public List<BsaDto> getStudieAdviezen() {
         return studieAdviezen;
     }
+
+    public String getStudentNummer() {
+        return studentNummer;
+    }
+
+    public List<String> getKlassen() {
+        return klassen;
+    }
+
 }

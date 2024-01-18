@@ -7,7 +7,7 @@ import nl.hu.inno.humc.student.domain.Opleiding;
 import nl.hu.inno.humc.student.domain.Student;
 import nl.hu.inno.humc.student.domain.StudentBuilder;
 import nl.hu.inno.humc.student.domain.Vak;
-import nl.hu.inno.humc.student.presentation.student.StudentRabbitProducer;
+import nl.hu.inno.humc.student.messaging.outbound.StudentProducer;
 import nl.hu.inno.humc.student.presentation.dto.OpleidingInschrijvingDto;
 import nl.hu.inno.humc.student.presentation.dto.StudentDto;
 import nl.hu.inno.humc.student.presentation.dto.VakInschrijvingDto;
@@ -25,13 +25,16 @@ public class StudentService {
     private final StudentRepository studentRepo;
     private final VakService vakService;
     private final OpleidingService opleidingService;
-    private final StudentRabbitProducer studentRabbitProducer;
+    private final StudentProducer studentProducer;
 
-    StudentService(StudentRepository studentRepository, StudentRabbitProducer studentRabbitProducer, VakService vakService, OpleidingService opleidingService) {
+    private final StudentClient studentClient;
+
+    StudentService(StudentRepository studentRepository, StudentProducer studentRabbitProducer, VakService vakService, OpleidingService opleidingService, StudentClient studentClient) {
         this.studentRepo = studentRepository;
-        this.studentRabbitProducer = studentRabbitProducer;
+        this.studentProducer = studentRabbitProducer;
         this.vakService = vakService;
         this.opleidingService = opleidingService;
+        this.studentClient = studentClient;
     }
 
     public StudentDto getStudentById(String id){
@@ -55,10 +58,20 @@ public class StudentService {
                 .withGeboortedatum(dto.getGeboortedatum())
                 .withVooropleiding(dto.getVooropleiding())
                 .build();
+
+
+        // Send student to the canvas application
+        // Preferably this would be done via messaging, but REST is the only option for now
+        // the canvas application generates as student id and returns it to us
+        String studentNummer = studentClient.registreerStudent(dto.getVoornaam(), dto.getAchternaam());
+        student.geefStudentNummer(studentNummer);
+
         student = studentRepo.save(student);
-        StudentDto studentDto = StudentDto.Of(student);
+
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendNewStudentToQueue(studentDto);
+        StudentDto studentDto = StudentDto.Of(student);
+        studentProducer.sendNewStudentToQueue(studentDto);
+
         return studentDto;
     }
 
@@ -81,7 +94,7 @@ public class StudentService {
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
         return studentDto;
     }
 
@@ -121,7 +134,20 @@ public class StudentService {
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
+        return studentDto;
+    }
+
+    public StudentDto schrijfStudentInVoorKlas(String studentId, String klasCode) {
+        Student student = studentRepo.findById(studentId).orElseThrow(StudentBestaatNietException::new);
+        // Voeg aan klas toe in Canvas
+        studentClient.voegStudentToeAanKlas(student.getStudentNummer(), klasCode);
+        student.schrijfInVoorKlas(klasCode);
+        studentRepo.save(student);
+
+        StudentDto studentDto = StudentDto.Of(student);
+        // Send student to queue so the other microservices can process it
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
         return studentDto;
     }
 
@@ -134,7 +160,7 @@ public class StudentService {
 
         StudentDto studentDto = StudentDto.Of(student);
         // Send student to queue so the other microservices can process it
-        studentRabbitProducer.sendUpdatedStudentToQueue(studentDto);
+        studentProducer.sendUpdatedStudentToQueue(studentDto);
         System.out.println("Student heeft vak behaald, " + vak.getStudiePunten() + " studiepunten toegevoegd aan " + studentId );
         return studentDto;
     }
